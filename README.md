@@ -1,3 +1,3 @@
 # CourtFinder
 
-In this project, I made this which is part of the final project of the campus at my university. I hope this project can have an efficient impact on finding a food court place along with tenants and food lists. and can also make it easier for tenants to make orders from customers and can print order notes. This project has a transaction report from tenants that can be seen by the food court manager
+CourtFinder is a project developed as part of my final university project. The goal of this application is to provide an efficient solution for users to find food courts, tenants, and food lists with ease. It also simplifies the process for tenants to manage customer orders and print order receipts. Additionally, the project includes a transaction reporting system that allows food court managers to view reports from tenants, providing a comprehensive view of operations.
