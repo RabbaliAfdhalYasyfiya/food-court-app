@@ -78,14 +78,14 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                 child: IconButton(
                   visualDensity: VisualDensity.comfortable,
                   onPressed: () {
-                    try {
-                      var url =
-                          "https://www.google.com/maps/dir/?api=1&destination=${widget.markerAdmin.latitude},${widget.markerAdmin.longitude}";
-                      final Uri uri = Uri.parse(url);
-                      launchUrl(uri);
-                    } catch (e) {
-                      debugPrint('Error : $e');
-                    }
+                    // try {
+                    //   var url =
+                    //       "https://www.google.com/maps/dir/?api=1&destination=${widget.markerAdmin.latitude},${widget.markerAdmin.longitude}";
+                    //   final Uri uri = Uri.parse(url);
+                    //   launchUrl(uri);
+                    // } catch (e) {
+                    //   debugPrint('Error : $e');
+                    // }
 
                     Navigator.push(
                       context,
