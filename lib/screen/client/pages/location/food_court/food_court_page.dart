@@ -11,15 +11,20 @@ import '../../../../../services/models/model_product.dart';
 import '../../../../../services/models/model.dart';
 import '../../../../../widget/button.dart';
 import '../../../../../widget/page.dart';
+import '../route_page.dart';
 import 'review_page.dart';
 
 class FoodCourtPage extends StatefulWidget {
   const FoodCourtPage({
     super.key,
     required this.markerAdmin,
+    required this.currentLat,
+    required this.currentLng,
   });
 
   final MarkerAdmin markerAdmin;
+  final double currentLat;
+  final double currentLng;
 
   @override
   State<FoodCourtPage> createState() => _FoodCourtPageState();
@@ -81,6 +86,17 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                     } catch (e) {
                       debugPrint('Error : $e');
                     }
+
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => RoutePage(
+                          markerAdmin: widget.markerAdmin,
+                          currentLat: widget.currentLat,
+                          currentLng: widget.currentLng,
+                        ),
+                      ),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),

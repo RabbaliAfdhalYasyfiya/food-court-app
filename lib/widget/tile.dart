@@ -13,9 +13,13 @@ class TileFoodCourt extends StatefulWidget {
   const TileFoodCourt({
     super.key,
     required this.markerAdmin,
+    required this.currentLat,
+    required this.currentLng,
   });
 
   final MarkerAdmin markerAdmin;
+  final double currentLat;
+  final double currentLng;
 
   @override
   State<TileFoodCourt> createState() => _TileFoodCourtState();
@@ -30,7 +34,6 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
 
   @override
   Widget build(BuildContext context) {
-    double rating = widget.markerAdmin.averageRating();
 
     return InkWell(
       borderRadius: BorderRadius.circular(15),
@@ -41,172 +44,150 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
             CupertinoPageRoute(
               builder: (context) => FoodCourtPage(
                 markerAdmin: widget.markerAdmin,
+                currentLat: widget.currentLat,
+                currentLng: widget.currentLng,
               ),
             ),
           );
         } else {
           snackBarCustom(
             context,
-            Theme.of(context).primaryColor,
-            'This ${widget.markerAdmin.placeName} is currently closed',
+            Colors.redAccent.shade400,
+            'This ${widget.markerAdmin.placeName} is currently Closed',
             Colors.white,
           );
         }
       },
       child: Card(
         margin: const EdgeInsets.all(0),
+        color: Colors.white,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
-          height: 170,
+          width: 180,
+          height: double.infinity,
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(width: 0.5, color: Colors.black26),
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.black26, width: 0.5),
           ),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                flex: 2,
-                child: Row(
+                flex: 3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 6,
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.all(Radius.circular(15)),
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          color: Colors.grey.shade200,
-                          child: Image.network(
-                            widget.markerAdmin.imagePlace,
-                            fit: BoxFit.cover,
-                            filterQuality: FilterQuality.low,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  backgroundColor: Colors.grey.shade400,
-                                  strokeCap: StrokeCap.round,
-                                  color: Theme.of(context).primaryColor,
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
+                        borderRadius: BorderRadius.circular(10),
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Colors.grey.shade200,
+                                    Colors.grey.shade100,
+                                    Colors.grey.shade50,
+                                  ],
                                 ),
-                              );
-                            },
-                            errorBuilder: (context, error, stackTrace) {
-                              return Center(
-                                child: Text(
-                                  'Image $error',
-                                  style: const TextStyle(
-                                    color: Colors.redAccent,
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.markerAdmin.imagePlace,
+                                filterQuality: FilterQuality.low,
+                                fit: BoxFit.cover,
+                                useOldImageOnUrlChange: true,
+                                fadeInCurve: Curves.easeIn,
+                                fadeOutCurve: Curves.easeOut,
+                                fadeInDuration: const Duration(milliseconds: 500),
+                                fadeOutDuration: const Duration(milliseconds: 750),
+                                errorWidget: (context, url, error) {
+                                  return Center(
+                                    child: Text(
+                                      'Image $error',
+                                      style: const TextStyle(
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Visibility(
+                              visible: widget.markerAdmin.averageRating() != 0.0,
+                              child: Positioned(
+                                bottom: 5,
+                                left: 5,
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 2.5, horizontal: 7.5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(50),
+                                    border: Border.all(
+                                      color: Colors.grey.shade300,
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        widget.markerAdmin.averageRating() == 0.0
+                                            ? '--'
+                                            : widget.markerAdmin
+                                                .averageRating()
+                                                .toStringAsPrecision(2),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      const Gap(2),
+                                      Icon(
+                                        widget.markerAdmin.averageRating() <= 4.0
+                                            ? CupertinoIcons.star_lefthalf_fill
+                                            : CupertinoIcons.star_fill,
+                                        color: Colors.amber,
+                                        size: 13,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    const Gap(10),
+                    const Gap(2.5),
                     Expanded(
                       flex: 2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             widget.markerAdmin.placeName,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
                               color: Colors.black,
-                              height: 1.15,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17,
+                              height: 1,
                             ),
-                          ),
-                          const Gap(5),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Visibility(
-                                //visible: rating != 0.0,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      rating == 0.0 ? '--' : rating.toStringAsPrecision(2),
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const Gap(5),
-                                    RatingBar(
-                                      initialRating: rating,
-                                      itemCount: 5,
-                                      direction: Axis.horizontal,
-                                      glow: false,
-                                      itemSize: 15,
-                                      ignoreGestures: true,
-                                      allowHalfRating: true,
-                                      maxRating: 5,
-                                      minRating: 0,
-                                      ratingWidget: RatingWidget(
-                                        full: const Icon(
-                                          CupertinoIcons.star_fill,
-                                          color: Colors.amber,
-                                        ),
-                                        half: const Icon(
-                                          CupertinoIcons.star_lefthalf_fill,
-                                          color: Colors.amber,
-                                        ),
-                                        empty: const Icon(
-                                          CupertinoIcons.star_fill,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      onRatingUpdate: (rate) {},
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Gap(5),
-                              Container(
-                                padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
-                                  borderRadius: BorderRadius.circular(50),
-                                  border: Border.all(
-                                    color: Colors.grey.shade300,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: Text(
-                                  widget.markerAdmin.isClose ? '· Open' : '· Close',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    color: widget.markerAdmin.isClose
-                                        ? Colors.greenAccent.shade400
-                                        : Colors.redAccent.shade400,
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
@@ -214,57 +195,56 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
                   ],
                 ),
               ),
+              const Gap(5),
               Expanded(
-                flex: 1,
+                flex: 0,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Gap(5),
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        widget.markerAdmin.addressPlace,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          height: 1,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade600,
-                        ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: Colors.blueAccent.shade400,
                       ),
-                    ),
-                    const VerticalDivider(
-                      thickness: 0.25,
-                      endIndent: 5,
-                      indent: 5,
-                      width: 25,
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
+                          const Icon(
                             CupertinoIcons.arrow_up_right_diamond_fill,
-                            color: Theme.of(context).primaryColor,
-                            size: 20,
+                            color: Colors.white,
+                            size: 15,
                           ),
+                          const Gap(3),
                           Text(
                             '${widget.markerAdmin.distance.toStringAsFixed(2)} km',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.white,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Gap(5),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: widget.markerAdmin.isClose
+                            ? Colors.greenAccent.shade400
+                            : Colors.redAccent.shade400,
+                      ),
+                      child: Text(
+                        widget.markerAdmin.isClose ? '· Open' : '· Close',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
