@@ -10,7 +10,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
@@ -55,20 +54,16 @@ class _LocationPageState extends State<LocationPage> {
   double radiusValue = 2000.0;
   double radiusValueInKilometers = 0.0;
 
+  double latitudeCurrent = 0.0;
+  double longitudeCurrent = 0.0;
+
   String? addressLocation;
   String? subLocation;
   String? specAddressLocation;
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-7.740697249517362, 110.35192056953613),
-    tilt: 60,
-    zoom: 14,
-  );
-
   final Set<Circle> _circle = <Circle>{};
   final List<Marker> _markers = <Marker>[];
 
-  late Position position;
   late Future<List<MarkerAdmin>> futureMarkerAdminData;
 
   @override
@@ -111,8 +106,8 @@ class _LocationPageState extends State<LocationPage> {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(position.latitude, position.longitude),
-          zoom: 14,
           tilt: 85,
+          zoom: 14,
         ),
       ),
     );
@@ -165,6 +160,8 @@ class _LocationPageState extends State<LocationPage> {
       _markers;
       _circle;
       setLoading = false;
+      latitudeCurrent = position.latitude;
+      longitudeCurrent = position.longitude;
       getNearPlace(position);
       getWeatherData(position);
 
@@ -611,7 +608,11 @@ class _LocationPageState extends State<LocationPage> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: GoogleMap(
-                                initialCameraPosition: _kGooglePlex,
+                                initialCameraPosition: CameraPosition(
+                                  target: LatLng(latitudeCurrent, longitudeCurrent),
+                                  tilt: 60,
+                                  zoom: 14,
+                                ),
                                 myLocationEnabled: false,
                                 trafficEnabled: false,
                                 compassEnabled: false,
@@ -745,11 +746,6 @@ class _LocationPageState extends State<LocationPage> {
                                   ),
                                   const Gap(10),
                                   GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    dragStartBehavior: DragStartBehavior.start,
-                                    supportedDevices: const <PointerDeviceKind>{
-                                      PointerDeviceKind.touch
-                                    },
                                     onTap: () {
                                       debugPrint('Weather :');
                                       debugPrint('timezone : ${_weather?.timezone}');
@@ -916,7 +912,6 @@ class _LocationPageState extends State<LocationPage> {
                                             'This ${markerAdmin.placeName} is currently Closed',
                                             Colors.white,
                                           );
-                                          
                                         }
                                       },
                                       child: Card(
