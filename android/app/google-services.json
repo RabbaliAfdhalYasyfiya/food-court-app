@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "716107306963",
+    "project_id": "capstone-project-1fab3",
+    "storage_bucket": "capstone-project-1fab3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716107306963:android:c33ba7d801765779714126",
+        "android_client_info": {
+          "package_name": "com.example.food_court_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716107306963-br1hh20k39jvgq8as52gj05cbh7bkd0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.food_court_app",
+            "certificate_hash": "7b6d59e366d8bbfbf0927f845a550cfab6feb53c"
+          }
+        },
+        {
+          "client_id": "716107306963-cl9lrvk5ce6nil9kjj83bd1sphmvn8bl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2hbp6Q_P8uYNAMcCSovn8ul4HKxPjQSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716107306963-cl9lrvk5ce6nil9kjj83bd1sphmvn8bl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

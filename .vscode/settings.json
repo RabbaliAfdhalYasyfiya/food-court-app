@@ -1,0 +1,11 @@
+{
+  "workbench.view.alwaysShowHeaderActions": true,
+  "git.confirmEmptyCommits": true,
+  "git.confirmSync": true,
+  "git.decorations.enabled": true,
+  "git.detectSubmodules": true,
+  "git.enableStatusBarSync": true,
+  "git.terminalGitEditor": true,
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.tabs.defaultIcon": "symbol-module"
+}

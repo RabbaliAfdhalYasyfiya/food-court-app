@@ -1,0 +1,707 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../services/models/model_product.dart';
+import '../../../../widget/bottom_sheet.dart';
+import '../../../../widget/load.dart';
+import '../../../../widget/snackbar.dart';
+import 'order_success.dart';
+
+enum ProductTypeEnum { QRIS, Cash }
+
+class CartOrder extends StatefulWidget {
+  const CartOrder({
+    super.key,
+    required this.selectedProducts,
+    required this.selectedQuantities,
+  });
+
+  final List<MenuProduct> selectedProducts;
+  final List<int> selectedQuantities;
+
+  @override
+  State<CartOrder> createState() => _CartOrderState();
+}
+
+class _CartOrderState extends State<CartOrder> {
+  final currentVendor = FirebaseAuth.instance.currentUser;
+
+  ProductTypeEnum? _productTypeEnum;
+
+  void addCheckoutProduct() async {
+    showLoading(context);
+
+    final List<Product> orderProduct = [];
+    double subTotal = _calculateSubtotal();
+    double taxFee = 1;
+    double priceTotal = 0.0 + taxFee;
+
+    var payMethod = _productTypeEnum?.name;
+    var orderTime = FieldValue.serverTimestamp();
+    for (int i = 0; i < widget.selectedProducts.length; i++) {
+      final product = widget.selectedProducts[i];
+      final quantity = widget.selectedQuantities[i];
+      final double price = double.tryParse(product.priceProduct.replaceAll('Rp', '')) ?? 0.0;
+      final double valuePrice = price * quantity;
+
+      orderProduct.add(Product(
+        productId: product.productId,
+        imageProduct: product.imageProduct,
+        nameProduct: product.nameProduct,
+        priceProduct: price,
+        quantityProduct: quantity,
+        valueTotal: valuePrice,
+        orderTime: Timestamp.now(),
+        payMethod: payMethod!,
+      ));
+
+      priceTotal += valuePrice;
+
+      await FirebaseFirestore.instance
+          .collection('vendors')
+          .doc(currentVendor!.uid)
+          .collection('products')
+          .doc(product.productId)
+          .update({
+        'stock_product': FieldValue.increment(-quantity),
+      });
+    }
+
+    DocumentReference orderRef = await FirebaseFirestore.instance.collection('orders').add({
+      'vendor_id': currentVendor!.uid,
+      'product': orderProduct
+          .map(
+            (p) => {
+              'product_id': p.productId,
+              'image_product': p.imageProduct,
+              'name_product': p.nameProduct,
+              'price_product': p.priceProduct,
+              'quantity_product': p.quantityProduct,
+              'value_total': p.valueTotal,
+            },
+          )
+          .toList(),
+      'sub_total': subTotal,
+      'price_total': priceTotal,
+      'pay_method': payMethod,
+      'order_time': orderTime,
+    });
+    await orderRef.update({
+      'order_id': orderRef.id,
+    });
+
+    // Get the actual order data including the timestamp
+    DocumentSnapshot orderSnapshot = await orderRef.get();
+    var actualOrderTime = orderSnapshot.get('order_time') as Timestamp;
+
+    for (var product in orderProduct) {
+      product.orderTime = actualOrderTime;
+    }
+
+    hideLoading(context);
+
+    Navigator.push(
+      context,
+      createRoute(
+        OrderSuccess(
+          orderedProducts: orderProduct,
+          priceTotal: priceTotal,
+          taxFee: taxFee,
+          payMethod: payMethod!,
+          vendorId: currentVendor!.uid,
+          orderTime: actualOrderTime,
+          initialIndex: 0,
+        ),
+      ),
+    );
+
+    snackBarCustom(
+      context,
+      Colors.greenAccent.shade400,
+      'Orders, Menu Successfully',
+      Colors.white,
+    );
+  }
+
+  ScrollController scrollController = ScrollController();
+
+  Route createRoute(Widget child) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
+  Widget checkoutCard(
+    BuildContext context,
+    int items,
+    double subtotal,
+    double taxFee,
+    double orderTotal,
+  ) {
+    return Card(
+      margin: const EdgeInsets.all(0),
+      elevation: 3,
+      semanticContainer: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 40,
+              height: 5,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                color: Colors.grey.shade400,
+              ),
+            ),
+            const Gap(20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Menu Items',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        ),
+                      ),
+                      Text(
+                        '$items',
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Subtotal',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        ),
+                      ),
+                      Text(
+                        'Rp ${NumberFormat('#,##0.000', 'id_ID').format(subtotal).replaceAll(',', '.')}',
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Tax Fee',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        ),
+                      ),
+                      Text(
+                        'Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee).replaceAll(',', '.')}',
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const Gap(5),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Total',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                  ),
+                  Text(
+                    'Rp ${NumberFormat('#,##0.000', 'id_ID').format(orderTotal).replaceAll(',', '.')}',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(
+              thickness: 0.5,
+              indent: 10,
+              endIndent: 10,
+              color: Colors.black38,
+              height: 15,
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Gap(10),
+                      Icon(
+                        Iconsax.empty_wallet,
+                        size: 22,
+                      ),
+                      Gap(10),
+                      Text(
+                        'Payment Method',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Gap(10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: RadioListTile<ProductTypeEnum>(
+                            visualDensity: VisualDensity.compact,
+                            activeColor: Theme.of(context).primaryColor,
+                            value: ProductTypeEnum.QRIS,
+                            title: Text(
+                              ProductTypeEnum.QRIS.name,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            groupValue: _productTypeEnum,
+                            onChanged: (value) {
+                              setState(() {
+                                _productTypeEnum = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      const Gap(10),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: RadioListTile<ProductTypeEnum>(
+                            visualDensity: VisualDensity.compact,
+                            activeColor: Theme.of(context).primaryColor,
+                            value: ProductTypeEnum.Cash,
+                            title: Text(
+                              ProductTypeEnum.Cash.name,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            groupValue: _productTypeEnum,
+                            onChanged: (value) {
+                              setState(() {
+                                _productTypeEnum = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const Gap(10),
+            ElevatedButton(
+              onPressed: () {
+                if (widget.selectedProducts.isEmpty) {
+                  snackBarCustom(
+                    context,
+                    Colors.redAccent.shade400,
+                    'Products, Ordered in Cart are Empty',
+                    Colors.white,
+                  );
+                } else if (_productTypeEnum == null) {
+                  snackBarCustom(
+                    context,
+                    Colors.redAccent.shade400,
+                    'Payment Method, not Checked',
+                    Colors.white,
+                  );
+                } else {
+                  addCheckoutProduct();
+                }
+              },
+              style: ButtonStyle(
+                fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                ),
+                elevation: const WidgetStatePropertyAll(3),
+                backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                padding: const WidgetStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 20),
+                ),
+              ),
+              child: const Text(
+                'Checkout',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _deleteProduct(int index) {
+    showLoading(context);
+    setState(() {
+      widget.selectedProducts.removeAt(index);
+      widget.selectedQuantities.removeAt(index);
+      _calculateSubtotal();
+    });
+    Navigator.pop(context);
+  }
+
+  double _calculateSubtotal() {
+    double subtotal = 0;
+    for (int i = 0; i < widget.selectedProducts.length; i++) {
+      final double price =
+          double.tryParse(widget.selectedProducts[i].priceProduct.replaceAll('Rp', '')) ?? 0;
+      subtotal += price * widget.selectedQuantities[i];
+    }
+    return subtotal;
+  }
+
+  void countInfoEdit(
+    final String imageProduct,
+    final String nameProduct,
+    final int quantity,
+    final double valuePrice,
+    final int index,
+    final Function(int) deleteProduct,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      scrollControlDisabledMaxHeightRatio: 1 / 2.15,
+      isScrollControlled: false,
+      enableDrag: false,
+      useRootNavigator: false,
+      showDragHandle: false,
+      useSafeArea: true,
+      isDismissible: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return BottomEditCount(
+          imageProduct: imageProduct,
+          nameProduct: nameProduct,
+          quantity: quantity,
+          valuePrice: valuePrice,
+          index: index,
+          deleteProduct: deleteProduct,
+          onSaveChanges: (newQuantity, newTotalPrice) {
+            updateProduct(index, newQuantity);
+          },
+        );
+      },
+    );
+  }
+
+  void updateProduct(int index, int newQuantity) {
+    setState(() {
+      widget.selectedQuantities[index] = newQuantity;
+      _calculateSubtotal(); // Update the subtotal
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double subTotal = _calculateSubtotal();
+    double taxFee = 1; // Example fixed tax fee
+    double orderTotal = subTotal + taxFee;
+
+    if (widget.selectedProducts.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (timeStamp) {
+          Navigator.pop(context);
+        },
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: Colors.grey.shade50,
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          style: const ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.white),
+          ),
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        titleSpacing: 2,
+        title: const Text(
+          'Cart Order',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              flex: 6,
+              child: widget.selectedProducts.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/Nodata-pana.png',
+                            width: 200,
+                          ),
+                          const Gap(15),
+                          const Text(
+                            'Here, there are',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          const Text(
+                            'no Menus in Cart yet',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ScrollbarTheme(
+                    data: const ScrollbarThemeData(
+                                crossAxisMargin: 0,
+                                trackVisibility: WidgetStatePropertyAll(false),
+                                thumbVisibility: WidgetStatePropertyAll(true),
+                                interactive: true,
+                                minThumbLength: 5,
+                                radius: Radius.circular(50),
+                                thickness: WidgetStatePropertyAll(5),
+                                mainAxisMargin: 50,
+                                thumbColor: WidgetStatePropertyAll(Colors.black26),
+                              ),
+                    child: Scrollbar(
+                                  controller: scrollController,
+
+                      child: ListView.separated(
+                          separatorBuilder: (context, index) => const Gap(10),
+                                  controller: scrollController,
+
+                          padding: const EdgeInsets.all(16),
+                          itemCount: widget.selectedProducts.length,
+                          itemBuilder: (context, index) {
+                            final product = widget.selectedProducts[index];
+                            final quantity = widget.selectedQuantities[index];
+                            final double price =
+                                double.tryParse(product.priceProduct.replaceAll('Rp', '')) ?? 0;
+                            final double valuePrice = price * quantity;
+                            return ListTile(
+                              tileColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: const BorderSide(color: Colors.black12, width: 0.5),
+                              ),
+                              style: ListTileStyle.list,
+                              visualDensity: VisualDensity.comfortable,
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 12.5, vertical: 5),
+                              leading: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: AspectRatio(
+                                  aspectRatio: 1 / 1,
+                                  child: Container(
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Colors.grey.shade200,
+                                            Colors.grey.shade100,
+                                            Colors.grey.shade50,
+                                          ],
+                                        ),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl: product.imageProduct,
+                                        filterQuality: FilterQuality.low,
+                                        fit: BoxFit.cover,
+                                        useOldImageOnUrlChange: true,
+                                        fadeInCurve: Curves.easeIn,
+                                        fadeOutCurve: Curves.easeOut,
+                                        fadeInDuration: const Duration(milliseconds: 500),
+                                        fadeOutDuration: const Duration(milliseconds: 750),
+                                      )
+                                      //Image.network(e.imageProduct),
+                                      ),
+                                ),
+                              ),
+                              title: Text(
+                                product.nameProduct,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 17,
+                                  height: 1,
+                                ),
+                              ),
+                              subtitle: Text('${quantity}x'),
+                              trailing: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    onLongPress: () {
+                                      _deleteProduct(index);
+                                    },
+                                    onTap: () {
+                                      countInfoEdit(
+                                        product.imageProduct,
+                                        product.nameProduct,
+                                        quantity,
+                                        valuePrice,
+                                        index,
+                                        (index) {
+                                          _deleteProduct(index);
+                                        },
+                                      );
+                                    },
+                                    borderRadius: BorderRadius.circular(10),
+                                    radius: 15,
+                                    splashColor: Theme.of(context).primaryColor.withOpacity(0.15),
+                                    child: Text(
+                                      'Edit',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'Rp ${NumberFormat('#,##0.000', 'id_ID').format(valuePrice).replaceAll(',', '.')}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                    ),
+                  ),
+            ),
+            Expanded(
+              flex: 6,
+              child: checkoutCard(
+                context,
+                widget.selectedProducts.length,
+                subTotal,
+                taxFee,
+                orderTotal,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
