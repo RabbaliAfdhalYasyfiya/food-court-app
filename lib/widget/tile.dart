@@ -146,10 +146,10 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
                                             : widget.markerAdmin
                                                 .averageRating()
                                                 .toStringAsPrecision(2),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w500,
-                                          color: Colors.black,
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                       ),
                                       const Gap(2),
