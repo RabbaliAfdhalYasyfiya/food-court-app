@@ -112,7 +112,7 @@ class _PageReviewState extends State<PageReview> {
                   fixedCenter: true,
                   activeDotScale: 0,
                   dotColor: Colors.grey.shade400,
-                  activeDotColor: Theme.of(context).primaryColor,
+                  activeDotColor: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],

@@ -66,7 +66,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
               ),
               icon: Icon(
                 Icons.arrow_back_rounded,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -97,9 +97,10 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                         ),
                       ),
                     );
+                    debugPrint('Current Location : ${widget.currentLat}, ${widget.currentLng}');
                   },
                   style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                    backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.primary),
                     padding: const WidgetStatePropertyAll(
                       EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     ),
@@ -208,9 +209,10 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                           widget.markerAdmin.placeName,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 24,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).primaryColor,
                             height: 1.05,
                           ),
                         ),
@@ -234,9 +236,10 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                             children: [
                               Text(
                                 rating == 0.0 ? '--' : rating.toStringAsPrecision(2),
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               const Gap(2.5),
@@ -270,11 +273,12 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 'Contacted',
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w500,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               Row(
@@ -359,18 +363,19 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Featured Tenant',
                         style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w500,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                       TextButton(
                         onPressed: () {},
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(
-                              Theme.of(context).primaryColor.withOpacity(0.1)),
+                              Theme.of(context).colorScheme.primary.withOpacity(0.1)),
                           visualDensity: VisualDensity.compact,
                         ),
                         child: Text(
@@ -378,7 +383,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ),
@@ -396,11 +401,12 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Reviews',
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w500,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                           TextButton(
@@ -418,7 +424,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                             },
                             style: ButtonStyle(
                               backgroundColor: WidgetStatePropertyAll(
-                                  Theme.of(context).primaryColor.withOpacity(0.1)),
+                                  Theme.of(context).colorScheme.primary.withOpacity(0.1)),
                               visualDensity: VisualDensity.compact,
                             ),
                             child: Text(
@@ -426,7 +432,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ),

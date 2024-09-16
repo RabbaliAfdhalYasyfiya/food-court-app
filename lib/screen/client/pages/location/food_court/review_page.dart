@@ -126,7 +126,7 @@ class _ReviewPageState extends State<ReviewPage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.grey.shade100,
+        backgroundColor: Theme.of(context).colorScheme.onSurface,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
@@ -138,7 +138,7 @@ class _ReviewPageState extends State<ReviewPage> {
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -165,7 +165,7 @@ class _ReviewPageState extends State<ReviewPage> {
                             Container(
                               height: 80,
                               width: double.infinity,
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surface,
                             ),
                             Container(
                               width: double.infinity,
@@ -174,10 +174,10 @@ class _ReviewPageState extends State<ReviewPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Give your rating',
                                     style: TextStyle(
-                                      color: Colors.black,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -187,7 +187,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                     padding:
                                         const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).primaryColor,
+                                      color: Theme.of(context).colorScheme.primary,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     child: Row(
@@ -258,8 +258,8 @@ class _ReviewPageState extends State<ReviewPage> {
                             children: [
                               Text(
                                 'Give more information to your friends about environment, the food in ${widget.placeName}...',
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 17,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -427,8 +427,9 @@ class _ReviewPageState extends State<ReviewPage> {
                           ),
                           elevation: const WidgetStatePropertyAll(3),
                           fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                          shadowColor: const WidgetStatePropertyAll(Colors.black),
-                          backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                          shadowColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                          backgroundColor:
+                              WidgetStatePropertyAll(Theme.of(context).colorScheme.primary),
                           padding: const WidgetStatePropertyAll(
                             EdgeInsets.symmetric(vertical: 17),
                           ),

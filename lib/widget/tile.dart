@@ -34,7 +34,6 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: () {
@@ -52,7 +51,7 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
         } else {
           snackBarCustom(
             context,
-            Colors.redAccent.shade400,
+            Theme.of(context).colorScheme.error,
             'This ${widget.markerAdmin.placeName} is currently Closed',
             Colors.white,
           );
@@ -60,7 +59,7 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
       },
       child: Card(
         margin: const EdgeInsets.all(0),
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
@@ -68,9 +67,9 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
           height: double.infinity,
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: Colors.black26, width: 0.5),
+            border: Border.all(color: Theme.of(context).colorScheme.outline, width: 0.75),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -342,10 +341,10 @@ class TileTenant extends StatelessWidget {
                       nameFoodCourt,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).primaryColor,
                         height: 1,
                       ),
                     ),
@@ -360,7 +359,7 @@ class TileTenant extends StatelessWidget {
                               TextSpan(
                                 text: '$lengthProduct',
                                 style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 17,
                                 ),
@@ -620,9 +619,9 @@ class TileMenu extends StatelessWidget {
                           textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w500,
                             fontSize: 18,
                             height: 1,
                           ),
@@ -630,8 +629,8 @@ class TileMenu extends StatelessWidget {
                         const Gap(10),
                         Text(
                           'Rp $price',
-                          style: const TextStyle(
-                            color: Colors.black,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
                           ),
@@ -1355,8 +1354,8 @@ class TileOrderProduct extends StatelessWidget {
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w500,
                         fontSize: 19,
                         height: 1,
@@ -1371,12 +1370,12 @@ class TileOrderProduct extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    const Divider(
+                    Divider(
                       thickness: 0.5,
                       height: 10,
                       endIndent: 10,
                       indent: 10,
-                      color: Colors.black26,
+                      color: Theme.of(context).dividerColor,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

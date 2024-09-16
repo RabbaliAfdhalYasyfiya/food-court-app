@@ -3,26 +3,22 @@ import 'package:flutter/material.dart';
 ThemeData lightMode = ThemeData(
   fontFamily: 'SF Pro Text',
   useMaterial3: true,
-  primaryColor: Colors.blueAccent.shade400,
-
-  scaffoldBackgroundColor: Colors.white,
-  brightness: Brightness.light,
-  dividerTheme: const DividerThemeData(
-    color: Colors.black54,
-  ),
-  
+  dividerColor: Colors.black26,
+  primaryColor: Colors.black,
+  splashColor: Colors.blueAccent.shade400,
+  indicatorColor: Colors.blueAccent.shade400,
   colorScheme: ColorScheme.light(
-    primary: const Color.fromARGB(255, 9, 14, 21),
-    onPrimary: Colors.blueAccent.shade700,
-    secondary: Colors.blueAccent,
-    onSecondary: Colors.blueAccent.shade100,
-    error: Colors.red.shade600,
-    onError: Colors.redAccent,
+    brightness: Brightness.light,
     surface: Colors.white,
-    onSurface: Colors.black87,
+    onSurface: Colors.grey.shade50,
+    onPrimary: Colors.grey.shade200,
+    primary: Colors.blueAccent.shade400,
+    secondary: Colors.grey.shade100,
+    error: Colors.red.shade400,
+    primaryFixed: Colors.greenAccent.shade400,
+    outline: Colors.black12,
   ),
 );
-
 
 ThemeData darkMode = ThemeData(
   fontFamily: 'SF Pro Text',

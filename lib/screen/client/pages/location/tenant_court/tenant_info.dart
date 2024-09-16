@@ -33,9 +33,10 @@ class TenantInfo extends StatelessWidget {
             tenant.vendorName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 25,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).primaryColor,
               height: 1.05,
             ),
           ),
@@ -52,11 +53,12 @@ class TenantInfo extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Contacted',
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 Row(
@@ -139,7 +141,7 @@ class TenantInfo extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                        WidgetStatePropertyAll(Theme.of(context).primaryColor.withOpacity(0.1)),
+                        WidgetStatePropertyAll(Theme.of(context).colorScheme.primary.withOpacity(0.1)),
                     visualDensity: VisualDensity.compact,
                   ),
                   child: Text(
@@ -147,7 +149,7 @@ class TenantInfo extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),

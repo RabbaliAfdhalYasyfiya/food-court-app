@@ -45,9 +45,10 @@ class _TenantMenuState extends State<TenantMenu> {
               padding: const EdgeInsets.only(left: 15, bottom: 7),
               child: Text(
                 category,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w500,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -93,12 +94,12 @@ class _TenantMenuState extends State<TenantMenu> {
         shadowColor: Colors.black,
         scrolledUnderElevation: 0,
         titleSpacing: 2,
-        title: const Text(
+        title: Text(
           'Menu Items',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            color: Colors.black,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         leading: IconButton(
@@ -107,7 +108,7 @@ class _TenantMenuState extends State<TenantMenu> {
           ),
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -118,10 +119,10 @@ class _TenantMenuState extends State<TenantMenu> {
             padding: const EdgeInsets.only(right: 15),
             child: Text(
               '(${widget.products.length})',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
-                color: Colors.black,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),
@@ -199,7 +200,7 @@ class _TenantMenuState extends State<TenantMenu> {
               '$nameProduct add Favorites, Successfully',
               Colors.white,
             );
-          
+
             Navigator.pop(context);
           },
         );

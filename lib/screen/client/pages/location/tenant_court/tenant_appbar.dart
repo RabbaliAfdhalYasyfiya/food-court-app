@@ -29,7 +29,7 @@ class TenantAppbar extends StatelessWidget {
         ),
         icon: Icon(
           Icons.arrow_back_rounded,
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
         onPressed: () {
           Navigator.pop(context);
