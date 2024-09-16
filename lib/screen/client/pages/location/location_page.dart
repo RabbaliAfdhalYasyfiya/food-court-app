@@ -448,13 +448,42 @@ class _LocationPageState extends State<LocationPage> {
                       ),
                       const Gap(5),
                       Expanded(
-                        child: Text(
-                          '$specAddressLocation',
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
+                        child: setLoading
+                            ? Shimmer.fromColors(
+                                baseColor: Colors.grey.shade200,
+                                highlightColor: Colors.grey.shade100,
+                                direction: ShimmerDirection.ltr,
+                                enabled: true,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 15,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                      ),
+                                    ),
+                                    const Gap(5),
+                                    Container(
+                                      height: 15,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            : Text(
+                                '$specAddressLocation',
+                                textAlign: TextAlign.left,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
                       ),
                     ],
                   )
