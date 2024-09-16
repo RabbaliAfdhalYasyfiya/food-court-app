@@ -111,15 +111,10 @@ class _EditPageState extends State<EditPage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
-          shadowColor: Colors.black,
-          elevation: 0,
           leading: IconButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
@@ -135,14 +130,7 @@ class _EditPageState extends State<EditPage> {
             },
           ),
           titleSpacing: 2,
-          title: const Text(
-            'Edit Profile',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-          ),
+          title: const Text('Edit Profile'),
         ),
         body: SafeArea(
           child: StreamBuilder<DocumentSnapshot>(

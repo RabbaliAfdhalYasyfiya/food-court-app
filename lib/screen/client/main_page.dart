@@ -87,19 +87,8 @@ class _MainPageClientState extends State<MainPageClient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        scrolledUnderElevation: 0,
-        shadowColor: Colors.transparent,
-        elevation: 0,
         automaticallyImplyLeading: false,
-        title: Text(
-          title[currentIndex],
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: Text(title[currentIndex]),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -132,7 +121,6 @@ class _MainPageClientState extends State<MainPageClient> {
         ],
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
         selectedIndex: currentIndex,
         onDestinationSelected: (value) {
           if (currentIndex == value) return;
@@ -141,15 +129,11 @@ class _MainPageClientState extends State<MainPageClient> {
             onTap = !onTap;
           });
         },
-        elevation: 7,
-        shadowColor: Colors.black,
-        overlayColor: WidgetStatePropertyAll(Theme.of(context).primaryColor.withOpacity(0.25)),
-        indicatorColor: Theme.of(context).primaryColor.withOpacity(0.15),
         destinations: [
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.map,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.map_15,
@@ -158,9 +142,9 @@ class _MainPageClientState extends State<MainPageClient> {
             label: 'Location',
           ),
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.heart,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.heart5,
@@ -170,8 +154,7 @@ class _MainPageClientState extends State<MainPageClient> {
           ),
           // NavigationDestination(
           //   icon: const Icon(
-          //     Iconsax.empty_wallet,
-          //     color: Colors.black,
+          //     Iconsax.empty_wallet
           //   ),
           //   selectedIcon: Icon(
           //     Iconsax.empty_wallet5,
@@ -180,9 +163,9 @@ class _MainPageClientState extends State<MainPageClient> {
           //   label: 'Payment',
           // ),
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.personalcard,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.personalcard5,

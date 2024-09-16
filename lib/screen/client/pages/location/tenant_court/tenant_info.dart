@@ -33,12 +33,7 @@ class TenantInfo extends StatelessWidget {
             tenant.vendorName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).primaryColor,
-              height: 1.05,
-            ),
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         const Gap(10),
@@ -47,7 +42,7 @@ class TenantInfo extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.fromLTRB(15, 10, 10, 10),
             decoration: BoxDecoration(
-              color: Colors.grey.shade100,
+              color: Theme.of(context).canvasColor,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Row(
@@ -55,11 +50,7 @@ class TenantInfo extends StatelessWidget {
               children: [
                 Text(
                   'Contacted',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 Row(
                   children: [
@@ -89,7 +80,7 @@ class TenantInfo extends StatelessWidget {
                     const Gap(5),
                     ButtonIcon(
                       icon: const Icon(Iconsax.sms_tracking),
-                      colors: Colors.black38,
+                      colors: Theme.of(context).primaryColor,
                       onPress: () async {
                         debugPrint('Email');
                         final url = Uri(scheme: 'mailto', path: tenant.emailVendor);
@@ -105,8 +96,8 @@ class TenantInfo extends StatelessWidget {
           ),
         ),
         const Gap(10),
-        const Divider(
-          color: Colors.black26,
+        Divider(
+          color: Theme.of(context).dividerColor,
           thickness: 0.25,
           height: 10,
           indent: 30,
@@ -119,12 +110,9 @@ class TenantInfo extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Menu Items',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 TextButton(
                   onPressed: () {
@@ -141,7 +129,7 @@ class TenantInfo extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor:
-                        WidgetStatePropertyAll(Theme.of(context).colorScheme.primary.withOpacity(0.1)),
+                        WidgetStatePropertyAll(Theme.of(context).primaryColor.withOpacity(0.1)),
                     visualDensity: VisualDensity.compact,
                   ),
                   child: Text(
@@ -149,7 +137,7 @@ class TenantInfo extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),

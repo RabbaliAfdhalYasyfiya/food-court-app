@@ -80,19 +80,8 @@ class _MainPageAdminState extends State<MainPageAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.white,
-        elevation: 0,
         automaticallyImplyLeading: false,
-        title: Text(
-          title[currentIndex],
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: Text(title[currentIndex]),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),

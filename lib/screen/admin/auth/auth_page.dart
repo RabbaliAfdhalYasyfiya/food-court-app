@@ -42,7 +42,7 @@ class _AuthPageAdminState extends State<AuthPageAdmin> {
           builder: (context) => const MainPageAdmin(),
         ),
       );
-      
+
       snackBarCustom(
         context,
         Colors.greenAccent.shade400,
@@ -73,8 +73,6 @@ class _AuthPageAdminState extends State<AuthPageAdmin> {
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
           leading: IconButton(
             style: const ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(Colors.white),
@@ -93,13 +91,7 @@ class _AuthPageAdminState extends State<AuthPageAdmin> {
             },
           ),
           titleSpacing: 2,
-          title: const Text(
-            'Manager',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          title: const Text('Manager'),
         ),
         body: SafeArea(
           child: Padding(

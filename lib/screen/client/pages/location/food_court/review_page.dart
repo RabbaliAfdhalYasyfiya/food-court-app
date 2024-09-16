@@ -125,20 +125,15 @@ class _ReviewPageState extends State<ReviewPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Theme.of(context).colorScheme.onSurface,
+        backgroundColor: Theme.of(context).canvasColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          shadowColor: Colors.black,
-          scrolledUnderElevation: 0,
           leading: IconButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -165,7 +160,7 @@ class _ReviewPageState extends State<ReviewPage> {
                             Container(
                               height: 80,
                               width: double.infinity,
-                              color: Theme.of(context).colorScheme.surface,
+                              color: Theme.of(context).scaffoldBackgroundColor,
                             ),
                             Container(
                               width: double.infinity,
@@ -176,18 +171,14 @@ class _ReviewPageState extends State<ReviewPage> {
                                 children: [
                                   Text(
                                     'Give your rating',
-                                    style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelLarge,
                                   ),
                                   const Gap(10),
                                   Container(
                                     padding:
                                         const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context).primaryColor,
                                       borderRadius: BorderRadius.circular(50),
                                     ),
                                     child: Row(
@@ -258,11 +249,7 @@ class _ReviewPageState extends State<ReviewPage> {
                             children: [
                               Text(
                                 'Give more information to your friends about environment, the food in ${widget.placeName}...',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               const Gap(10),
                               TextFormField(
@@ -321,9 +308,10 @@ class _ReviewPageState extends State<ReviewPage> {
                                       height: 175,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        border: Border.all(width: 1, color: Colors.grey.shade300),
+                                        border: Border.all(
+                                            width: 1, color: Theme.of(context).colorScheme.outline),
                                         borderRadius: BorderRadius.circular(15),
-                                        color: Colors.grey.shade200,
+                                        color: Theme.of(context).scaffoldBackgroundColor,
                                       ),
                                       child: Stack(
                                         children: [
@@ -383,9 +371,11 @@ class _ReviewPageState extends State<ReviewPage> {
                                         height: 175,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          border: Border.all(width: 1, color: Colors.grey.shade300),
+                                          border: Border.all(
+                                              width: 1,
+                                              color: Theme.of(context).colorScheme.outline),
                                           borderRadius: BorderRadius.circular(15),
-                                          color: Colors.grey.shade200,
+                                          color: Theme.of(context).scaffoldBackgroundColor,
                                         ),
                                         child: const Icon(
                                           Iconsax.gallery_add5,
@@ -428,8 +418,7 @@ class _ReviewPageState extends State<ReviewPage> {
                           elevation: const WidgetStatePropertyAll(3),
                           fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
                           shadowColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                          backgroundColor:
-                              WidgetStatePropertyAll(Theme.of(context).colorScheme.primary),
+                          backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
                           padding: const WidgetStatePropertyAll(
                             EdgeInsets.symmetric(vertical: 17),
                           ),

@@ -182,8 +182,8 @@ class _LocationPageState extends State<LocationPage> {
           radius: radiusValue,
           circleId: const CircleId('circleId'),
           center: LatLng(position.latitude, position.longitude),
-          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
-          strokeColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+          fillColor: Theme.of(context).primaryColor.withOpacity(0.25),
+          strokeColor: Theme.of(context).primaryColor.withOpacity(0.5),
           strokeWidth: 1,
           visible: true,
         ),
@@ -365,7 +365,7 @@ class _LocationPageState extends State<LocationPage> {
       elevation: 0,
       child: Container(
         width: double.infinity,
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
         child: Row(
           children: [
@@ -424,7 +424,7 @@ class _LocationPageState extends State<LocationPage> {
                   Text(
                     nameUser,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w500,
                       fontSize: 17,
                     ),
@@ -448,45 +448,13 @@ class _LocationPageState extends State<LocationPage> {
                       ),
                       const Gap(5),
                       Expanded(
-                        child: setLoading
-                            ? Shimmer.fromColors(
-                                baseColor: Colors.grey.shade200,
-                                highlightColor: Colors.grey.shade100,
-                                direction: ShimmerDirection.ltr,
-                                enabled: true,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 15,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
-                                        borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                      ),
-                                    ),
-                                    const Gap(5),
-                                    Container(
-                                      height: 15,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
-                                        borderRadius: const BorderRadius.all(Radius.circular(5)),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : Text(
-                                '$specAddressLocation',
-                                textAlign: TextAlign.left,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  height: 1.25,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
+                        child: Text(
+                          '$specAddressLocation',
+                          textAlign: TextAlign.left,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ),
                     ],
                   )
@@ -553,7 +521,6 @@ class _LocationPageState extends State<LocationPage> {
     double radiusValueInKilometers = radiusValue / 1000.0;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -652,9 +619,6 @@ class _LocationPageState extends State<LocationPage> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Card(
-                                        margin: const EdgeInsets.all(0),
-                                        elevation: 3,
-                                        shadowColor: Colors.black45,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(100)),
                                         child: IconButton(
@@ -667,12 +631,15 @@ class _LocationPageState extends State<LocationPage> {
                                           icon: Icon(
                                             Icons.gps_fixed_rounded,
                                             size: 30,
-                                            color: Theme.of(context).colorScheme.primary,
+                                            color: Theme.of(context).primaryColor,
                                           ),
-                                          style: const ButtonStyle(
-                                            elevation: WidgetStatePropertyAll(10),
-                                            backgroundColor: WidgetStatePropertyAll(Colors.white),
-                                            padding: WidgetStatePropertyAll(EdgeInsets.all(10)),
+                                          style: ButtonStyle(
+                                            elevation: const WidgetStatePropertyAll(10),
+                                            backgroundColor: WidgetStatePropertyAll(
+                                              Theme.of(context).scaffoldBackgroundColor,
+                                            ),
+                                            padding:
+                                                const WidgetStatePropertyAll(EdgeInsets.all(10)),
                                           ),
                                         ),
                                       ),
@@ -680,16 +647,13 @@ class _LocationPageState extends State<LocationPage> {
                                       Expanded(
                                         flex: 4,
                                         child: Card(
-                                          margin: const EdgeInsets.all(0),
-                                          elevation: 3,
-                                          shadowColor: Colors.black45,
                                           child: Container(
                                             height: 40,
                                             width: double.infinity,
                                             padding: const EdgeInsets.only(left: 15),
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(25),
-                                              color: Theme.of(context).colorScheme.surface,
+                                              color: Theme.of(context).scaffoldBackgroundColor,
                                             ),
                                             child: Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -701,19 +665,15 @@ class _LocationPageState extends State<LocationPage> {
                                                         text: radiusValueInKilometers
                                                             .toStringAsFixed(2),
                                                         style: TextStyle(
-                                                          color:
-                                                              Theme.of(context).colorScheme.primary,
+                                                          color: Theme.of(context).primaryColor,
                                                           fontWeight: FontWeight.w600,
                                                           fontSize: 15,
                                                         ),
                                                       ),
                                                       TextSpan(
                                                         text: ' km',
-                                                        style: TextStyle(
-                                                          color: Theme.of(context).primaryColor,
-                                                          fontWeight: FontWeight.w400,
-                                                          fontSize: 13,
-                                                        ),
+                                                        style:
+                                                            Theme.of(context).textTheme.bodySmall,
                                                       ),
                                                     ],
                                                   ),
@@ -728,8 +688,7 @@ class _LocationPageState extends State<LocationPage> {
                                                             .primaryColor
                                                             .withOpacity(0.25)),
                                                     inactiveColor: Colors.grey.shade300,
-                                                    activeColor:
-                                                        Theme.of(context).colorScheme.primary,
+                                                    activeColor: Theme.of(context).primaryColor,
                                                     value: radiusValue,
                                                     onChanged: (newValue) {
                                                       setState(() {
@@ -756,15 +715,12 @@ class _LocationPageState extends State<LocationPage> {
                                       showWeatherInfo();
                                     },
                                     child: Card(
-                                      margin: const EdgeInsets.all(0),
-                                      elevation: 3,
-                                      shadowColor: Colors.black45,
                                       child: Container(
                                         height: 40,
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5),
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(25),
-                                          color: Colors.white,
+                                          color: Theme.of(context).scaffoldBackgroundColor,
                                         ),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
@@ -780,10 +736,7 @@ class _LocationPageState extends State<LocationPage> {
                                             const Gap(2.5),
                                             Text(
                                               '${_weather?.feelsLike.round() ?? '0'}°',
-                                              style: const TextStyle(
-                                                color: Colors.black54,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                              style: Theme.of(context).textTheme.titleSmall,
                                             ),
                                           ],
                                         ),
@@ -803,11 +756,7 @@ class _LocationPageState extends State<LocationPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                     child: Text(
                       'Nearby Food Court',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   const Gap(5),
@@ -853,27 +802,19 @@ class _LocationPageState extends State<LocationPage> {
                                   margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(context).canvasColor,
                                   ),
-                                  child: const Column(
+                                  child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         'Not Found.',
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black54,
-                                        ),
+                                        style: Theme.of(context).textTheme.labelMedium,
                                       ),
                                       Text(
                                         'Nearby Food Court',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black38,
-                                        ),
+                                        style: Theme.of(context).textTheme.labelSmall,
                                       ),
                                     ],
                                   ),
@@ -931,13 +872,13 @@ class _LocationPageState extends State<LocationPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       child: Container(
         width: double.infinity,
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
         child: Row(
           children: [
             Shimmer.fromColors(
               baseColor: Theme.of(context).colorScheme.onPrimary,
-              highlightColor: Colors.grey.shade100,
+              highlightColor: Theme.of(context).colorScheme.onSecondary,
               direction: ShimmerDirection.ltr,
               enabled: true,
               child: Container(
@@ -991,7 +932,7 @@ class _LocationPageState extends State<LocationPage> {
                       Expanded(
                         child: Shimmer.fromColors(
                           baseColor: Theme.of(context).colorScheme.onPrimary,
-                          highlightColor: Colors.grey.shade100,
+                          highlightColor: Theme.of(context).colorScheme.onSecondary,
                           direction: ShimmerDirection.ltr,
                           enabled: true,
                           child: Column(
@@ -1040,9 +981,9 @@ class _LocationPageState extends State<LocationPage> {
         height: double.infinity,
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey.shade200, width: 0.5),
+          border: Border.all(color: Theme.of(context).colorScheme.outline, width: 0.5),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1051,7 +992,7 @@ class _LocationPageState extends State<LocationPage> {
               flex: 5,
               child: Shimmer.fromColors(
                 baseColor: Theme.of(context).colorScheme.onPrimary,
-                highlightColor: Colors.grey.shade100,
+                highlightColor: Theme.of(context).colorScheme.onSecondary,
                 direction: ShimmerDirection.ltr,
                 enabled: true,
                 child: Container(
@@ -1069,7 +1010,7 @@ class _LocationPageState extends State<LocationPage> {
               flex: 2,
               child: Shimmer.fromColors(
                 baseColor: Theme.of(context).colorScheme.onPrimary,
-                highlightColor: Colors.grey.shade100,
+                highlightColor: Theme.of(context).colorScheme.onSecondary,
                 direction: ShimmerDirection.ltr,
                 enabled: true,
                 child: Column(
@@ -1101,22 +1042,22 @@ class _LocationPageState extends State<LocationPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Shimmer.fromColors(
-                  baseColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                  highlightColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                  baseColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                  highlightColor: Theme.of(context).primaryColor.withOpacity(0.25),
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Container(
                     width: 65,
                     height: 20,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                      color: Theme.of(context).primaryColor.withOpacity(0.25),
                       borderRadius: BorderRadius.circular(50),
                     ),
                   ),
                 ),
                 Shimmer.fromColors(
                   baseColor: Theme.of(context).colorScheme.onPrimary,
-                  highlightColor: Colors.grey.shade100,
+                  highlightColor: Theme.of(context).colorScheme.onSecondary,
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Container(

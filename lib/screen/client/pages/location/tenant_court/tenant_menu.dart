@@ -45,11 +45,7 @@ class _TenantMenuState extends State<TenantMenu> {
               padding: const EdgeInsets.only(left: 15, bottom: 7),
               child: Text(
                 category,
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).primaryColor,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
           ),
@@ -87,28 +83,16 @@ class _TenantMenuState extends State<TenantMenu> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        shadowColor: Colors.black,
-        scrolledUnderElevation: 0,
         titleSpacing: 2,
-        title: Text(
-          'Menu Items',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
+        title: const Text('Menu Items'),
         leading: IconButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.white),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
           ),
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).primaryColor,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -119,11 +103,7 @@ class _TenantMenuState extends State<TenantMenu> {
             padding: const EdgeInsets.only(right: 15),
             child: Text(
               '(${widget.products.length})',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).primaryColor,
-              ),
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
         ],

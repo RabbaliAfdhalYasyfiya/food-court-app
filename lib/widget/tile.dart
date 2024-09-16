@@ -59,7 +59,6 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
       },
       child: Card(
         margin: const EdgeInsets.all(0),
-        color: Theme.of(context).colorScheme.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
@@ -67,7 +66,7 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
           height: double.infinity,
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
+            color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(color: Theme.of(context).colorScheme.outline, width: 0.75),
           ),
@@ -94,9 +93,9 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   colors: [
-                                    Colors.grey.shade200,
-                                    Colors.grey.shade100,
-                                    Colors.grey.shade50,
+                                    Theme.of(context).colorScheme.onPrimary,
+                                    Theme.of(context).colorScheme.onSecondary,
+                                    Theme.of(context).colorScheme.onTertiary,
                                   ],
                                 ),
                               ),
@@ -130,10 +129,10 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 2.5, horizontal: 7.5),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
+                                    color: Theme.of(context).colorScheme.onPrimary,
                                     borderRadius: BorderRadius.circular(50),
                                     border: Border.all(
-                                      color: Colors.grey.shade300,
+                                      color: Theme.of(context).colorScheme.outline,
                                       width: 1,
                                     ),
                                   ),
@@ -181,12 +180,7 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
                             widget.markerAdmin.placeName,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                              height: 1,
-                            ),
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
                         ],
                       ),
@@ -283,9 +277,9 @@ class TileTenant extends StatelessWidget {
           height: double.infinity,
           width: double.infinity,
           decoration: BoxDecoration(
-            border: Border.all(width: 0.5, color: Colors.black26),
+            border: Border.all(width: 0.5, color: Theme.of(context).colorScheme.outline),
             borderRadius: BorderRadius.circular(15),
-            color: Colors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,9 +297,9 @@ class TileTenant extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.grey.shade200,
-                          Colors.grey.shade100,
-                          Colors.grey.shade50,
+                          Theme.of(context).colorScheme.onPrimary,
+                          Theme.of(context).colorScheme.onSecondary,
+                          Theme.of(context).colorScheme.onTertiary,
                         ],
                       ),
                     ),
@@ -341,14 +335,9 @@ class TileTenant extends StatelessWidget {
                       nameFoodCourt,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).primaryColor,
-                        height: 1,
-                      ),
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
-                    const Gap(2.5),
+                    const Gap(5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -359,18 +348,14 @@ class TileTenant extends StatelessWidget {
                               TextSpan(
                                 text: '$lengthProduct',
                                 style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 17,
                                 ),
                               ),
-                              const TextSpan(
+                              TextSpan(
                                 text: ' Menu',
-                                style: TextStyle(
-                                  color: Colors.black38,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15,
-                                ),
+                                style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],
                           ),
@@ -548,7 +533,6 @@ class TileMenu extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.all(0),
         elevation: 0,
-        color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: GestureDetector(
           onTap: ontap,
@@ -556,9 +540,9 @@ class TileMenu extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.black45, width: 0.25),
+              border: Border.all(color: Theme.of(context).colorScheme.outline, width: 0.25),
             ),
             child: Row(
               children: [
@@ -576,9 +560,9 @@ class TileMenu extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.grey.shade200,
-                              Colors.grey.shade100,
-                              Colors.grey.shade50,
+                              Theme.of(context).colorScheme.onPrimary,
+                              Theme.of(context).colorScheme.onSecondary,
+                              Theme.of(context).colorScheme.onTertiary,
                             ],
                           ),
                         ),
@@ -619,30 +603,17 @@ class TileMenu extends StatelessWidget {
                           textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            height: 1,
-                          ),
+                          style: Theme.of(context).textTheme.headlineLarge,
                         ),
                         const Gap(10),
                         Text(
                           'Rp $price',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                          ),
+                          style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         const Gap(5),
                         Text(
                           category,
-                          style: const TextStyle(
-                            color: Colors.black45,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 13,
-                          ),
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                         const Gap(2.5),
                         Visibility(
@@ -651,12 +622,7 @@ class TileMenu extends StatelessWidget {
                             descMenu,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              height: 1,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ),
                       ],
@@ -707,7 +673,7 @@ class TileReview extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: Colors.black12, width: 0.75),
-          color: Colors.white,
+          color: Theme.of(context).scaffoldBackgroundColor,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -718,7 +684,7 @@ class TileReview extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: CircleAvatar(
-                  backgroundColor: Colors.grey.shade200,
+                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
                   backgroundImage: NetworkImage(imageUser),
                 ),
               ),
@@ -743,22 +709,15 @@ class TileReview extends StatelessWidget {
                             Text(
                               nameUser,
                               maxLines: 1,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   ratingUser.toString(),
-                                  style: const TextStyle(
-                                    color: Colors.black45,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                                 const Gap(5),
                                 RatingBar(
@@ -794,7 +753,7 @@ class TileReview extends StatelessWidget {
                         PopupMenuButton(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
-                            side: const BorderSide(width: 0.5, color: Colors.black26),
+                            side: BorderSide(width: 0.5, color: Theme.of(context).dividerColor),
                           ),
                           useRootNavigator: true,
                           popUpAnimationStyle: AnimationStyle(
@@ -802,43 +761,62 @@ class TileReview extends StatelessWidget {
                               duration: const Duration(milliseconds: 250)),
                           enabled: true,
                           elevation: 2,
-                          iconColor: Colors.black38,
+                          iconColor: Theme.of(context).dividerColor,
                           iconSize: 20,
                           position: PopupMenuPosition.under,
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           itemBuilder: (context) => [
                             if (userId == currentUserId) ...[
                               PopupMenuItem(
                                 onTap: () {},
                                 enabled: userId == currentUserId,
-                                child: const Row(
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Iconsax.edit),
-                                    Gap(10),
-                                    Text('Edit'),
+                                    const Icon(
+                                      Iconsax.edit,
+                                      size: 20,
+                                    ),
+                                    const Gap(10),
+                                    Text(
+                                      'Edit',
+                                      style: Theme.of(context).textTheme.bodyMedium,
+                                    ),
                                   ],
                                 ),
                               ),
                               PopupMenuItem(
                                 onTap: delete,
-                                child: const Row(
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Iconsax.trash),
-                                    Gap(10),
-                                    Text('Delete'),
+                                    const Icon(
+                                      Iconsax.trash,
+                                      size: 20,
+                                    ),
+                                    const Gap(10),
+                                    Text(
+                                      'Delete',
+                                      style: Theme.of(context).textTheme.bodyMedium,
+                                    ),
                                   ],
                                 ),
                               ),
                             ] else ...[
                               PopupMenuItem(
                                 onTap: () {},
-                                child: const Row(
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Iconsax.flag),
-                                    Gap(10),
-                                    Text('Report'),
+                                    const Icon(
+                                      Iconsax.flag,
+                                      size: 20,
+                                    ),
+                                    const Gap(10),
+                                    Text(
+                                      'Report',
+                                      style: Theme.of(context).textTheme.bodyMedium,
+                                    ),
                                   ],
                                 ),
                               )
@@ -850,7 +828,7 @@ class TileReview extends StatelessWidget {
                   ),
                   Divider(
                     thickness: 0.75,
-                    color: Colors.grey.shade200,
+                    color: Theme.of(context).colorScheme.outline,
                   ),
                   Expanded(
                     flex: 5,
@@ -864,9 +842,9 @@ class TileReview extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.grey.shade200,
-                              Colors.grey.shade100,
-                              Colors.grey.shade50,
+                              Theme.of(context).colorScheme.onPrimary,
+                              Theme.of(context).colorScheme.onSecondary,
+                              Theme.of(context).colorScheme.onTertiary,
                             ],
                           ),
                         ),
@@ -901,12 +879,7 @@ class TileReview extends StatelessWidget {
                       maxLines: 7,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey.shade600,
-                        height: 1.25,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ],
@@ -950,9 +923,9 @@ class TileFavorite extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.black38, width: 0.25),
+              border: Border.all(color: Theme.of(context).colorScheme.outline, width: 0.25),
             ),
             child: Row(
               children: [
@@ -970,9 +943,9 @@ class TileFavorite extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.grey.shade200,
-                              Colors.grey.shade100,
-                              Colors.grey.shade50,
+                              Theme.of(context).colorScheme.onPrimary,
+                              Theme.of(context).colorScheme.onSecondary,
+                              Theme.of(context).colorScheme.onTertiary,
                             ],
                           ),
                         ),
@@ -1013,21 +986,12 @@ class TileFavorite extends StatelessWidget {
                         textAlign: TextAlign.start,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          height: 1,
-                        ),
+                        style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       const Gap(10),
                       Text(
                         'Rp $priceProduct',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                        ),
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       const Gap(5),
                       Column(
@@ -1035,22 +999,13 @@ class TileFavorite extends StatelessWidget {
                         children: [
                           Text(
                             categoryProduct,
-                            style: const TextStyle(
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           Text(
                             descProduct,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              height: 1,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),
@@ -1065,9 +1020,9 @@ class TileFavorite extends StatelessWidget {
             left: 0,
             child: IconButton.filled(
               onPressed: delete,
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.red),
-                shape: WidgetStatePropertyAll(
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(Colors.redAccent.shade400),
+                shape: const WidgetStatePropertyAll(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(15),

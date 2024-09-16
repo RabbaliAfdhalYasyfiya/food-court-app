@@ -54,19 +54,19 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
               statusBarBrightness: Brightness.dark,
             ),
             expandedHeight: 265,
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             elevation: 0,
             scrolledUnderElevation: 1,
             pinned: true,
             stretch: true,
             leadingWidth: 70,
             leading: IconButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(Colors.white),
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
               ),
               icon: Icon(
                 Icons.arrow_back_rounded,
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -100,7 +100,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                     debugPrint('Current Location : ${widget.currentLat}, ${widget.currentLng}');
                   },
                   style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.primary),
+                    backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
                     padding: const WidgetStatePropertyAll(
                       EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     ),
@@ -180,9 +180,9 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                 height: 35,
                 alignment: Alignment.topCenter,
                 padding: const EdgeInsets.only(top: 10),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
                 ),
                 child: Container(
                   width: 40,
@@ -209,12 +209,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                           widget.markerAdmin.placeName,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).primaryColor,
-                            height: 1.05,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ),
                       const Gap(10),
@@ -223,10 +218,10 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7.5),
                           decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
+                            color: Theme.of(context).colorScheme.onPrimary,
                             borderRadius: BorderRadius.circular(50),
                             border: Border.all(
-                              color: Colors.grey.shade300,
+                              color: Theme.of(context).colorScheme.outline,
                               width: 1,
                             ),
                           ),
@@ -236,11 +231,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                             children: [
                               Text(
                                 rating == 0.0 ? '--' : rating.toStringAsPrecision(2),
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                                style: Theme.of(context).textTheme.displaySmall,
                               ),
                               const Gap(2.5),
                               Icon(
@@ -263,7 +254,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
+                      color: Theme.of(context).canvasColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Column(
@@ -275,11 +266,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                             children: [
                               Text(
                                 'Contacted',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                                style: Theme.of(context).textTheme.displayMedium,
                               ),
                               Row(
                                 children: [
@@ -311,7 +298,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                                   const Gap(5),
                                   ButtonIcon(
                                     icon: const Icon(Iconsax.sms_tracking),
-                                    colors: Colors.black38,
+                                    colors: Theme.of(context).primaryColor,
                                     onPress: () async {
                                       debugPrint('Email');
                                       final url = Uri(
@@ -326,10 +313,10 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                             ],
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 2.5),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 2.5),
                           child: Divider(
-                            color: Colors.white,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             thickness: 1.5,
                             height: 10,
                           ),
@@ -338,11 +325,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                           padding: const EdgeInsets.only(right: 10, left: 16),
                           child: Text(
                             widget.markerAdmin.addressPlace,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black45,
-                            ),
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ),
                       ],
@@ -350,8 +333,8 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                   ),
                 ),
                 const Gap(10),
-                const Divider(
-                  color: Colors.black26,
+                Divider(
+                  color: Theme.of(context).dividerColor,
                   thickness: 0.25,
                   height: 10,
                   indent: 30,
@@ -365,17 +348,13 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                     children: [
                       Text(
                         'Featured Tenant',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       TextButton(
                         onPressed: () {},
                         style: ButtonStyle(
                           backgroundColor: WidgetStatePropertyAll(
-                              Theme.of(context).colorScheme.primary.withOpacity(0.1)),
+                              Theme.of(context).primaryColor.withOpacity(0.1)),
                           visualDensity: VisualDensity.compact,
                         ),
                         child: Text(
@@ -383,7 +362,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
@@ -403,11 +382,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                         children: [
                           Text(
                             'Reviews',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w500,
-                              color: Theme.of(context).primaryColor,
-                            ),
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                           TextButton(
                             onPressed: () {
@@ -424,7 +399,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                             },
                             style: ButtonStyle(
                               backgroundColor: WidgetStatePropertyAll(
-                                  Theme.of(context).colorScheme.primary.withOpacity(0.1)),
+                                  Theme.of(context).primaryColor.withOpacity(0.1)),
                               visualDensity: VisualDensity.compact,
                             ),
                             child: Text(
@@ -432,7 +407,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
-                                color: Theme.of(context).colorScheme.primary,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
@@ -443,7 +418,7 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                     Container(
                       height: 365,
                       width: double.infinity,
-                      color: Colors.grey.shade100,
+                      color: Theme.of(context).canvasColor,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: PageReview(
                         currentUser: currentUser,

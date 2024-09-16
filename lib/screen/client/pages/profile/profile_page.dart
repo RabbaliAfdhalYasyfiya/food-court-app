@@ -218,7 +218,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance.collection('clients').doc(currentUser.uid).snapshots(),
@@ -275,9 +274,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
                                       colors: [
-                                        Colors.grey.shade200,
-                                        Colors.grey.shade100,
-                                        Colors.grey.shade50,
+                                        Theme.of(context).colorScheme.onPrimary,
+                                        Theme.of(context).colorScheme.onSecondary,
+                                        Theme.of(context).colorScheme.onTertiary,
                                       ],
                                     ),
                                   ),
@@ -407,9 +406,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             );
                           },
                           color: Colors.white,
-                          style: const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(Colors.white),
-                            shape: WidgetStatePropertyAll(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
+                            shape: const WidgetStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(15)),
                               ),
@@ -427,7 +427,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ButtonAccount(
                     icon: Iconsax.moon,
                     colorIcon: Theme.of(context).primaryColor,
-                    colorButton: Colors.grey.shade50,
+                    colorButton: Theme.of(context).colorScheme.onTertiary,
                     label: 'Dark Mode',
                     color: Colors.black,
                     widget: Transform.scale(
@@ -445,7 +445,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ButtonAccount(
                     icon: Iconsax.security_safe,
                     colorIcon: Theme.of(context).primaryColor,
-                    colorButton: Colors.grey.shade50,
+                    colorButton: Theme.of(context).colorScheme.onTertiary,
                     label: 'Privacy & Security',
                     color: Colors.black,
                     widget: const Icon(

@@ -112,7 +112,7 @@ class _PageReviewState extends State<PageReview> {
                   fixedCenter: true,
                   activeDotScale: 0,
                   dotColor: Colors.grey.shade400,
-                  activeDotColor: Theme.of(context).colorScheme.primary,
+                  activeDotColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -347,7 +347,7 @@ class PageTenant extends StatelessWidget {
           .snapshots(),
       builder: (context, vendorSnapshot) {
         if (!vendorSnapshot.hasData || vendorSnapshot.data!.docs.isEmpty) {
-          return tenantNull();
+          return tenantNull(context);
         }
 
         if (vendorSnapshot.hasError) {
@@ -377,7 +377,7 @@ class PageTenant extends StatelessWidget {
           future: vendorFuture,
           builder: (context, snapshot) {
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return tenantNull();
+              return tenantNull(context);
             }
 
             if (vendorSnapshot.hasError) {
@@ -538,29 +538,26 @@ class PageTenant extends StatelessWidget {
     );
   }
 
-  Widget tenantNull() {
-    return const SizedBox(
+  Widget tenantNull(BuildContext context) {
+    return Container(
       height: 150,
       width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Theme.of(context).canvasColor,
+      ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'The Tenant',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                color: Colors.black54,
-              ),
+              style: Theme.of(context).textTheme.labelMedium,
             ),
             Text(
               'Has not yet entered.',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-                color: Colors.black38,
-              ),
+              style: Theme.of(context).textTheme.labelSmall,
             ),
           ],
         ),

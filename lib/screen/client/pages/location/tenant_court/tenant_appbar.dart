@@ -17,19 +17,19 @@ class TenantAppbar extends StatelessWidget {
         statusBarBrightness: Brightness.dark,
       ),
       expandedHeight: 250,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       elevation: 0,
       scrolledUnderElevation: 1,
       pinned: true,
       stretch: true,
       leadingWidth: 70,
       leading: IconButton(
-        style: const ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(Colors.white),
+        style: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
         ),
         icon: Icon(
           Icons.arrow_back_rounded,
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).primaryColor,
         ),
         onPressed: () {
           Navigator.pop(context);
@@ -90,9 +90,9 @@ class TenantAppbar extends StatelessWidget {
           height: 35,
           alignment: Alignment.topCenter,
           padding: const EdgeInsets.only(top: 10),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
           ),
           child: Container(
             width: 40,
