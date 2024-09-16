@@ -450,8 +450,8 @@ class _LocationPageState extends State<LocationPage> {
                       Expanded(
                         child: setLoading
                             ? Shimmer.fromColors(
-                                baseColor: Colors.grey.shade200,
-                                highlightColor: Colors.grey.shade100,
+                                baseColor: Theme.of(context).colorScheme.onPrimary,
+                                highlightColor: Theme.of(context).colorScheme.onSecondary,
                                 direction: ShimmerDirection.ltr,
                                 enabled: true,
                                 child: Column(
@@ -461,7 +461,7 @@ class _LocationPageState extends State<LocationPage> {
                                       height: 15,
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
+                                        color: Theme.of(context).colorScheme.onPrimary,
                                         borderRadius: const BorderRadius.all(Radius.circular(5)),
                                       ),
                                     ),
@@ -470,7 +470,7 @@ class _LocationPageState extends State<LocationPage> {
                                       height: 15,
                                       width: 150,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
+                                        color: Theme.of(context).colorScheme.onPrimary,
                                         borderRadius: const BorderRadius.all(Radius.circular(5)),
                                       ),
                                     )
