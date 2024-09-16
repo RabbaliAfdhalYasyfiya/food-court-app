@@ -599,10 +599,11 @@ class _LocationPageState extends State<LocationPage> {
                             decoration: BoxDecoration(
                               color: Colors.grey.shade200,
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: Colors.black26, width: 0.5),
+                              border: Border.all(
+                                  color: Theme.of(context).colorScheme.outline, width: 0.5),
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(19),
                               child: GoogleMap(
                                 initialCameraPosition: CameraPosition(
                                   target: LatLng(latitudeCurrent, longitudeCurrent),
