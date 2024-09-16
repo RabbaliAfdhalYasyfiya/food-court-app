@@ -111,7 +111,7 @@ class _RoutePageState extends State<RoutePage> {
                 minMaxZoomPreference: MinMaxZoomPreference.unbounded,
                 indoorViewEnabled: true,
                 zoomControlsEnabled: false,
-                style: Utils.mapStyle,
+                style: Utils.mapStyleLight,
                 onMapCreated: (GoogleMapController controller) {
                   controller.getStyleError();
                   completer.complete(controller);

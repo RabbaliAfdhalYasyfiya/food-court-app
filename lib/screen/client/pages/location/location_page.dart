@@ -621,7 +621,7 @@ class _LocationPageState extends State<LocationPage> {
                                 minMaxZoomPreference: MinMaxZoomPreference.unbounded,
                                 indoorViewEnabled: true,
                                 zoomControlsEnabled: false,
-                                style: Utils.mapStyle,
+                                style: Utils.mapStyleDark,
                                 markers: Set<Marker>.of(_markers),
                                 onTap: (argument) {
                                   customInfoWindowAdminsController.hideInfoWindow!();

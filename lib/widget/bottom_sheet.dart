@@ -351,7 +351,7 @@ class _BottomSheetLocationState extends State<BottomSheetLocation> {
                               indoorViewEnabled: false,
                               markers: Set<Marker>.of(marker),
                               onMapCreated: (GoogleMapController controller) {
-                                controller.setMapStyle(Utils.mapStyle);
+                                controller.setMapStyle(Utils.mapStyleLight);
                                 _completer.complete(controller);
                               },
                               onTap: (LatLng latLng) async {
