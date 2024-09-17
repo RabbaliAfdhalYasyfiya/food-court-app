@@ -16,7 +16,6 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           fit: StackFit.expand,
@@ -85,11 +84,11 @@ class _WelcomePageState extends State<WelcomePage> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.white.withOpacity(0),
-                        Colors.white.withOpacity(0.25),
-                        Colors.white.withOpacity(0.5),
-                        Colors.white,
-                        Colors.white,
+                        Theme.of(context).canvasColor.withOpacity(0),
+                        Theme.of(context).canvasColor.withOpacity(0.25),
+                        Theme.of(context).canvasColor.withOpacity(0.5),
+                        Theme.of(context).canvasColor,
+                        Theme.of(context).canvasColor,
                       ],
                     ),
                   ),
@@ -99,22 +98,22 @@ class _WelcomePageState extends State<WelcomePage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Open Food Court World.",
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         const Gap(10),
-                        const Text(
+                        Text(
                           "Easily Your Choose Anything with The Food Court",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 21,
                             fontWeight: FontWeight.w400,
-                            color: Colors.black45,
+                            color: Theme.of(context).colorScheme.secondary,
                             height: 1.15,
                           ),
                         ),

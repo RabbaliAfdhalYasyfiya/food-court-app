@@ -40,7 +40,7 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
           builder: (context) => const MainPageTenant(),
         ),
       );
-      
+
       snackBarCustom(
         context,
         Colors.greenAccent.shade400,
@@ -68,14 +68,11 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
           leading: IconButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
@@ -91,13 +88,7 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
             },
           ),
           titleSpacing: 2,
-          title: const Text(
-            'Tenant',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          title: const Text('Tenant'),
         ),
         body: SafeArea(
           child: Padding(
@@ -119,12 +110,12 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
                           filterQuality: FilterQuality.low,
                         ),
                         const Gap(10),
-                        const Text(
+                        Text(
                           "Let's! Enter to find out.",
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black,
+                            color: Theme.of(context).colorScheme.primary,
                             height: 1,
                           ),
                         ),
@@ -166,7 +157,8 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
                             value: checked,
                             visualDensity: VisualDensity.compact,
                             activeColor: Theme.of(context).primaryColor,
-                            side: const BorderSide(color: Colors.black54, width: 1),
+                            side:
+                                BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
                             splashRadius: 50,
                             checkColor: Colors.white,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -182,10 +174,10 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
                                 checked = !checked;
                               });
                             },
-                            child: const Text(
+                            child: Text(
                               'Remember me',
                               style: TextStyle(
-                                color: Colors.black54,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w300,
                               ),

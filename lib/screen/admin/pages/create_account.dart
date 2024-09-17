@@ -70,13 +70,10 @@ class _CreateAccountVendorState extends State<CreateAccountVendor> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
           leading: IconButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+              style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
@@ -96,12 +93,12 @@ class _CreateAccountVendorState extends State<CreateAccountVendor> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Let's create Tenant account.",
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.primary,
                         height: 1,
                       ),
                     ),

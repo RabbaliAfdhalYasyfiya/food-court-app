@@ -109,13 +109,10 @@ class _CreateAccountAdminState extends State<CreateAccountAdmin> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
           leading: IconButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
@@ -140,12 +137,12 @@ class _CreateAccountAdminState extends State<CreateAccountAdmin> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Let's create your account.",
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.primary,
                         height: 1,
                       ),
                     ),
@@ -301,10 +298,10 @@ class _CreateAccountAdminState extends State<CreateAccountAdmin> {
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         children: [
-                          const TextSpan(
+                          TextSpan(
                             text: 'By creating an account, you agree to our ',
                             style: TextStyle(
-                              color: Colors.black54,
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w400,
                               fontSize: 15,
                             ),
@@ -319,10 +316,10 @@ class _CreateAccountAdminState extends State<CreateAccountAdmin> {
                               decorationStyle: TextDecorationStyle.solid,
                             ),
                           ),
-                          const TextSpan(
+                          TextSpan(
                             text: ' and agree to ',
                             style: TextStyle(
-                              color: Colors.black54,
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w400,
                               fontSize: 15,
                             ),

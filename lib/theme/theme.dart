@@ -117,6 +117,7 @@ ThemeData lightMode = ThemeData(
     onTertiary: Colors.grey.shade50,
     outline: Colors.grey.shade300,
     primary: Colors.black,
+    secondary: Colors.black45,
   ),
 );
 
@@ -236,5 +237,6 @@ ThemeData darkMode = ThemeData(
     onTertiary: Colors.grey.shade500,
     outline: Colors.grey.shade700,
     primary: Colors.white,
+    secondary: Colors.white54,
   ),
 );
