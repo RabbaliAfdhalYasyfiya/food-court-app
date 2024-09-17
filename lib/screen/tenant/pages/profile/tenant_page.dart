@@ -203,7 +203,6 @@ class TenantPofilePageState extends State<TenantPofilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Consumer<AppService>(
         builder: (context, activeProvider, child) {
           return SafeArea(
@@ -298,12 +297,7 @@ class TenantPofilePageState extends State<TenantPofilePage> {
                                           placeNameController.text,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.black,
-                                            height: 1,
-                                          ),
+                                          style: Theme.of(context).textTheme.titleLarge,
                                         ),
                                       ),
                                       const Gap(10),
@@ -339,7 +333,7 @@ class TenantPofilePageState extends State<TenantPofilePage> {
                                   Container(
                                     padding: const EdgeInsets.symmetric(vertical: 10),
                                     decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
+                                      color: Theme.of(context).canvasColor,
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: Column(
@@ -349,9 +343,9 @@ class TenantPofilePageState extends State<TenantPofilePage> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
-                                              const Icon(
+                                              Icon(
                                                 Iconsax.sms,
-                                                color: Colors.black,
+                                                color: Theme.of(context).colorScheme.primary,
                                                 size: 22,
                                               ),
                                               const Gap(15),
@@ -366,19 +360,19 @@ class TenantPofilePageState extends State<TenantPofilePage> {
                                             ],
                                           ),
                                         ),
-                                        const Divider(
+                                        Divider(
                                           thickness: 2,
                                           height: 20,
-                                          color: Colors.white,
+                                          color: Theme.of(context).scaffoldBackgroundColor,
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 15),
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
-                                              const Icon(
+                                              Icon(
                                                 Iconsax.call_calling,
-                                                color: Colors.black,
+                                                color: Theme.of(context).colorScheme.primary,
                                                 size: 22,
                                               ),
                                               const Gap(15),
@@ -411,7 +405,7 @@ class TenantPofilePageState extends State<TenantPofilePage> {
                         ButtonAccount(
                           icon: Iconsax.lamp_on,
                           colorIcon: Theme.of(context).primaryColor,
-                          colorButton: Colors.grey.shade100,
+                          colorButton: Theme.of(context).colorScheme.onTertiary,
                           label: 'Active',
                           color: Colors.black,
                           widget: Row(

@@ -5,7 +5,6 @@ ThemeData lightMode = ThemeData(
   useMaterial3: true,
   dividerColor: Colors.black26,
   primaryColor: Colors.blueAccent.shade400,
-  splashColor: Colors.blueAccent.shade400,
   indicatorColor: Colors.blueAccent.shade400,
   scaffoldBackgroundColor: Colors.white,
   canvasColor: Colors.grey.shade100,
@@ -78,8 +77,10 @@ ThemeData lightMode = ThemeData(
       color: Colors.black45,
       fontWeight: FontWeight.w400,
       fontSize: 13,
-      height: 1,
     ),
+  ),
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: Colors.blueAccent.shade400,
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: Colors.blueAccent.shade400,
@@ -123,6 +124,7 @@ ThemeData lightMode = ThemeData(
     outline: Colors.grey.shade300,
     primary: Colors.black,
     secondary: Colors.black45,
+    tertiary: Colors.black54,
   ),
 );
 
@@ -130,8 +132,8 @@ ThemeData darkMode = ThemeData(
   fontFamily: 'SF Pro Text',
   useMaterial3: true,
   dividerColor: Colors.white54,
-  splashColor: Colors.grey.shade900,
-  primaryColor: Colors.blueAccent.shade400,
+  primaryColor: Colors.blueAccent.shade200,
+  indicatorColor: Colors.blueAccent.shade200,
   scaffoldBackgroundColor: Colors.grey.shade900,
   canvasColor: Colors.black45,
   textTheme: const TextTheme(
@@ -203,11 +205,13 @@ ThemeData darkMode = ThemeData(
       color: Colors.white54,
       fontWeight: FontWeight.w400,
       fontSize: 13,
-      height: 1,
     ),
   ),
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+    color: Colors.blueAccent.shade200,
+  ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Colors.blueAccent.shade400,
+    backgroundColor: Colors.blueAccent.shade200,
     elevation: 2,
     disabledElevation: 5,
   ),
@@ -232,8 +236,8 @@ ThemeData darkMode = ThemeData(
     backgroundColor: Colors.grey.shade900,
     elevation: 7,
     shadowColor: Colors.white,
-    overlayColor: WidgetStatePropertyAll(Colors.blueAccent.shade400.withOpacity(0.25)),
-    indicatorColor: Colors.blueAccent.shade400.withOpacity(0.15),
+    overlayColor: WidgetStatePropertyAll(Colors.blueAccent.shade200.withOpacity(0.25)),
+    indicatorColor: Colors.blueAccent.shade200.withOpacity(0.15),
     labelTextStyle: const WidgetStatePropertyAll(
       TextStyle(
         color: Colors.white,
@@ -248,5 +252,6 @@ ThemeData darkMode = ThemeData(
     outline: Colors.grey.shade700,
     primary: Colors.white,
     secondary: Colors.white54,
+    tertiary: Colors.white60,
   ),
 );

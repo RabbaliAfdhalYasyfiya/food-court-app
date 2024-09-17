@@ -136,23 +136,12 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        elevation: 0,
         titleSpacing: 2,
-        title: const Text(
-          'Add Product',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: const Text('Add Product'),
         leading: IconButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.white),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
           ),
           icon: Icon(
             Icons.arrow_back_rounded,
@@ -185,9 +174,9 @@ class _AddProductState extends State<AddProduct> {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
-                                  Colors.grey.shade200,
-                                  Colors.grey.shade100,
-                                  Colors.grey.shade50,
+                                  Theme.of(context).colorScheme.onPrimary,
+                                  Theme.of(context).colorScheme.onSecondary,
+                                  Theme.of(context).colorScheme.onTertiary,
                                 ],
                               ),
                             ),
@@ -211,16 +200,18 @@ class _AddProductState extends State<AddProduct> {
                         Positioned(
                           bottom: 15,
                           right: 20,
-                          child: IconButton.filled(
+                          child: IconButton(
                             visualDensity: VisualDensity.comfortable,
                             padding: const EdgeInsets.all(15),
-                            style: const ButtonStyle(
+                            style: ButtonStyle(
                               visualDensity: VisualDensity.compact,
-                              elevation: WidgetStatePropertyAll(2),
-                              shape: WidgetStatePropertyAll(
+                              elevation: const WidgetStatePropertyAll(2),
+                              shape: const WidgetStatePropertyAll(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(10))),
                               ),
+                              backgroundColor:
+                                  WidgetStatePropertyAll(Theme.of(context).primaryColor),
                             ),
                             onPressed: () {
                               showModalBottomSheet(

@@ -343,9 +343,9 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: [
-                                  Colors.grey.shade200,
-                                  Colors.grey.shade100,
-                                  Colors.grey.shade50,
+                                  Theme.of(context).colorScheme.onPrimary,
+                                  Theme.of(context).colorScheme.onSecondary,
+                                  Theme.of(context).colorScheme.onTertiary,
                                 ],
                               ),
                             ),

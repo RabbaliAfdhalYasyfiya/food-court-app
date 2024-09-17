@@ -157,15 +157,20 @@ class _CartOrderState extends State<CartOrder> {
   ) {
     return Card(
       margin: const EdgeInsets.all(0),
-      elevation: 3,
+      elevation: 25,
+      shadowColor: Theme.of(context).navigationBarTheme.shadowColor,
       semanticContainer: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(20),
+          ),
+        ),
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -187,63 +192,39 @@ class _CartOrderState extends State<CartOrder> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Menu Items',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       Text(
                         '$items',
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Subtotal',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       Text(
                         'Rp ${NumberFormat('#,##0.000', 'id_ID').format(subtotal).replaceAll(',', '.')}',
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'Tax Fee',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       Text(
                         'Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee).replaceAll(',', '.')}',
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
                   ),
@@ -260,18 +241,18 @@ class _CartOrderState extends State<CartOrder> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Total',
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                     ),
                   ),
                   Text(
                     'Rp ${NumberFormat('#,##0.000', 'id_ID').format(orderTotal).replaceAll(',', '.')}',
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
                     ),
@@ -279,36 +260,37 @@ class _CartOrderState extends State<CartOrder> {
                 ],
               ),
             ),
-            const Divider(
+            Divider(
               thickness: 0.5,
               indent: 10,
               endIndent: 10,
-              color: Colors.black38,
+              color: Theme.of(context).dividerColor,
               height: 15,
             ),
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: Theme.of(context).canvasColor,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Gap(10),
+                      const Gap(10),
                       Icon(
                         Iconsax.empty_wallet,
                         size: 22,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
-                      Gap(10),
+                      const Gap(10),
                       Text(
                         'Payment Method',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w400,
                           fontSize: 18,
                         ),
@@ -321,7 +303,7 @@ class _CartOrderState extends State<CartOrder> {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: RadioListTile<ProductTypeEnum>(
@@ -330,11 +312,7 @@ class _CartOrderState extends State<CartOrder> {
                             value: ProductTypeEnum.QRIS,
                             title: Text(
                               ProductTypeEnum.QRIS.name,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: Theme.of(context).textTheme.labelLarge,
                             ),
                             groupValue: _productTypeEnum,
                             onChanged: (value) {
@@ -349,7 +327,7 @@ class _CartOrderState extends State<CartOrder> {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: RadioListTile<ProductTypeEnum>(
@@ -358,11 +336,7 @@ class _CartOrderState extends State<CartOrder> {
                             value: ProductTypeEnum.Cash,
                             title: Text(
                               ProductTypeEnum.Cash.name,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: Theme.of(context).textTheme.labelLarge,
                             ),
                             groupValue: _productTypeEnum,
                             onChanged: (value) {
@@ -501,14 +475,10 @@ class _CartOrderState extends State<CartOrder> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade50,
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        elevation: 0,
         leading: IconButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.white),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
           ),
           icon: Icon(
             Icons.arrow_back_rounded,
@@ -519,14 +489,7 @@ class _CartOrderState extends State<CartOrder> {
           },
         ),
         titleSpacing: 2,
-        title: const Text(
-          'Cart Order',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: const Text('Cart Order'),
       ),
       body: SafeArea(
         child: Column(
@@ -563,24 +526,22 @@ class _CartOrderState extends State<CartOrder> {
                       ),
                     )
                   : ScrollbarTheme(
-                    data: const ScrollbarThemeData(
-                                crossAxisMargin: 0,
-                                trackVisibility: WidgetStatePropertyAll(false),
-                                thumbVisibility: WidgetStatePropertyAll(true),
-                                interactive: true,
-                                minThumbLength: 5,
-                                radius: Radius.circular(50),
-                                thickness: WidgetStatePropertyAll(5),
-                                mainAxisMargin: 50,
-                                thumbColor: WidgetStatePropertyAll(Colors.black26),
-                              ),
-                    child: Scrollbar(
-                                  controller: scrollController,
-
-                      child: ListView.separated(
+                      data: const ScrollbarThemeData(
+                        crossAxisMargin: 0,
+                        trackVisibility: WidgetStatePropertyAll(false),
+                        thumbVisibility: WidgetStatePropertyAll(true),
+                        interactive: true,
+                        minThumbLength: 5,
+                        radius: Radius.circular(50),
+                        thickness: WidgetStatePropertyAll(5),
+                        mainAxisMargin: 50,
+                        thumbColor: WidgetStatePropertyAll(Colors.black26),
+                      ),
+                      child: Scrollbar(
+                        controller: scrollController,
+                        child: ListView.separated(
                           separatorBuilder: (context, index) => const Gap(10),
-                                  controller: scrollController,
-
+                          controller: scrollController,
                           padding: const EdgeInsets.all(16),
                           itemCount: widget.selectedProducts.length,
                           itemBuilder: (context, index) {
@@ -590,14 +551,16 @@ class _CartOrderState extends State<CartOrder> {
                                 double.tryParse(product.priceProduct.replaceAll('Rp', '')) ?? 0;
                             final double valuePrice = price * quantity;
                             return ListTile(
-                              tileColor: Colors.white,
+                              tileColor: Theme.of(context).scaffoldBackgroundColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
-                                side: const BorderSide(color: Colors.black12, width: 0.5),
+                                side: BorderSide(
+                                    color: Theme.of(context).colorScheme.outline, width: 0.5),
                               ),
                               style: ListTileStyle.list,
                               visualDensity: VisualDensity.comfortable,
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 12.5, vertical: 5),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 12.5, vertical: 5),
                               leading: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: AspectRatio(
@@ -610,9 +573,9 @@ class _CartOrderState extends State<CartOrder> {
                                           begin: Alignment.topCenter,
                                           end: Alignment.bottomCenter,
                                           colors: [
-                                            Colors.grey.shade200,
-                                            Colors.grey.shade100,
-                                            Colors.grey.shade50,
+                                            Theme.of(context).colorScheme.onPrimary,
+                                            Theme.of(context).colorScheme.onSecondary,
+                                            Theme.of(context).colorScheme.onTertiary,
                                           ],
                                         ),
                                       ),
@@ -634,13 +597,21 @@ class _CartOrderState extends State<CartOrder> {
                                 product.nameProduct,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
-                                style: const TextStyle(
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 17,
                                   height: 1,
                                 ),
                               ),
-                              subtitle: Text('${quantity}x'),
+                              subtitle: Text(
+                                '${quantity}x',
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                               trailing: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -676,9 +647,10 @@ class _CartOrderState extends State<CartOrder> {
                                   ),
                                   Text(
                                     'Rp ${NumberFormat('#,##0.000', 'id_ID').format(valuePrice).replaceAll(',', '.')}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w400,
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.primary,
                                       fontSize: 14,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                 ],
@@ -686,8 +658,8 @@ class _CartOrderState extends State<CartOrder> {
                             );
                           },
                         ),
+                      ),
                     ),
-                  ),
             ),
             Expanded(
               flex: 6,

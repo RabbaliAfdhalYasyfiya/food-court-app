@@ -93,19 +93,8 @@ class _MainPageTenantState extends State<MainPageTenant> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        shadowColor: Colors.transparent,
-        elevation: 0,
         automaticallyImplyLeading: false,
-        title: Text(
-          title[currentIndex],
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: Text(title[currentIndex]),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -138,7 +127,6 @@ class _MainPageTenantState extends State<MainPageTenant> {
         ],
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
         selectedIndex: currentIndex,
         onDestinationSelected: (value) {
           if (currentIndex == value) return;
@@ -147,15 +135,11 @@ class _MainPageTenantState extends State<MainPageTenant> {
             onTap = !onTap;
           });
         },
-        elevation: 7,
-        shadowColor: Colors.black,
-        overlayColor: WidgetStatePropertyAll(Theme.of(context).primaryColor.withOpacity(0.25)),
-        indicatorColor: Theme.of(context).primaryColor.withOpacity(0.15),
         destinations: [
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.menu_board,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.menu_board5,
@@ -164,9 +148,9 @@ class _MainPageTenantState extends State<MainPageTenant> {
             label: 'Order',
           ),
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.directbox_notif,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.directbox_notif5,
@@ -175,9 +159,9 @@ class _MainPageTenantState extends State<MainPageTenant> {
             label: 'Activity',
           ),
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.note_21,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.note_15,
@@ -186,9 +170,9 @@ class _MainPageTenantState extends State<MainPageTenant> {
             label: 'Product',
           ),
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.personalcard,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.personalcard5,

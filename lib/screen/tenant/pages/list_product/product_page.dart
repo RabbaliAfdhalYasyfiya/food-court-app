@@ -9,6 +9,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../widget/snackbar.dart';
+import '../../../../widget/tile.dart';
 import '../add_product.dart';
 
 class ProductPage extends StatefulWidget {
@@ -185,17 +186,13 @@ class _ProductPageState extends State<ProductPage> {
                                   children: [
                                     Text(
                                       category,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 17,
-                                      ),
+                                      style: Theme.of(context).textTheme.titleMedium,
                                     ),
                                     const Gap(10),
-                                    const Expanded(
+                                    Expanded(
                                       child: Divider(
                                         thickness: 0.5,
-                                        color: Colors.black54,
+                                        color: Theme.of(context).dividerColor,
                                       ),
                                     ),
                                   ],
@@ -209,14 +206,24 @@ class _ProductPageState extends State<ProductPage> {
                                   padding: const EdgeInsets.only(bottom: 15),
                                   itemBuilder: (context, index) {
                                     final product = products[index];
-                                    return productCard(
-                                      product.imageProduct,
-                                      product.nameProduct,
-                                      product.priceProduct,
-                                      product.categoryProduct,
-                                      product.stockProduct,
-                                      product.descProduct,
-                                      () {
+                                    return TileAddMenu(
+                                      showInfo: () {
+                                        showInfoProductCard(
+                                          product.imageProduct,
+                                          product.nameProduct,
+                                          product.priceProduct,
+                                          product.categoryProduct,
+                                          product.descProduct,
+                                        );
+                                        debugPrint('Tap product Card: ${product.nameProduct}');
+                                      },
+                                      imageProduct: product.imageProduct,
+                                      nameProduct: product.nameProduct,
+                                      priceProduct: product.priceProduct,
+                                      categoryProduct: product.categoryProduct,
+                                      stockProduct: product.stockProduct,
+                                      descProduct: product.descProduct,
+                                      delete: () {
                                         deleteProduct(product.productId);
                                       },
                                     );
@@ -257,184 +264,6 @@ class _ProductPageState extends State<ProductPage> {
     } catch (e) {
       debugPrint("Failed to delete Product: $e");
     }
-  }
-
-  Widget productCard(
-    String imageProduct,
-    String nameProduct,
-    String priceProduct,
-    String categoryProduct,
-    int stockProduct,
-    String descProduct,
-    Function() delete,
-  ) {
-    return Card(
-      margin: const EdgeInsets.all(0),
-      elevation: 0,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      child: GestureDetector(
-        onTap: () {
-          showInfoProductCard(
-            imageProduct,
-            nameProduct,
-            priceProduct,
-            categoryProduct,
-            descProduct,
-          );
-          debugPrint('Tap product Card: $nameProduct');
-        },
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.grey.shade200, width: 1),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: AspectRatio(
-                      aspectRatio: 4 / 4,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.grey.shade200,
-                                Colors.grey.shade100,
-                                Colors.grey.shade50,
-                              ],
-                            ),
-                          ),
-                          child: CachedNetworkImage(
-                            imageUrl: imageProduct,
-                            filterQuality: FilterQuality.low,
-                            fit: BoxFit.cover,
-                            useOldImageOnUrlChange: true,
-                            fadeInCurve: Curves.easeIn,
-                            fadeOutCurve: Curves.easeOut,
-                            fadeInDuration: const Duration(milliseconds: 500),
-                            fadeOutDuration: const Duration(milliseconds: 750),
-                            errorWidget: (context, url, error) {
-                              return Center(
-                                child: Text(
-                                  'Image $error',
-                                  style: const TextStyle(
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Gap(10),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          nameProduct,
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                            height: 1,
-                          ),
-                        ),
-                        const Gap(10),
-                        Text(
-                          'Rp $priceProduct',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                          ),
-                        ),
-                        const Gap(5),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              categoryProduct,
-                              style: const TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
-                              ),
-                            ),
-                            Text(
-                              ' | Stock: $stockProduct',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Visibility(
-                          visible: descProduct.isNotEmpty,
-                          child: Text(
-                            descProduct,
-                            maxLines: 3,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.black45,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13,
-                              height: 1,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Positioned(
-              top: 5,
-              left: 5,
-              child: IconButton.filled(
-                onPressed: delete,
-                style: ButtonStyle(
-                  backgroundColor: const WidgetStatePropertyAll(Colors.red),
-                  shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-                ),
-                icon: const Icon(
-                  Iconsax.trash,
-                  color: Colors.white,
-                ),
-                iconSize: 20,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
   }
 
   Widget productLoad() {

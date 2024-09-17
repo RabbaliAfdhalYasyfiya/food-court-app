@@ -131,8 +131,11 @@ class _TenantTableState extends State<TenantTable> {
                       showBottomBorder: true,
                       dividerThickness: 0.15,
                       horizontalMargin: 15,
-                      border: const TableBorder.symmetric(inside: BorderSide(width: 0.05)),
-                      headingRowColor: WidgetStatePropertyAll(Colors.black12.withOpacity(0.015)),
+                      border: TableBorder.symmetric(
+                          inside: BorderSide(
+                              width: 0.05, color: Theme.of(context).colorScheme.secondary)),
+                      headingRowColor: WidgetStatePropertyAll(
+                          Theme.of(context).colorScheme.secondary.withOpacity(0.015)),
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       columns: [
                         DataColumn(

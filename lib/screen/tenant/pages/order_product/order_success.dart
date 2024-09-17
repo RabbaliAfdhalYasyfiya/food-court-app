@@ -305,7 +305,6 @@ class _OrderSuccessState extends State<OrderSuccess> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance.collection('vendors').doc(widget.vendorId).snapshots(),
         builder: (context, snapshot) {
@@ -352,23 +351,24 @@ class _OrderSuccessState extends State<OrderSuccess> {
                       padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Column(
                         children: [
-                          SizedBox(
+                          Container(
                             height: 140,
                             width: 140,
+                            color: Colors.transparent,
                             child: LottieBuilder.asset(
                               'assets/success_animation.json',
                               filterQuality: FilterQuality.low,
                               alignment: Alignment.center,
                               repeat: true,
                               animate: true,
-                              backgroundLoading: true,
+                              backgroundLoading: false,
                             ),
                           ),
-                          const Text(
-                            'The order has been uccessfully!',
+                          Text(
+                            'The order has been successfully!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.primary,
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
                               height: 1.25,
@@ -389,8 +389,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
                           end: Alignment.topCenter,
                           begin: Alignment.bottomCenter,
                           colors: [
-                            Colors.grey.shade100,
-                            Colors.grey.shade50,
+                            Theme.of(context).colorScheme.onSecondary,
+                            Theme.of(context).colorScheme.onTertiary,
                           ],
                         ),
                       ),
@@ -400,7 +400,6 @@ class _OrderSuccessState extends State<OrderSuccess> {
                           // List Menu
                           Expanded(
                             child: ScrollbarTheme(
-                            
                               data: const ScrollbarThemeData(
                                 crossAxisMargin: 0,
                                 trackVisibility: WidgetStatePropertyAll(false),
@@ -413,7 +412,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                 thumbColor: WidgetStatePropertyAll(Colors.black26),
                               ),
                               child: Scrollbar(
-                                  controller: scrollController,
+                                controller: scrollController,
                                 child: ListView.builder(
                                   controller: scrollController,
                                   scrollDirection: Axis.vertical,
@@ -435,9 +434,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                               begin: Alignment.topCenter,
                                               end: Alignment.bottomCenter,
                                               colors: [
-                                                Colors.grey.shade200,
-                                                Colors.grey.shade100,
-                                                Colors.grey.shade50,
+                                                Theme.of(context).colorScheme.onPrimary,
+                                                Theme.of(context).colorScheme.onSecondary,
+                                                Theme.of(context).colorScheme.onTertiary,
                                               ],
                                             ),
                                           ),
@@ -457,15 +456,25 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                         product.nameProduct,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
-                                        style: const TextStyle(
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontWeight: FontWeight.w500,
+                                          fontSize: 16,
                                           height: 1,
                                         ),
                                       ),
-                                      subtitle: Text('${product.quantityProduct}x'),
+                                      subtitle: Text(
+                                        '${product.quantityProduct}x',
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primary,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
                                       trailing: Text(
                                         'Rp ${NumberFormat('#,##0.000', 'id_ID').format(product.valueTotal).replaceAll(',', '.')}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontWeight: FontWeight.w400,
                                           fontSize: 15,
                                         ),
@@ -482,7 +491,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
                             child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.035),
+                                color: Theme.of(context).colorScheme.primary.withOpacity(0.035),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Column(
@@ -493,10 +502,10 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Date & Time',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: Theme.of(context).colorScheme.tertiary,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16,
                                           ),
@@ -505,8 +514,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                         Text(
                                           DateFormat('dd/MM/yy hh:mm')
                                               .format(widget.orderTime.toDate()),
-                                          style: const TextStyle(
-                                            color: Colors.black,
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 17,
                                           ),
@@ -514,19 +523,19 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                       ],
                                     ),
                                   ),
-                                  const Divider(
+                                  Divider(
                                     thickness: 1.5,
-                                    color: Colors.white,
+                                    color: Theme.of(context).scaffoldBackgroundColor,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Payment Method',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: Theme.of(context).colorScheme.tertiary,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16,
                                           ),
@@ -534,8 +543,8 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                         const Gap(5),
                                         Text(
                                           widget.payMethod.toString(),
-                                          style: const TextStyle(
-                                            color: Colors.black,
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 17,
                                           ),
@@ -543,27 +552,27 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                       ],
                                     ),
                                   ),
-                                  const Divider(
+                                  Divider(
                                     thickness: 1.5,
-                                    color: Colors.white,
+                                    color: Theme.of(context).scaffoldBackgroundColor,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Tax Fee',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: Theme.of(context).colorScheme.tertiary,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16,
                                           ),
                                         ),
                                         Text(
                                           'Rp ${NumberFormat('#,##0.000', 'id_ID').format(widget.taxFee).replaceAll(',', '.')}',
-                                          style: const TextStyle(
-                                            color: Colors.black,
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 17,
                                           ),
@@ -571,27 +580,27 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                       ],
                                     ),
                                   ),
-                                  const Divider(
+                                  Divider(
                                     thickness: 1.5,
-                                    color: Colors.white,
+                                    color: Theme.of(context).scaffoldBackgroundColor,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 16),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Total',
                                           style: TextStyle(
-                                            color: Colors.black54,
+                                            color: Theme.of(context).colorScheme.tertiary,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 16,
                                           ),
                                         ),
                                         Text(
                                           'Rp ${NumberFormat('#,##0.000', 'id_ID').format(widget.priceTotal).replaceAll(',', '.')}',
-                                          style: const TextStyle(
-                                            color: Colors.black,
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontWeight: FontWeight.w500,
                                             fontSize: 17,
                                           ),

@@ -16,7 +16,6 @@ import '../../../../widget/load.dart';
 import '../../../../widget/snackbar.dart';
 import '../../auth/auth_page.dart';
 import 'edit_page.dart';
-import 'privacy.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -114,7 +113,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget profileLoad() {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -405,10 +403,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             );
                           },
-                          color: Colors.white,
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                            shape: const WidgetStatePropertyAll(
+                          color: Theme.of(context).primaryColor,
+                          style: const ButtonStyle(
+                            backgroundColor: WidgetStatePropertyAll(Colors.white),
+                            shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(15)),
                               ),
@@ -421,6 +419,35 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     ),
+                  ),
+                  const Gap(20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Privacy & Security',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 22.5,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const Gap(15),
+                      ButtonPrivacy(
+                        onTap: () {},
+                        icon: Iconsax.lock_1,
+                        label: 'Privacy Key',
+                        description:
+                            'Privacy keys can keep accounts secure and are used as two-step verification.',
+                      ),
+                      ButtonPrivacy(
+                        onTap: () {},
+                        icon: Iconsax.finger_scan,
+                        label: 'Biometric Lock',
+                        description:
+                            'Biometric lock can be used as a security option to unlock CourtFinder on your device.',
+                      ),
+                    ],
                   ),
                   const Gap(20),
                   ButtonAccount(
@@ -441,25 +468,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     onTap: () {},
                   ),
-                  ButtonAccount(
-                    icon: Iconsax.security_safe,
-                    colorIcon: Theme.of(context).primaryColor,
-                    colorButton: Theme.of(context).colorScheme.onTertiary,
-                    label: 'Privacy & Security',
-                    color: Colors.black,
-                    widget: const Icon(
-                      Icons.keyboard_arrow_right_rounded,
-                      color: Colors.black,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                          builder: (context) => const Privacy(),
-                        ),
-                      );
-                    },
-                  ),
+                  // ButtonAccount(
+                  //   icon: Iconsax.security_safe,
+                  //   colorIcon: Theme.of(context).primaryColor,
+                  //   colorButton: Theme.of(context).colorScheme.onTertiary,
+                  //   label: 'Privacy & Security',
+                  //   color: Colors.black,
+                  //   widget: const Icon(
+                  //     Icons.keyboard_arrow_right_rounded,
+                  //     color: Colors.black,
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       CupertinoPageRoute(
+                  //         builder: (context) => const Privacy(),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   const Gap(20),
                   ButtonAccount(
                     icon: Iconsax.trash,

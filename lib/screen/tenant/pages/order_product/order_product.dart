@@ -158,10 +158,10 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                   width: double.infinity,
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: Colors.grey.shade100,
+                      color: Theme.of(context).colorScheme.onSecondary,
                       width: 1,
                     ),
                   ),
@@ -177,9 +177,9 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                       indicatorWeight: 4,
                       tabAlignment: TabAlignment.center,
                       splashBorderRadius: BorderRadius.circular(10),
-                      unselectedLabelStyle: const TextStyle(
+                      unselectedLabelStyle: TextStyle(
                         fontSize: 15,
-                        color: Colors.black38,
+                        color: Theme.of(context).colorScheme.secondary,
                         fontWeight: FontWeight.w400,
                       ),
                       labelStyle: TextStyle(
@@ -297,7 +297,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                                         child: Container(
                                           width: double.infinity,
                                           height: 100,
-                                          color: Colors.transparent,
+                                          color: Theme.of(context).scaffoldBackgroundColor,
                                           padding: const EdgeInsets.all(16),
                                           child: ElevatedButton.icon(
                                             icon: const Icon(

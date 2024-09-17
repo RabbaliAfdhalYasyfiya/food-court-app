@@ -413,10 +413,18 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                             showBottomBorder: true,
                                             horizontalMargin: 10,
                                             dividerThickness: 0.15,
-                                            border: const TableBorder.symmetric(
-                                                inside: BorderSide(width: 0.05)),
+                                            border: TableBorder.symmetric(
+                                              inside: BorderSide(
+                                                width: 0.05,
+                                                color: Theme.of(context).colorScheme.secondary,
+                                              ),
+                                            ),
                                             headingRowColor: WidgetStatePropertyAll(
-                                                Colors.black12.withOpacity(0.015)),
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary
+                                                  .withOpacity(0.015),
+                                            ),
                                             columns: [
                                               DataColumn(
                                                 label: dataColumn('Menu'),
@@ -450,10 +458,18 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                               showBottomBorder: true,
                                               dividerThickness: 0.15,
                                               horizontalMargin: 15,
-                                              border: const TableBorder.symmetric(
-                                                  inside: BorderSide(width: 0.05)),
+                                              border: TableBorder.symmetric(
+                                                inside: BorderSide(
+                                                  width: 0.05,
+                                                  color: Theme.of(context).colorScheme.secondary,
+                                                ),
+                                              ),
                                               headingRowColor: WidgetStatePropertyAll(
-                                                  Colors.black12.withOpacity(0.015)),
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary
+                                                    .withOpacity(0.015),
+                                              ),
                                               clipBehavior: Clip.antiAliasWithSaveLayer,
                                               columns: [
                                                 DataColumn(
@@ -566,10 +582,19 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                         maxX: 6,
                                         borderData: FlBorderData(
                                           show: true,
-                                          border: const Border(
-                                            bottom: BorderSide(width: 0.25),
-                                            left: BorderSide(width: 0.25),
-                                            right: BorderSide(width: 0.25),
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              width: 0.25,
+                                              color: Theme.of(context).colorScheme.primary,
+                                            ),
+                                            left: BorderSide(
+                                              width: 0.25,
+                                              color: Theme.of(context).colorScheme.primary,
+                                            ),
+                                            right: BorderSide(
+                                              width: 0.25,
+                                              color: Theme.of(context).colorScheme.primary,
+                                            ),
                                           ),
                                         ),
                                         titlesData: FlTitlesData(
@@ -597,8 +622,9 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                               return HorizontalLine(
                                                 y: e.y.toDouble(),
                                                 strokeWidth: 0.5,
-                                                color:
-                                                    e.y == 0 ? Colors.transparent : Colors.black38,
+                                                color: e.y == 0
+                                                    ? Colors.transparent
+                                                    : Theme.of(context).colorScheme.secondary,
                                                 strokeCap: StrokeCap.butt,
                                                 label: HorizontalLineLabel(
                                                   show: true,

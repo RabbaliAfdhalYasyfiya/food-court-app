@@ -263,7 +263,7 @@ class ButtonPrivacy extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            tileColor: Colors.grey.shade50,
+            tileColor: Theme.of(context).colorScheme.onTertiary,
             splashColor: Theme.of(context).primaryColor.withOpacity(0.25),
             onTap: onTap,
             visualDensity: VisualDensity.comfortable,

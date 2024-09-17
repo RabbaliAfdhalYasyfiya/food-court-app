@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -164,29 +165,61 @@ class _EditPageState extends State<EditPage> {
                                       children: [
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(100),
-                                          child: _image != null
-                                              ? Image.memory(
-                                                  _image!,
-                                                  height: double.infinity,
-                                                  width: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                  filterQuality: FilterQuality.low,
-                                                )
-                                              : Image.network(
-                                                  userData['image'],
-                                                  height: double.infinity,
-                                                  width: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                  filterQuality: FilterQuality.low,
-                                                ),
+                                          child: Container(
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                  Theme.of(context).colorScheme.onPrimary,
+                                                  Theme.of(context).colorScheme.onSecondary,
+                                                  Theme.of(context).colorScheme.onTertiary,
+                                                ],
+                                              ),
+                                            ),
+                                            child: _image != null
+                                                ? Image.memory(
+                                                    _image!,
+                                                    height: double.infinity,
+                                                    width: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                    filterQuality: FilterQuality.low,
+                                                  )
+                                                : CachedNetworkImage(
+                                                    imageUrl: userData['image'],
+                                                    filterQuality: FilterQuality.low,
+                                                    fit: BoxFit.cover,
+                                                    useOldImageOnUrlChange: true,
+                                                    fadeInCurve: Curves.easeIn,
+                                                    fadeOutCurve: Curves.easeOut,
+                                                    fadeInDuration:
+                                                        const Duration(milliseconds: 500),
+                                                    fadeOutDuration:
+                                                        const Duration(milliseconds: 750),
+                                                    errorWidget: (context, url, error) {
+                                                      return Center(
+                                                        child: Text(
+                                                          'Image $error',
+                                                          style: const TextStyle(
+                                                            color: Colors.redAccent,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                          ),
                                         ),
                                         Positioned(
                                           bottom: 0,
                                           right: 0,
                                           child: IconButton.filled(
-                                            style: const ButtonStyle(
+                                            style: ButtonStyle(
                                               visualDensity: VisualDensity.comfortable,
-                                              elevation: WidgetStatePropertyAll(2),
+                                              elevation: const WidgetStatePropertyAll(2),
+                                              backgroundColor: WidgetStatePropertyAll(
+                                                  Theme.of(context).primaryColor),
                                             ),
                                             onPressed: () {
                                               showModalBottomSheet(

@@ -24,8 +24,8 @@ class _ActivityPageState extends State<ActivityPage> {
     return Column(
       children: [
         Shimmer.fromColors(
-          baseColor: Colors.grey.shade200,
-          highlightColor: Colors.grey.shade100,
+          baseColor: Theme.of(context).colorScheme.onPrimary,
+          highlightColor: Theme.of(context).colorScheme.onSecondary,
           direction: ShimmerDirection.ltr,
           enabled: true,
           child: Row(
@@ -65,12 +65,12 @@ class _ActivityPageState extends State<ActivityPage> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade200,
+                    baseColor: Theme.of(context).colorScheme.onPrimary,
+                    highlightColor: Theme.of(context).colorScheme.onSecondary,
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Row(
@@ -106,8 +106,8 @@ class _ActivityPageState extends State<ActivityPage> {
                 ),
                 const Gap(10),
                 Shimmer.fromColors(
-                  baseColor: Colors.grey.shade200,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor: Theme.of(context).colorScheme.onPrimary,
+                  highlightColor: Theme.of(context).colorScheme.onSecondary,
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Container(
@@ -360,17 +360,17 @@ class _ActivityPageState extends State<ActivityPage> {
                             children: [
                               Text(
                                 date,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 15,
                                 ),
                               ),
                               const Gap(10),
-                              const Expanded(
+                              Expanded(
                                 child: Divider(
                                   thickness: 0.5,
-                                  color: Colors.black54,
+                                  color: Theme.of(context).dividerColor,
                                 ),
                               ),
                             ],
@@ -405,6 +405,7 @@ class _ActivityPageState extends State<ActivityPage> {
                               }
 
                               return InkWell(
+                                splashColor: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(15),
                                 onDoubleTap: () {
                                   debugPrint('Order ID : ${order.orderId}');
@@ -433,7 +434,8 @@ class _ActivityPageState extends State<ActivityPage> {
                                   expandedCrossAxisAlignment: CrossAxisAlignment.end,
                                   expandedAlignment: Alignment.topCenter,
                                   initiallyExpanded: false,
-                                  collapsedBackgroundColor: Colors.grey.shade50,
+                                  collapsedBackgroundColor:
+                                      Theme.of(context).colorScheme.onTertiary,
                                   childrenPadding:
                                       const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                                   collapsedShape: RoundedRectangleBorder(
@@ -442,7 +444,8 @@ class _ActivityPageState extends State<ActivityPage> {
                                   ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    side: const BorderSide(width: 0.5, color: Colors.black54),
+                                    side: BorderSide(
+                                        width: 0.5, color: Theme.of(context).colorScheme.secondary),
                                   ),
                                   leading: CircleAvatar(
                                     backgroundColor: order.payMethod == 'QRIS'
@@ -455,13 +458,12 @@ class _ActivityPageState extends State<ActivityPage> {
                                       color: order.payMethod == 'QRIS' ? Colors.blue : Colors.green,
                                     ),
                                   ),
-                                  title: Text(
-                                    order.payMethod,
-                                  ),
+                                  title: Text(order.payMethod),
                                   subtitle: Text(
                                     order.orderId,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 12,
+                                      color: Theme.of(context).colorScheme.primary,
                                       fontWeight: FontWeight.w200,
                                     ),
                                   ),
@@ -472,15 +474,17 @@ class _ActivityPageState extends State<ActivityPage> {
                                     children: [
                                       Text(
                                         'Rp ${NumberFormat('#,##0.000', 'id_ID').format(order.priceTotal).replaceAll(',', '.')}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 15,
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                       Text(
                                         '+ Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee).replaceAll(',', '.')}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontSize: 12,
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontWeight: FontWeight.w300,
                                         ),
                                       ),
@@ -523,16 +527,26 @@ class _ActivityPageState extends State<ActivityPage> {
                                           e.nameProduct,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontWeight: FontWeight.w500,
+                                            color: Theme.of(context).colorScheme.primary,
+                                            fontSize: 16,
                                             height: 1,
                                           ),
                                         ),
-                                        subtitle: Text('${e.quantityProduct}x'),
+                                        subtitle: Text(
+                                          '${e.quantityProduct}x',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            color: Theme.of(context).colorScheme.primary,
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                         trailing: Text(
                                           'Rp ${NumberFormat('#,##0.000', 'id_ID').format(e.valueTotal).replaceAll(',', '.')}',
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontWeight: FontWeight.w400,
+                                            color: Theme.of(context).colorScheme.primary,
                                             fontSize: 14,
                                           ),
                                         ),
@@ -551,67 +565,60 @@ class _ActivityPageState extends State<ActivityPage> {
                 ),
                 Align(
                   alignment: AlignmentDirectional.bottomCenter,
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 5,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.grey.shade400,
+                  child: Card(
+                    margin: EdgeInsets.zero,
+                    elevation: 25,
+                    color: Theme.of(context).navigationBarTheme.shadowColor,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.grey.shade400,
+                            ),
                           ),
-                        ),
-                        const Gap(20),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Total Tax Fee',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
+                          const Gap(20),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total Tax Fee',
+                                style: Theme.of(context).textTheme.headlineSmall,
                               ),
-                            ),
-                            Text(
-                              'Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee * orderData.length).replaceAll(',', '.')}',
-                              style: const TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
+                              Text(
+                                'Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee * orderData.length).replaceAll(',', '.')}',
+                                style: Theme.of(context).textTheme.headlineSmall,
                               ),
-                            ),
-                          ],
-                        ),
-                        const Gap(5),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Total Sales',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17,
+                            ],
+                          ),
+                          const Gap(5),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total Sales',
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
-                            ),
-                            Text(
-                              'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue).replaceAll(',', '.')}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17,
+                              Text(
+                                'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue).replaceAll(',', '.')}',
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

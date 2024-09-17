@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -101,15 +102,10 @@ class _EditTenantState extends State<EditTenant> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
-          shadowColor: Colors.black,
-          elevation: 0,
           leading: IconButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
@@ -157,9 +153,9 @@ class _EditTenantState extends State<EditTenant> {
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
                                         colors: [
-                                          Colors.grey.shade200,
-                                          Colors.grey.shade100,
-                                          Colors.grey.shade50,
+                                          Theme.of(context).colorScheme.onPrimary,
+                                          Theme.of(context).colorScheme.onSecondary,
+                                          Theme.of(context).colorScheme.onTertiary,
                                         ],
                                       ),
                                     ),
@@ -171,28 +167,43 @@ class _EditTenantState extends State<EditTenant> {
                                             fit: BoxFit.cover,
                                             filterQuality: FilterQuality.low,
                                           )
-                                        : Image.network(
-                                            tenantData['image_place'],
-                                            height: double.infinity,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
+                                        : CachedNetworkImage(
+                                            imageUrl: tenantData['image_place'],
                                             filterQuality: FilterQuality.low,
+                                            fit: BoxFit.cover,
+                                            useOldImageOnUrlChange: true,
+                                            fadeInCurve: Curves.easeIn,
+                                            fadeOutCurve: Curves.easeOut,
+                                            fadeInDuration: const Duration(milliseconds: 500),
+                                            fadeOutDuration: const Duration(milliseconds: 750),
+                                            errorWidget: (context, url, error) {
+                                              return Center(
+                                                child: Text(
+                                                  'Image $error',
+                                                  style: const TextStyle(
+                                                    color: Colors.redAccent,
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
                                   ),
                                 ),
                                 Positioned(
                                   bottom: 10,
                                   right: 10,
-                                  child: IconButton.filled(
+                                  child: IconButton(
                                     visualDensity: VisualDensity.comfortable,
                                     padding: const EdgeInsets.all(15),
-                                    style: const ButtonStyle(
+                                    style: ButtonStyle(
                                       visualDensity: VisualDensity.compact,
-                                      elevation: WidgetStatePropertyAll(2),
-                                      shape: WidgetStatePropertyAll(
+                                      elevation: const WidgetStatePropertyAll(2),
+                                      shape: const WidgetStatePropertyAll(
                                         RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(Radius.circular(10))),
                                       ),
+                                      backgroundColor:
+                                          WidgetStatePropertyAll(Theme.of(context).primaryColor),
                                     ),
                                     onPressed: () {
                                       showModalBottomSheet(

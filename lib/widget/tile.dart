@@ -529,7 +529,7 @@ class TileMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Card(
         margin: const EdgeInsets.all(0),
         elevation: 0,
@@ -1235,7 +1235,6 @@ class TileOrderProduct extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(0),
       elevation: 0,
-      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Stack(
         fit: StackFit.expand,
@@ -1245,9 +1244,9 @@ class TileOrderProduct extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.black12, width: 1),
+              border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
             ),
             child: Column(
               children: [
@@ -1267,9 +1266,9 @@ class TileOrderProduct extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                Colors.grey.shade200,
-                                Colors.grey.shade100,
-                                Colors.grey.shade50,
+                                Theme.of(context).colorScheme.onPrimary,
+                                Theme.of(context).colorScheme.onSecondary,
+                                Theme.of(context).colorScheme.onTertiary,
                               ],
                             ),
                           ),
@@ -1307,7 +1306,7 @@ class TileOrderProduct extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w500,
                         fontSize: 19,
                         height: 1,
@@ -1316,11 +1315,7 @@ class TileOrderProduct extends StatelessWidget {
                     const Gap(5),
                     Text(
                       'Rp $priceProduct',
-                      style: const TextStyle(
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                      ),
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     Divider(
                       thickness: 0.5,
@@ -1359,16 +1354,12 @@ class TileOrderProduct extends StatelessWidget {
                             margin: const EdgeInsets.symmetric(horizontal: 5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey.shade200,
+                              color: Theme.of(context).colorScheme.onPrimary,
                             ),
                             child: Center(
                               child: Text(
                                 '$count',
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 20,
-                                ),
+                                style: Theme.of(context).textTheme.labelLarge,
                               ),
                             ),
                           ),
@@ -1405,16 +1396,16 @@ class TileOrderProduct extends StatelessWidget {
             left: 1,
             child: Container(
               padding: const EdgeInsets.all(2.5),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
               ),
               child: Checkbox.adaptive(
                 value: checkProduct,
                 visualDensity: VisualDensity.compact,
                 activeColor: Theme.of(context).primaryColor,
-                side: const BorderSide(color: Colors.black, width: 1.5),
+                side: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5),
                 autofocus: true,
                 splashRadius: 50,
                 checkColor: Colors.white,
@@ -1424,6 +1415,169 @@ class TileOrderProduct extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class TileAddMenu extends StatelessWidget {
+  const TileAddMenu({
+    super.key,
+    required this.showInfo,
+    required this.imageProduct,
+    required this.nameProduct,
+    required this.priceProduct,
+    required this.categoryProduct,
+    required this.stockProduct,
+    required this.descProduct,
+    required this.delete,
+  });
+
+  final Function() showInfo;
+  final String imageProduct;
+  final String nameProduct;
+  final String priceProduct;
+  final String categoryProduct;
+  final int stockProduct;
+  final String descProduct;
+  final Function() delete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(0),
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: GestureDetector(
+        onTap: showInfo,
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: AspectRatio(
+                      aspectRatio: 4 / 4,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Theme.of(context).colorScheme.onPrimary,
+                                Theme.of(context).colorScheme.onSecondary,
+                                Theme.of(context).colorScheme.onTertiary,
+                              ],
+                            ),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: imageProduct,
+                            filterQuality: FilterQuality.low,
+                            fit: BoxFit.cover,
+                            useOldImageOnUrlChange: true,
+                            fadeInCurve: Curves.easeIn,
+                            fadeOutCurve: Curves.easeOut,
+                            fadeInDuration: const Duration(milliseconds: 500),
+                            fadeOutDuration: const Duration(milliseconds: 750),
+                            errorWidget: (context, url, error) {
+                              return Center(
+                                child: Text(
+                                  'Image $error',
+                                  style: const TextStyle(
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Gap(10),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          nameProduct,
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        const Gap(10),
+                        Text(
+                          'Rp $priceProduct',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        const Gap(5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              categoryProduct,
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            Text(
+                              ' | Stock: $stockProduct',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                          ],
+                        ),
+                        const Gap(2.5),
+                        Visibility(
+                          visible: descProduct.isNotEmpty,
+                          child: Text(
+                            descProduct,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              top: 5,
+              left: 5,
+              child: IconButton.filled(
+                onPressed: delete,
+                style: ButtonStyle(
+                  backgroundColor: const WidgetStatePropertyAll(Colors.red),
+                  shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                ),
+                icon: const Icon(
+                  Iconsax.trash,
+                  color: Colors.white,
+                ),
+                iconSize: 20,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
