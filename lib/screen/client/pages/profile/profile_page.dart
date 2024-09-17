@@ -407,8 +407,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                           color: Colors.white,
                           style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
+                            backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
                             shape: const WidgetStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(15)),

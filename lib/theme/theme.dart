@@ -81,6 +81,11 @@ ThemeData lightMode = ThemeData(
       height: 1,
     ),
   ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: Colors.blueAccent.shade400,
+    elevation: 2,
+    disabledElevation: 5,
+  ),
   cardTheme: const CardTheme(
     margin: EdgeInsets.all(0),
     elevation: 3,
@@ -200,6 +205,11 @@ ThemeData darkMode = ThemeData(
       fontSize: 13,
       height: 1,
     ),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: Colors.blueAccent.shade400,
+    elevation: 2,
+    disabledElevation: 5,
   ),
   cardTheme: CardTheme(
     margin: const EdgeInsets.all(0),

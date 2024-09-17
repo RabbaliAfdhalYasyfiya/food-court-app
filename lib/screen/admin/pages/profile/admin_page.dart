@@ -81,7 +81,6 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
       'Delete Account, Successfully',
       Colors.white,
     );
-
   }
 
   final placeNameController = TextEditingController();
@@ -306,7 +305,6 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
     return Consumer<AppService>(
       builder: (context, activeProvider, child) {
         return Scaffold(
-          backgroundColor: Colors.white,
           body: SafeArea(
             child: StreamBuilder<DocumentSnapshot>(
               stream:
@@ -396,12 +394,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                                       placeNameController.text,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 3,
-                                      style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
-                                        height: 1,
-                                      ),
+                                      style: Theme.of(context).textTheme.titleLarge,
                                     ),
                                   ),
                                   const Gap(5),
@@ -437,7 +430,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                               Container(
                                 padding: const EdgeInsets.symmetric(vertical: 10),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
+                                  color: Theme.of(context).canvasColor,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Column(
@@ -446,9 +439,9 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                                       padding: const EdgeInsets.symmetric(horizontal: 15),
                                       child: Row(
                                         children: [
-                                          const Icon(
+                                          Icon(
                                             Iconsax.sms,
-                                            color: Colors.black,
+                                            color: Theme.of(context).colorScheme.primary,
                                             size: 22,
                                           ),
                                           const Gap(10),
@@ -463,46 +456,47 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                                         ],
                                       ),
                                     ),
-                                    const Divider(
+                                    Divider(
                                       thickness: 2,
                                       height: 20,
-                                      color: Colors.white,
+                                      color: Theme.of(context).scaffoldBackgroundColor,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 15),
                                       child: Row(
                                         children: [
-                                          const Icon(
+                                          Icon(
                                             Iconsax.call_calling,
-                                            color: Colors.black,
+                                            color: Theme.of(context).colorScheme.primary,
                                             size: 22,
                                           ),
                                           const Gap(10),
                                           Text(
                                             phoneNumberController.text,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w400,
+                                              color: Theme.of(context).colorScheme.primary,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    const Divider(
+                                    Divider(
                                       thickness: 2,
                                       height: 20,
-                                      color: Colors.white,
+                                      color: Theme.of(context).scaffoldBackgroundColor,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 15),
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          const Padding(
-                                            padding: EdgeInsets.only(top: 2.5),
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 2.5),
                                             child: Icon(
                                               Iconsax.location,
-                                              color: Colors.black,
+                                              color: Theme.of(context).colorScheme.primary,
                                               size: 22,
                                             ),
                                           ),
@@ -512,12 +506,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                                               addressPlaceController.text,
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.ellipsis,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black54,
-                                              ),
+                                              style: Theme.of(context).textTheme.labelSmall,
                                             ),
                                           ),
                                         ],
@@ -539,7 +528,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                         ButtonAccount(
                           icon: Iconsax.lamp_on,
                           colorIcon: Theme.of(context).primaryColor,
-                          colorButton: Colors.grey.shade100,
+                          colorButton: Theme.of(context).colorScheme.onTertiary,
                           label: 'Active',
                           color: Colors.black,
                           widget: Row(

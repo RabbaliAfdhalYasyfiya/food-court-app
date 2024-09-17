@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../services/models/model_product.dart';
 
-class TenantTable extends StatelessWidget {
+class TenantTable extends StatefulWidget {
   const TenantTable({
     super.key,
     required this.allProducts,
@@ -12,28 +12,33 @@ class TenantTable extends StatelessWidget {
 
   final List<Product> allProducts;
 
+  @override
+  State<TenantTable> createState() => _TenantTableState();
+}
+
+class _TenantTableState extends State<TenantTable> {
   Widget dataColumn(
     String title,
   ) {
     return Text(
       title,
       maxLines: 2,
-      style: const TextStyle(fontWeight: FontWeight.w600, height: 1),
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+        height: 1,
+        color: Theme.of(context).colorScheme.primary,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
         automaticallyImplyLeading: false,
-        scrolledUnderElevation: 0,
         leading: IconButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.white),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
           ),
           icon: Icon(
             Icons.arrow_back_rounded,
@@ -44,14 +49,7 @@ class TenantTable extends StatelessWidget {
           },
         ),
         titleSpacing: 2,
-        title: const Text(
-          'Table Order',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: const Text('Table Order'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -105,16 +103,18 @@ class TenantTable extends StatelessWidget {
                         label: dataColumn('Menu'),
                       ),
                     ],
-                    rows: allProducts.map(
+                    rows: widget.allProducts.map(
                       (e) {
                         return DataRow(
                           cells: [
-                            DataCell(Text(
-                              e.nameProduct,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: const TextStyle(height: 1.25),
-                            ))
+                            DataCell(
+                              Text(
+                                e.nameProduct,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            )
                           ],
                         );
                       },
@@ -152,7 +152,7 @@ class TenantTable extends StatelessWidget {
                           headingRowAlignment: MainAxisAlignment.center,
                         ),
                       ],
-                      rows: allProducts.map(
+                      rows: widget.allProducts.map(
                         (e) {
                           return DataRow(
                             cells: [
@@ -160,6 +160,7 @@ class TenantTable extends StatelessWidget {
                                 Center(
                                   child: Text(
                                     DateFormat('dd/MMM/yyyy, hh:mm').format(e.orderTime.toDate()),
+                                    style: Theme.of(context).textTheme.bodySmall,
                                   ),
                                 ),
                               ),
@@ -182,6 +183,8 @@ class TenantTable extends StatelessWidget {
                                       e.payMethod,
                                       style: TextStyle(
                                         color: e.payMethod != 'Cash' ? Colors.blue : Colors.green,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ),
@@ -191,12 +194,14 @@ class TenantTable extends StatelessWidget {
                                 Center(
                                   child: Text(
                                     '${e.quantityProduct.toString()}x',
+                                    style: Theme.of(context).textTheme.bodySmall,
                                   ),
                                 ),
                               ),
                               DataCell(
                                 Text(
                                   'Rp ${NumberFormat('#,##0.000', 'id_ID').format(e.valueTotal).replaceAll(',', '.')}',
+                                  style: Theme.of(context).textTheme.bodySmall,
                                   // 'Rp ${e.valueTotal.toStringAsFixed(3)}',
                                 ),
                               ),

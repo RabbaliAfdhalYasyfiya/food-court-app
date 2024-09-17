@@ -27,8 +27,8 @@ class VendorLaporanPage extends StatefulWidget {
 
 class _VendorLaporanPageState extends State<VendorLaporanPage> {
   Widget getBottomTitles(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Colors.black,
+    final style = TextStyle(
+      color: Theme.of(context).colorScheme.primary,
       fontWeight: FontWeight.w500,
       fontSize: 13,
     );
@@ -36,28 +36,28 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
     Widget text;
     switch (value.toInt()) {
       case 0:
-        text = const Text('Sun', style: style);
+        text = Text('Sun', style: style);
         break;
       case 1:
-        text = const Text('Mon', style: style);
+        text = Text('Mon', style: style);
         break;
       case 2:
-        text = const Text('Tue', style: style);
+        text = Text('Tue', style: style);
         break;
       case 3:
-        text = const Text('Wes', style: style);
+        text = Text('Wes', style: style);
         break;
       case 4:
-        text = const Text('Thu', style: style);
+        text = Text('Thu', style: style);
         break;
       case 5:
-        text = const Text('Fri', style: style);
+        text = Text('Fri', style: style);
         break;
       case 6:
-        text = const Text('Sat', style: style);
+        text = Text('Sat', style: style);
         break;
       default:
-        text = const Text('', style: style);
+        text = Text('', style: style);
         break;
     }
 
@@ -70,7 +70,11 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
     return Text(
       title,
       maxLines: 2,
-      style: const TextStyle(fontWeight: FontWeight.w600, height: 1),
+      style: TextStyle(
+        fontWeight: FontWeight.w600,
+        height: 1,
+        color: Theme.of(context).colorScheme.primary,
+      ),
     );
   }
 
@@ -102,10 +106,10 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                 nameTotal,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black54,
+                  color: Theme.of(context).colorScheme.secondary,
                   height: 1,
                 ),
               ),
@@ -120,9 +124,10 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
               total,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
+                color: Theme.of(context).colorScheme.primary,
               ),
             ),
           ),
@@ -134,15 +139,11 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
         automaticallyImplyLeading: false,
-        scrolledUnderElevation: 1,
         leading: IconButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.white),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
           ),
           icon: Icon(
             Icons.arrow_back_rounded,
@@ -153,14 +154,7 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
           },
         ),
         titleSpacing: 2,
-        title: const Text(
-          'Report',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: const Text('Report'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 15),
@@ -279,9 +273,10 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                     widget.tenant.vendorName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   GridView(
@@ -367,11 +362,12 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Order results',
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,
+                                        color: Theme.of(context).colorScheme.primary,
                                       ),
                                     ),
                                     TextButton(
@@ -435,7 +431,8 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                                         e.nameProduct,
                                                         overflow: TextOverflow.ellipsis,
                                                         maxLines: 2,
-                                                        style: const TextStyle(height: 1.25),
+                                                        style:
+                                                            Theme.of(context).textTheme.bodySmall,
                                                       ),
                                                     )
                                                   ],
@@ -485,6 +482,9 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                                           child: Text(
                                                             DateFormat('dd/MMM/yyyy, hh:mm')
                                                                 .format(e.orderTime.toDate()),
+                                                            style: Theme.of(context)
+                                                                .textTheme
+                                                                .bodySmall,
                                                           ),
                                                         ),
                                                       ),
@@ -512,6 +512,8 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                                                 color: e.payMethod != 'Cash'
                                                                     ? Colors.blue
                                                                     : Colors.green,
+                                                                fontWeight: FontWeight.w300,
+                                                                fontSize: 14,
                                                               ),
                                                             ),
                                                           ),
@@ -521,12 +523,17 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                                         Center(
                                                           child: Text(
                                                             '${e.quantityProduct.toString()}x',
+                                                            style: Theme.of(context)
+                                                                .textTheme
+                                                                .bodySmall,
                                                           ),
                                                         ),
                                                       ),
                                                       DataCell(
                                                         Text(
                                                           'Rp ${NumberFormat('#,##0.000', 'id_ID').format(e.valueTotal).replaceAll(',', '.')}',
+                                                          style:
+                                                              Theme.of(context).textTheme.bodySmall,
                                                           // 'Rp ${e.valueTotal.toStringAsFixed(3)}',
                                                         ),
                                                       ),
@@ -603,8 +610,10 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                                   style: TextStyle(
                                                     color: e.y == maxYValue
                                                         ? Theme.of(context).primaryColor
-                                                        : Colors.black87,
-                                                    fontWeight: FontWeight.w500,
+                                                        : Theme.of(context).colorScheme.primary,
+                                                    fontWeight: e.y == maxYValue
+                                                        ? FontWeight.w600
+                                                        : FontWeight.w400,
                                                   ),
                                                   labelResolver: (line) => line.y == 0
                                                       ? ''

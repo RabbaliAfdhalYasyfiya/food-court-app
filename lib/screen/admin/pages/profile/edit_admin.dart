@@ -100,15 +100,10 @@ class _EditProfileAdminState extends State<EditProfileAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        shadowColor: Colors.black,
-        elevation: 0,
         leading: IconButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(Colors.white),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
           ),
           icon: Icon(
             Icons.arrow_back_rounded,
@@ -119,14 +114,7 @@ class _EditProfileAdminState extends State<EditProfileAdmin> {
           },
         ),
         titleSpacing: 2,
-        title: const Text(
-          'Edit Profile',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        ),
+        title: const Text('Edit Profile'),
       ),
       body: SafeArea(
         child: StreamBuilder<DocumentSnapshot>(
@@ -135,149 +123,149 @@ class _EditProfileAdminState extends State<EditProfileAdmin> {
             if (snapshot.hasData) {
               final adminData = snapshot.data!.data() as Map<String, dynamic>;
               return Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(25),
-                                child: Container(
-                                  height: 200,
-                                  width: double.infinity,
-                                  color: Colors.grey.shade200,
-                                  child: _image != null
-                                      ? Image.memory(
-                                          _image!,
-                                          height: double.infinity,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                          filterQuality: FilterQuality.low,
-                                        )
-                                      : Image.network(
-                                          adminData['image_place'],
-                                          height: double.infinity,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
-                                          filterQuality: FilterQuality.low,
-                                        ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 15,
-                                right: 20,
-                                child: IconButton.filled(
-                                  style: const ButtonStyle(
-                                    visualDensity: VisualDensity.comfortable,
-                                    elevation: WidgetStatePropertyAll(2),
-                                    padding: WidgetStatePropertyAll(
-                                        EdgeInsets.symmetric(horizontal: 25)),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(25),
+                          child: Container(
+                            height: 200,
+                            width: double.infinity,
+                            color: Colors.grey.shade200,
+                            child: _image != null
+                                ? Image.memory(
+                                    _image!,
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.low,
+                                  )
+                                : Image.network(
+                                    adminData['image_place'],
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    filterQuality: FilterQuality.low,
                                   ),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      context: context,
-                                      builder: (context) => BottomSheetPhoto(
-                                        camera: () {
-                                          getFromCamera();
-                                          Navigator.pop(context);
-                                        },
-                                        gallery: () {
-                                          getFromGallery();
-                                          Navigator.pop(context);
-                                        },
-                                        delete: () {
-                                          deleteImage();
-                                          Navigator.pop(context);
-                                        },
-                                        title: 'Profile Photo',
-                                      ),
-                                    );
-                                  },
-                                  color: Theme.of(context).primaryColor,
-                                  icon: const Icon(
-                                    Iconsax.camera,
-                                    size: 20,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
-                          const Gap(15),
-                          FormFields(
-                            prefixIcon: Iconsax.building,
-                            inputType: TextInputType.text,
-                            controller: widget.placeNameController,
-                            hintText: 'Place Name',
-                            tap: false,
-                            maxLineBoolean: false,
-                            textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
-                            focusNode: fieldPlaceName,
-                            onFieldSubmit: (val) {
-                              FocusScope.of(context).requestFocus(fieldEmail);
-                            },
-                          ),
-                          const Gap(15),
-                          FormFields(
-                            prefixIcon: Iconsax.sms,
-                            inputType: TextInputType.text,
-                            controller: widget.emailController,
-                            hintText: 'Email Address',
-                            tap: false,
-                            maxLineBoolean: false,
-                            textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
-                            focusNode: fieldEmail,
-                            onFieldSubmit: (val) {
-                              FocusScope.of(context).requestFocus(fieldPhoneNum);
-                            },
-                          ),
-                          const Gap(15),
-                          FormFields(
-                            prefixIcon: Iconsax.call_calling,
-                            inputType: TextInputType.phone,
-                            controller: widget.phoneNumberController,
-                            hintText: 'Phone Number',
-                            tap: false,
-                            maxLineBoolean: false,
-                            textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
-                            focusNode: fieldPhoneNum,
-                            onFieldSubmit: (val) {
-                              FocusScope.of(context).requestFocus();
-                            },
-                          ),
-                          const Gap(50),
-                          ElevatedButton(
-                            onPressed: () {
-                              enterUpdate();
-                            },
+                        ),
+                        Positioned(
+                          bottom: 15,
+                          right: 20,
+                          child: IconButton(
                             style: ButtonStyle(
-                              shape: WidgetStatePropertyAll(
-                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                              ),
-                              fixedSize:
-                                  const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                              elevation: const WidgetStatePropertyAll(1),
+                              visualDensity: VisualDensity.comfortable,
+                              elevation: const WidgetStatePropertyAll(2),
+                              padding: const WidgetStatePropertyAll(
+                                  EdgeInsets.symmetric(horizontal: 25)),
                               backgroundColor:
                                   WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                              padding: const WidgetStatePropertyAll(
-                                EdgeInsets.symmetric(vertical: 20),
-                              ),
                             ),
-                            child: const Text(
-                              'Saved',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) => BottomSheetPhoto(
+                                  camera: () {
+                                    getFromCamera();
+                                    Navigator.pop(context);
+                                  },
+                                  gallery: () {
+                                    getFromGallery();
+                                    Navigator.pop(context);
+                                  },
+                                  delete: () {
+                                    deleteImage();
+                                    Navigator.pop(context);
+                                  },
+                                  title: 'Profile Photo',
+                                ),
+                              );
+                            },
+                            color: Theme.of(context).primaryColor,
+                            icon: const Icon(
+                              Iconsax.camera,
+                              size: 20,
+                              color: Colors.white,
                             ),
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+                    const Gap(15),
+                    FormFields(
+                      prefixIcon: Iconsax.building,
+                      inputType: TextInputType.text,
+                      controller: widget.placeNameController,
+                      hintText: 'Place Name',
+                      tap: false,
+                      maxLineBoolean: false,
+                      textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
+                      focusNode: fieldPlaceName,
+                      onFieldSubmit: (val) {
+                        FocusScope.of(context).requestFocus(fieldEmail);
+                      },
+                    ),
+                    const Gap(15),
+                    FormFields(
+                      prefixIcon: Iconsax.sms,
+                      inputType: TextInputType.text,
+                      controller: widget.emailController,
+                      hintText: 'Email Address',
+                      tap: false,
+                      maxLineBoolean: false,
+                      textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
+                      focusNode: fieldEmail,
+                      onFieldSubmit: (val) {
+                        FocusScope.of(context).requestFocus(fieldPhoneNum);
+                      },
+                    ),
+                    const Gap(15),
+                    FormFields(
+                      prefixIcon: Iconsax.call_calling,
+                      inputType: TextInputType.phone,
+                      controller: widget.phoneNumberController,
+                      hintText: 'Phone Number',
+                      tap: false,
+                      maxLineBoolean: false,
+                      textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
+                      focusNode: fieldPhoneNum,
+                      onFieldSubmit: (val) {
+                        FocusScope.of(context).requestFocus();
+                      },
+                    ),
+                    const Gap(50),
+                    ElevatedButton(
+                      onPressed: () {
+                        enterUpdate();
+                      },
+                      style: ButtonStyle(
+                        shape: WidgetStatePropertyAll(
+                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                        ),
+                        fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+                        elevation: const WidgetStatePropertyAll(1),
+                        backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                        padding: const WidgetStatePropertyAll(
+                          EdgeInsets.symmetric(vertical: 20),
+                        ),
                       ),
-                    );
+                      child: const Text(
+                        'Saved',
+                        style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             } else {
               return Center(
                 child: Text('Error: ${snapshot.error}'),

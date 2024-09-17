@@ -114,7 +114,6 @@ class _MainPageAdminState extends State<MainPageAdmin> {
         ],
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.white,
         selectedIndex: currentIndex,
         onDestinationSelected: (value) {
           if (currentIndex == value) return;
@@ -123,15 +122,11 @@ class _MainPageAdminState extends State<MainPageAdmin> {
             onTap = !onTap;
           });
         },
-        elevation: 7,
-        shadowColor: Colors.black,
-        overlayColor: WidgetStatePropertyAll(Theme.of(context).primaryColor.withOpacity(0.25)),
-        indicatorColor: Theme.of(context).primaryColor.withOpacity(0.15),
         destinations: [
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.shop,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.shop5,
@@ -140,9 +135,9 @@ class _MainPageAdminState extends State<MainPageAdmin> {
             label: 'Tenant',
           ),
           NavigationDestination(
-            icon: const Icon(
+            icon: Icon(
               Iconsax.personalcard,
-              color: Colors.black,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.personalcard5,

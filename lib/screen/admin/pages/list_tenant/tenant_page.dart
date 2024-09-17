@@ -22,20 +22,20 @@ class _VendorPageState extends State<VendorPage> {
   final currentAdmin = FirebaseAuth.instance.currentUser!;
   bool loadList = false;
 
-  Widget vendorLoad() {
+  Widget tenantLoad() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.shade200, width: 1),
+        border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
       ),
       child: Column(
         children: [
           Shimmer.fromColors(
-            baseColor: Colors.grey.shade200,
-            highlightColor: Colors.grey.shade100,
+            baseColor: Theme.of(context).colorScheme.onPrimary,
+            highlightColor: Theme.of(context).colorScheme.onSecondary,
             direction: ShimmerDirection.ltr,
             enabled: true,
             child: Container(
@@ -55,8 +55,8 @@ class _VendorPageState extends State<VendorPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Shimmer.fromColors(
-                  baseColor: Colors.grey.shade200,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor: Theme.of(context).colorScheme.onPrimary,
+                  highlightColor: Theme.of(context).colorScheme.onSecondary,
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Row(
@@ -85,8 +85,8 @@ class _VendorPageState extends State<VendorPage> {
                 ),
                 const Gap(10),
                 Shimmer.fromColors(
-                  baseColor: Colors.grey.shade200,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor: Theme.of(context).colorScheme.onPrimary,
+                  highlightColor: Theme.of(context).colorScheme.onSecondary,
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Container(
@@ -126,9 +126,7 @@ class _VendorPageState extends State<VendorPage> {
             String adminPass = adminData['password'];
 
             return FloatingActionButton(
-              elevation: 2,
               materialTapTargetSize: MaterialTapTargetSize.padded,
-              disabledElevation: 5,
               onPressed: () {
                 debugPrint(adminId);
                 debugPrint(adminEmail);
@@ -195,7 +193,7 @@ class _VendorPageState extends State<VendorPage> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 5,
                 itemBuilder: (context, index) {
-                  return vendorLoad();
+                  return tenantLoad();
                 },
               );
             }
@@ -302,7 +300,7 @@ class _VendorPageState extends State<VendorPage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 7,
                     itemBuilder: (context, index) {
-                      return vendorLoad();
+                      return tenantLoad();
                     },
                   ),
                 );

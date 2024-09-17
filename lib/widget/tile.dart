@@ -1071,19 +1071,16 @@ class TileTenantManager extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(0),
       elevation: 0,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(width: 0.75, color: Colors.black38),
+            border: Border.all(width: 0.75, color: Theme.of(context).colorScheme.outline),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1106,9 +1103,9 @@ class TileTenantManager extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.grey.shade200,
-                          Colors.grey.shade100,
-                          Colors.grey.shade50,
+                          Theme.of(context).colorScheme.onPrimary,
+                          Theme.of(context).colorScheme.onSecondary,
+                          Theme.of(context).colorScheme.onTertiary,
                         ],
                       ),
                     ),
@@ -1150,8 +1147,8 @@ class TileTenantManager extends StatelessWidget {
                             textAlign: TextAlign.start,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.black,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w600,
                               fontSize: 22,
                               height: 1,

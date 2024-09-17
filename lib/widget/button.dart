@@ -182,7 +182,12 @@ class ButtonAccount extends StatelessWidget {
         minLeadingWidth: 5,
         title: Text(
           label,
-          style: Theme.of(context).textTheme.displayMedium,
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.w500,
+            fontSize: 17,
+            height: 1,
+          ),
         ),
         trailing: widget,
         tileColor: colorButton,
