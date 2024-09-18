@@ -6,6 +6,7 @@ ThemeData lightMode = ThemeData(
   dividerColor: Colors.black26,
   primaryColor: Colors.blueAccent.shade400,
   indicatorColor: Colors.blueAccent.shade400,
+  shadowColor: Colors.black,
   scaffoldBackgroundColor: Colors.white,
   canvasColor: Colors.grey.shade100,
   textTheme: const TextTheme(
@@ -125,6 +126,8 @@ ThemeData lightMode = ThemeData(
     primary: Colors.black,
     secondary: Colors.black45,
     tertiary: Colors.black54,
+    background: Colors.blueAccent.shade400,
+    primaryContainer: Colors.grey.shade50,
   ),
 );
 
@@ -136,6 +139,7 @@ ThemeData darkMode = ThemeData(
   indicatorColor: Colors.blueAccent.shade200,
   scaffoldBackgroundColor: Colors.grey.shade900,
   canvasColor: Colors.black45,
+  shadowColor: Colors.white,
   textTheme: const TextTheme(
     labelLarge: TextStyle(
       color: Colors.white,
@@ -253,5 +257,7 @@ ThemeData darkMode = ThemeData(
     primary: Colors.white,
     secondary: Colors.white54,
     tertiary: Colors.white60,
+    background: Colors.grey.shade900,
+    primaryContainer: Colors.grey.shade800,
   ),
 );

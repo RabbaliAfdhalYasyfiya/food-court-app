@@ -449,7 +449,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
-                  const Gap(20),
+                  Divider(
+                    thickness: 0.5,
+                    endIndent: 10,
+                    indent: 10,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  const Gap(15),
                   ButtonAccount(
                     icon: Iconsax.moon,
                     colorIcon: Theme.of(context).primaryColor,

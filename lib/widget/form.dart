@@ -22,8 +22,8 @@ class FieldFormEmail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: TextFormField(
@@ -74,12 +74,6 @@ class FieldFormEmail extends StatelessWidget {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(
-                color: Colors.black,
-              ),
-            ),
             hintText: hintText,
             hintStyle: TextStyle(
               fontWeight: FontWeight.w400,
@@ -114,8 +108,8 @@ class FieldFormPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: TextFormField(
@@ -176,12 +170,6 @@ class FieldFormPassword extends StatelessWidget {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(
-                color: Colors.black,
-              ),
-            ),
             hintText: hintText,
             hintStyle: TextStyle(
               fontWeight: FontWeight.w400,
@@ -224,8 +212,8 @@ class FormFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: TextFormField(
@@ -278,12 +266,6 @@ class FormFields extends StatelessWidget {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: const BorderSide(
-                color: Colors.black,
-              ),
-            ),
             hintText: hintText,
             hintStyle: TextStyle(
               fontWeight: FontWeight.w400,
@@ -322,8 +304,8 @@ class FormFieldPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: TextFormField(
@@ -384,12 +366,6 @@ class FormFieldPassword extends StatelessWidget {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(17),
-              borderSide: const BorderSide(
-                color: Colors.black,
-              ),
-            ),
             hintText: hintText,
             hintStyle: TextStyle(
               fontWeight: FontWeight.w400,
@@ -424,8 +400,8 @@ class FormFieldGenerateCode extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: TextFormField(
@@ -491,12 +467,6 @@ class FormFieldGenerateCode extends StatelessWidget {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(17),
-              borderSide: const BorderSide(
-                color: Colors.black,
-              ),
-            ),
             hintText: hintText,
             hintStyle: TextStyle(
               fontWeight: FontWeight.w400,
@@ -531,8 +501,8 @@ class FormFieldGetLocation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(20),
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Center(
         child: TextFormField(
@@ -597,12 +567,6 @@ class FormFieldGetLocation extends StatelessWidget {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(17),
-              borderSide: const BorderSide(
-                color: Colors.black,
-              ),
-            ),
             hintText: hintText,
             hintStyle: TextStyle(
               fontWeight: FontWeight.w400,

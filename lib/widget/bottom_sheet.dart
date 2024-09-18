@@ -46,7 +46,7 @@ class BottomSheetPhoto extends StatelessWidget {
               Theme.of(context).primaryColor.withOpacity(0.25),
             ),
             elevation: const WidgetStatePropertyAll(0),
-            backgroundColor: WidgetStatePropertyAll(Colors.grey.shade300),
+            backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.primaryContainer),
             fixedSize: const WidgetStatePropertyAll(Size.square(70)),
             maximumSize: const WidgetStatePropertyAll(Size.square(60)),
             minimumSize: const WidgetStatePropertyAll(Size.square(0)),
@@ -55,7 +55,7 @@ class BottomSheetPhoto extends StatelessWidget {
               RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1,
-                  color: Colors.grey.shade400,
+                  color: Theme.of(context).colorScheme.outline,
                 ),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(50),
@@ -76,8 +76,8 @@ class BottomSheetPhoto extends StatelessWidget {
         ),
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 15,
             fontWeight: FontWeight.w400,
           ),
@@ -94,9 +94,9 @@ class BottomSheetPhoto extends StatelessWidget {
         bottom: 15,
         top: 5,
       ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(25)),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.all(Radius.circular(25)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -112,15 +112,15 @@ class BottomSheetPhoto extends StatelessWidget {
           const Gap(10),
           Text(
             title,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
           ),
-          const Divider(
+          Divider(
             thickness: 0.25,
-            color: Colors.black38,
+            color: Theme.of(context).dividerColor,
             endIndent: 15,
             indent: 15,
           ),
@@ -277,10 +277,11 @@ class _BottomSheetLocationState extends State<BottomSheetLocation> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                style: const ButtonStyle(
-                  shadowColor: WidgetStatePropertyAll(Colors.black),
-                  elevation: WidgetStatePropertyAll(1),
-                  backgroundColor: WidgetStatePropertyAll(Colors.white),
+                style: ButtonStyle(
+                  shadowColor: const WidgetStatePropertyAll(Colors.black),
+                  elevation: const WidgetStatePropertyAll(1),
+                  backgroundColor:
+                      WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -297,9 +298,9 @@ class _BottomSheetLocationState extends State<BottomSheetLocation> {
               height: double.infinity,
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-                color: Colors.white,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                color: Theme.of(context).scaffoldBackgroundColor,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -364,11 +365,12 @@ class _BottomSheetLocationState extends State<BottomSheetLocation> {
                               left: 10,
                               top: 10,
                               child: IconButton(
-                                style: const ButtonStyle(
-                                  iconSize: WidgetStatePropertyAll(30),
-                                  shadowColor: WidgetStatePropertyAll(Colors.black),
-                                  elevation: WidgetStatePropertyAll(1),
-                                  backgroundColor: WidgetStatePropertyAll(Colors.white),
+                                style: ButtonStyle(
+                                  iconSize: const WidgetStatePropertyAll(30),
+                                  shadowColor: const WidgetStatePropertyAll(Colors.black),
+                                  elevation: const WidgetStatePropertyAll(1),
+                                  backgroundColor: WidgetStatePropertyAll(
+                                      Theme.of(context).scaffoldBackgroundColor),
                                 ),
                                 onPressed: () async {
                                   getCurrentLocation();
@@ -448,9 +450,9 @@ class BottomSheetInfo extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(25)),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: const BorderRadius.all(Radius.circular(25)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -483,8 +485,8 @@ class BottomSheetInfo extends StatelessWidget {
                       flex: 2,
                       child: Text(
                         textInfo,
-                        style: const TextStyle(
-                          color: Colors.black,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                         ),
@@ -512,8 +514,8 @@ class BottomSheetInfo extends StatelessWidget {
               Expanded(
                 child: ButtonDelete(
                   text: 'Cancel',
-                  color: Colors.white,
-                  borderColor: Colors.black54,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderColor: Theme.of(context).colorScheme.tertiary,
                   textColor: Theme.of(context).primaryColor,
                   smallText: false,
                   onTap: () {
@@ -565,10 +567,11 @@ class BottomMenuInfo extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerRight,
               child: IconButton(
-                style: const ButtonStyle(
-                  shadowColor: WidgetStatePropertyAll(Colors.black),
-                  elevation: WidgetStatePropertyAll(1),
-                  backgroundColor: WidgetStatePropertyAll(Colors.white),
+                style: ButtonStyle(
+                  shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+                  elevation: const WidgetStatePropertyAll(1),
+                  backgroundColor:
+                      WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -585,9 +588,9 @@ class BottomMenuInfo extends StatelessWidget {
               height: double.infinity,
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-                color: Colors.white,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                color: Theme.of(context).scaffoldBackgroundColor,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -677,8 +680,8 @@ class BottomMenuInfo extends StatelessWidget {
                                         textAlign: TextAlign.start,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          color: Colors.black,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 22,
                                           height: 1,

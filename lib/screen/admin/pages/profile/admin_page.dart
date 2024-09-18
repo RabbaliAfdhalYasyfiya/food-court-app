@@ -518,11 +518,11 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
                             ],
                           ),
                         ),
-                        const Divider(
+                        Divider(
                           thickness: 0.5,
                           endIndent: 10,
                           indent: 10,
-                          color: Colors.black54,
+                          color: Theme.of(context).dividerColor,
                         ),
                         const Gap(10),
                         ButtonAccount(

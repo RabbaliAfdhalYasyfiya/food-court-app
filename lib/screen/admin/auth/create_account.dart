@@ -236,6 +236,7 @@ class _CreateAccountAdminState extends State<CreateAccountAdmin> {
                                 useSafeArea: true,
                                 isDismissible: false,
                                 elevation: 0,
+                                barrierColor: Theme.of(context).colorScheme.tertiary,
                                 backgroundColor: Colors.transparent,
                                 builder: (context) {
                                   return BottomSheetLocation(

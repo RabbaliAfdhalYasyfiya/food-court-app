@@ -46,6 +46,7 @@ class _MainPageClientState extends State<MainPageClient> {
       showDragHandle: false,
       useSafeArea: true,
       isDismissible: false,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return BottomSheetInfo(
