@@ -363,7 +363,7 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Order results',
+                                      'Order Results',
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,

@@ -399,6 +399,7 @@ class _ProductPageState extends State<ProductPage> {
       useSafeArea: true,
       isDismissible: false,
       elevation: 0,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       scrollControlDisabledMaxHeightRatio: descProduct.isEmpty ? 1 / 1.3 : 1 / 1.5,
       backgroundColor: Colors.transparent,
       builder: (context) {
@@ -416,10 +417,11 @@ class _ProductPageState extends State<ProductPage> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
-                    style: const ButtonStyle(
-                      shadowColor: WidgetStatePropertyAll(Colors.black),
-                      elevation: WidgetStatePropertyAll(1),
-                      backgroundColor: WidgetStatePropertyAll(Colors.white),
+                    style: ButtonStyle(
+                      shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+                      elevation: const WidgetStatePropertyAll(1),
+                      backgroundColor:
+                          WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -436,9 +438,9 @@ class _ProductPageState extends State<ProductPage> {
                   height: double.infinity,
                   width: double.infinity,
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(25)),
+                    color: Theme.of(context).scaffoldBackgroundColor,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -459,30 +461,29 @@ class _ProductPageState extends State<ProductPage> {
                             children: [
                               AspectRatio(
                                 aspectRatio: descProduct.isEmpty ? 1 / 1 : 3 / 2,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(17),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(17),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(17),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Theme.of(context).colorScheme.onPrimary,
+                                          Theme.of(context).colorScheme.onSecondary,
+                                          Theme.of(context).colorScheme.onTertiary,
+                                        ],
+                                      ),
+                                    ),
                                     child: CachedNetworkImage(
                                       imageUrl: imageProduct,
                                       filterQuality: FilterQuality.low,
                                       fit: BoxFit.cover,
-                                      placeholder: (context, url) {
-                                        return Container(
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          color: Colors.grey.shade200,
-                                          child: Center(
-                                            child: CircularProgressIndicator(
-                                              backgroundColor: Colors.grey.shade400,
-                                              strokeCap: StrokeCap.round,
-                                            ),
-                                          ),
-                                        );
-                                      },
+                                      useOldImageOnUrlChange: true,
+                                      fadeInCurve: Curves.easeIn,
+                                      fadeOutCurve: Curves.easeOut,
+                                      fadeInDuration: const Duration(milliseconds: 500),
+                                      fadeOutDuration: const Duration(milliseconds: 750),
                                       errorWidget: (context, url, error) {
                                         return Center(
                                           child: Text(
@@ -493,40 +494,30 @@ class _ProductPageState extends State<ProductPage> {
                                           ),
                                         );
                                       },
-                                      imageBuilder: (context, imageProvider) {
-                                        return Container(
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey.shade200,
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                              filterQuality: FilterQuality.low,
-                                            ),
-                                          ),
-                                        );
-                                      },
                                     ),
                                   ),
                                 ),
                               ),
                               Positioned(
                                 bottom: 0,
-                                right: 10,
+                                right: 15,
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey.shade300,
-                                    border: Border.all(width: 1, color: Colors.grey.shade200),
+                                    color: Theme.of(context).colorScheme.outline,
+                                    border: Border.all(
+                                      width: 1,
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                    ),
                                     borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10)),
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                    ),
                                   ),
                                   child: Text(
                                     'Rp $priceProduct',
-                                    style: const TextStyle(
-                                      color: Colors.black,
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.primary,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20,
                                     ),
@@ -546,8 +537,8 @@ class _ProductPageState extends State<ProductPage> {
                                   textAlign: TextAlign.start,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    color: Colors.black,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 22,
                                     height: 1,
@@ -559,8 +550,8 @@ class _ProductPageState extends State<ProductPage> {
                                   textAlign: TextAlign.start,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    color: Colors.black54,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.tertiary,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 17,
                                     height: 1,
@@ -573,8 +564,8 @@ class _ProductPageState extends State<ProductPage> {
                                     descProduct,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: Colors.black45,
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.secondary,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15,
                                       height: 1,

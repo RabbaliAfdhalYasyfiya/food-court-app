@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
       showDragHandle: false,
       useSafeArea: true,
       isDismissible: false,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       builder: (context) {
         return BottomSheetInfo(
           iconInfo: CupertinoIcons.info_circle,
@@ -428,7 +429,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         'Privacy & Security',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
-                          fontSize: 22.5,
+                          fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

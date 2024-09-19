@@ -10,7 +10,7 @@ void showLoading(BuildContext context) {
     traversalEdgeBehavior: TraversalEdgeBehavior.closedLoop,
     builder: (context) {
       return Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
         insetPadding: const EdgeInsets.symmetric(horizontal: 135),
         alignment: Alignment.center,
@@ -25,12 +25,12 @@ void showLoading(BuildContext context) {
                 color: Theme.of(context).primaryColor,
                 size: 75,
               ),
-              const Text(
+              Text(
                 'Loading...',
                 style: TextStyle(
-                  color: Colors.black38,
+                  color:  Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.w400,
-                  fontSize: 13,
+                  fontSize: 14,
                 ),
               )
             ],

@@ -608,52 +608,37 @@ class BottomMenuInfo extends StatelessWidget {
                       children: [
                         Expanded(
                           flex: descProduct.isNotEmpty ? 4 : 6,
-                          child: Container(
-                            height: double.infinity,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.black26,
-                              borderRadius: BorderRadius.circular(17),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(17),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(17),
+                            child: Container(
+                              height: double.infinity,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Theme.of(context).colorScheme.onPrimary,
+                                    Theme.of(context).colorScheme.onSecondary,
+                                    Theme.of(context).colorScheme.onTertiary,
+                                  ],
+                                ),
+                              ),
                               child: CachedNetworkImage(
                                 imageUrl: imageProduct,
                                 filterQuality: FilterQuality.low,
                                 fit: BoxFit.cover,
-                                placeholder: (context, url) {
-                                  return Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    color: Colors.grey.shade200,
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        backgroundColor: Colors.grey.shade400,
-                                        strokeCap: StrokeCap.round,
-                                      ),
-                                    ),
-                                  );
-                                },
+                                useOldImageOnUrlChange: true,
+                                fadeInCurve: Curves.easeIn,
+                                fadeOutCurve: Curves.easeOut,
+                                fadeInDuration: const Duration(milliseconds: 500),
+                                fadeOutDuration: const Duration(milliseconds: 750),
                                 errorWidget: (context, url, error) {
                                   return Center(
                                     child: Text(
                                       'Image $error',
                                       style: const TextStyle(
                                         color: Colors.redAccent,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                        filterQuality: FilterQuality.low,
                                       ),
                                     ),
                                   );
@@ -682,7 +667,7 @@ class BottomMenuInfo extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.primary,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w500,
                                           fontSize: 22,
                                           height: 1,
                                         ),
@@ -693,14 +678,17 @@ class BottomMenuInfo extends StatelessWidget {
                                       padding:
                                           const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                                       decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
-                                        border: Border.all(width: 1, color: Colors.grey.shade200),
+                                        color: Theme.of(context).colorScheme.outline,
+                                        border: Border.all(
+                                          width: 1,
+                                          color: Theme.of(context).colorScheme.onPrimary,
+                                        ),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Text(
                                         'Rp $priceProduct',
-                                        style: const TextStyle(
-                                          color: Colors.black,
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 15,
                                         ),
@@ -711,8 +699,8 @@ class BottomMenuInfo extends StatelessWidget {
                                 const Gap(10),
                                 Text(
                                   categoryProduct,
-                                  style: const TextStyle(
-                                    color: Colors.black54,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.tertiary,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
                                     height: 1,
@@ -725,8 +713,8 @@ class BottomMenuInfo extends StatelessWidget {
                                     descProduct,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: Colors.black45,
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.secondary,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15,
                                       height: 1,
@@ -879,10 +867,11 @@ class _BottomEditCountState extends State<BottomEditCount> {
                 // ),
                 const Gap(10),
                 IconButton(
-                  style: const ButtonStyle(
-                    shadowColor: WidgetStatePropertyAll(Colors.black),
-                    elevation: WidgetStatePropertyAll(1),
-                    backgroundColor: WidgetStatePropertyAll(Colors.white),
+                  style: ButtonStyle(
+                    shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+                    elevation: const WidgetStatePropertyAll(1),
+                    backgroundColor:
+                        WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -900,9 +889,9 @@ class _BottomEditCountState extends State<BottomEditCount> {
               height: double.infinity,
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-                color: Colors.white,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                color: Theme.of(context).scaffoldBackgroundColor,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -927,39 +916,49 @@ class _BottomEditCountState extends State<BottomEditCount> {
                             child: AspectRatio(
                               aspectRatio: 1 / 1,
                               child: Container(
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Colors.grey.shade200,
-                                        Colors.grey.shade100,
-                                        Colors.grey.shade50,
-                                      ],
-                                    ),
+                                height: double.infinity,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Theme.of(context).colorScheme.onPrimary,
+                                      Theme.of(context).colorScheme.onSecondary,
+                                      Theme.of(context).colorScheme.onTertiary,
+                                    ],
                                   ),
-                                  child: CachedNetworkImage(
-                                    imageUrl: widget.imageProduct,
-                                    filterQuality: FilterQuality.low,
-                                    fit: BoxFit.cover,
-                                    useOldImageOnUrlChange: true,
-                                    fadeInCurve: Curves.easeIn,
-                                    fadeOutCurve: Curves.easeOut,
-                                    fadeInDuration: const Duration(milliseconds: 500),
-                                    fadeOutDuration: const Duration(milliseconds: 750),
-                                  )
-                                  //Image.network(e.imageProduct),
-                                  ),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: widget.imageProduct,
+                                  filterQuality: FilterQuality.low,
+                                  fit: BoxFit.cover,
+                                  useOldImageOnUrlChange: true,
+                                  fadeInCurve: Curves.easeIn,
+                                  fadeOutCurve: Curves.easeOut,
+                                  fadeInDuration: const Duration(milliseconds: 500),
+                                  fadeOutDuration: const Duration(milliseconds: 750),
+                                  errorWidget: (context, url, error) {
+                                    return Center(
+                                      child: Text(
+                                        'Image $error',
+                                        style: const TextStyle(
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                           title: Text(
                             widget.nameProduct,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.primary,
                               fontSize: 17,
                               height: 1.15,
                             ),
@@ -967,12 +966,20 @@ class _BottomEditCountState extends State<BottomEditCount> {
                           visualDensity: VisualDensity.standard,
                           trailing: Text(
                             'Rp ${totalPrice == 0 ? '-' : NumberFormat('#,##0.000', 'id_ID').format(totalPrice).replaceAll(',', '.')}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 15,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '${currentQuantity}x',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              color: Theme.of(context).colorScheme.primary,
                               fontSize: 14,
                             ),
                           ),
-                          subtitle: Text('${currentQuantity}x'),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1005,13 +1012,13 @@ class _BottomEditCountState extends State<BottomEditCount> {
                               margin: const EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey.shade200,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                               child: Center(
                                 child: Text(
                                   '$currentQuantity',
-                                  style: const TextStyle(
-                                    color: Colors.black,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.primary,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 20,
                                   ),

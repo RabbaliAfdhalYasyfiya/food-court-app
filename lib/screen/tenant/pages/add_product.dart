@@ -42,7 +42,6 @@ class _AddProductState extends State<AddProduct> {
     debugPrint('No Image Selected');
   }
 
-  // Function untuk mengupdate gambar profil
   Future<String> uploadImageToStorage(String childname, Uint8List file) async {
     Reference ref = _storage.ref().child(childname);
     UploadTask uploadTask = ref.putData(file);
@@ -51,7 +50,6 @@ class _AddProductState extends State<AddProduct> {
     return downloadUrl;
   }
 
-  //get from camera
   void getFromCamera() async {
     Uint8List imgCamera = await pickImage(ImageSource.camera);
 
@@ -60,7 +58,6 @@ class _AddProductState extends State<AddProduct> {
     });
   }
 
-  //get from gallery
   void getFromGallery() async {
     Uint8List imgGallery = await pickImage(ImageSource.gallery);
 
@@ -69,7 +66,6 @@ class _AddProductState extends State<AddProduct> {
     });
   }
 
-  //delete image
   void deleteImage() async {
     setState(() {
       _image = null;
@@ -107,24 +103,37 @@ class _AddProductState extends State<AddProduct> {
   void enterAddProduct() async {
     showLoading(context);
 
-    addProduct(
-      await uploadImageToStorage("image_product/${currentVendor.uid}/${uuid.v4()}", _image!),
-      nameProductController.text,
-      priceProductController.text,
-      categoryProductController.text.isNotEmpty ? categoryProductController.text : '',
-      int.parse(stockProductController.text),
-      descriptionProductController.text.isNotEmpty ? descriptionProductController.text : '',
-    );
+    try {
+      final imageUrl =
+          await uploadImageToStorage("image_product/${currentVendor.uid}/${uuid.v4()}", _image!);
 
-    snackBarCustom(
-      context,
-      Colors.greenAccent.shade400,
-      'Product, Added Successfully',
-      Colors.white,
-    );
+      addProduct(
+        imageUrl,
+        nameProductController.text,
+        priceProductController.text,
+        categoryProductController.text.isNotEmpty ? categoryProductController.text : '',
+        int.parse(stockProductController.text),
+        descriptionProductController.text.isNotEmpty ? descriptionProductController.text : '',
+      );
 
-    hideLoading(context);
-    Navigator.pop(context);
+      snackBarCustom(
+        context,
+        Colors.greenAccent.shade400,
+        'Product Added Successfully',
+        Colors.white,
+      );
+    } catch (error) {
+      snackBarCustom(
+        context,
+        Colors.redAccent.shade400,
+        'Failed to add product',
+        Colors.white,
+      );
+    } finally {
+      hideLoading(context);
+
+      Navigator.pop(context);
+    }
   }
 
   FocusNode fieldNameProduct = FocusNode();

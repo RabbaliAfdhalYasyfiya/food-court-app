@@ -29,15 +29,16 @@ class _WelcomePageState extends State<WelcomePage> {
                   const Gap(35),
                   Card(
                     margin: const EdgeInsets.all(0),
-                    color: Colors.white,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     shape: RoundedRectangleBorder(
-                        borderRadius: const BorderRadius.horizontal(
-                            left: Radius.circular(100), right: Radius.circular(50)),
-                        side: BorderSide(
-                          color: Theme.of(context).primaryColor.withOpacity(0.1),
-                          width: 1,
-                          style: BorderStyle.solid,
-                        )),
+                      borderRadius: const BorderRadius.horizontal(
+                          left: Radius.circular(100), right: Radius.circular(50)),
+                      side: BorderSide(
+                        color: Theme.of(context).primaryColor.withOpacity(0.25),
+                        width: 1,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
                     elevation: 0.5,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -52,12 +53,12 @@ class _WelcomePageState extends State<WelcomePage> {
                             filterQuality: FilterQuality.low,
                           ),
                           const Gap(10),
-                          const Text(
+                          Text(
                             'CourtFinder',
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ],

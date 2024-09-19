@@ -48,6 +48,7 @@ class _AdminProfilePageState extends State<AdminProfilePage> {
       showDragHandle: false,
       useSafeArea: true,
       isDismissible: false,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       builder: (context) {
         return BottomSheetInfo(
           iconInfo: CupertinoIcons.info_circle,

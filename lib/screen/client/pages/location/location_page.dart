@@ -717,7 +717,8 @@ class _LocationPageState extends State<LocationPage> {
                                                         Theme.of(context)
                                                             .primaryColor
                                                             .withOpacity(0.25)),
-                                                    inactiveColor: Colors.grey.shade300,
+                                                    inactiveColor:
+                                                        Theme.of(context).colorScheme.outline,
                                                     activeColor: Theme.of(context).primaryColor,
                                                     value: radiusValue,
                                                     onChanged: (newValue) {
@@ -885,6 +886,7 @@ class _LocationPageState extends State<LocationPage> {
       barrierDismissible: false,
       useRootNavigator: true,
       traversalEdgeBehavior: TraversalEdgeBehavior.parentScope,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       builder: (context) {
         return WeatherInfo(
           addressLocation: subLocation ?? addressLocation,
@@ -927,15 +929,15 @@ class _LocationPageState extends State<LocationPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Shimmer.fromColors(
-                    baseColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-                    highlightColor: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                    baseColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                    highlightColor: Theme.of(context).primaryColor.withOpacity(0.25),
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Container(
                       height: 17,
                       width: 125,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.25),
+                        color: Theme.of(context).primaryColor.withOpacity(0.25),
                         borderRadius: const BorderRadius.all(Radius.circular(5)),
                       ),
                     ),
@@ -1004,7 +1006,6 @@ class _LocationPageState extends State<LocationPage> {
     return Card(
       margin: const EdgeInsets.all(0),
       elevation: 0,
-      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Container(
         width: 180,

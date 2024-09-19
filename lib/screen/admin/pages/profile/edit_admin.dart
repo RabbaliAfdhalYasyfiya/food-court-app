@@ -266,6 +266,7 @@ class _EditProfileAdminState extends State<EditProfileAdmin> {
                     ElevatedButton(
                       onPressed: () {
                         enterUpdate();
+                        Navigator.pop(context);
                       },
                       style: ButtonStyle(
                         shape: WidgetStatePropertyAll(
@@ -312,8 +313,6 @@ class _EditProfileAdminState extends State<EditProfileAdmin> {
       widget.emailController.text,
       widget.phoneNumberController.text,
     );
-
-    Navigator.pop(context);
 
     setState(() {
       loadSign = false;

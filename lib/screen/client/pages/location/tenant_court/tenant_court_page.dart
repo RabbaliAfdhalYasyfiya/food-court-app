@@ -68,6 +68,7 @@ class _TenantCourtPageState extends State<TenantCourtPage> {
       useSafeArea: true,
       isDismissible: false,
       elevation: 0,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       scrollControlDisabledMaxHeightRatio: 1 / 1.5,
       backgroundColor: Colors.transparent,
       builder: (context) {

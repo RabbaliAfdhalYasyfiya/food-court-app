@@ -38,9 +38,9 @@ class _WeatherInfoState extends State<WeatherInfo> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 25),
         padding: const EdgeInsets.all(15),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(25)),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: const BorderRadius.all(Radius.circular(25)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -64,18 +64,18 @@ class _WeatherInfoState extends State<WeatherInfo> {
                     children: [
                       Text(
                         widget.addressLocation!,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 21,
-                          color: Colors.black87,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.w400,
                           height: 1,
                         ),
                       ),
                       Text(
                         '${capitalizeWords(widget.weather?.descCondition)} · ${DateFormat('EEEE, MMM d').format(DateTime.now())}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Colors.black54,
+                          color: Theme.of(context).colorScheme.tertiary,
                           fontWeight: FontWeight.w300,
                         ),
                       ),
@@ -94,8 +94,8 @@ class _WeatherInfoState extends State<WeatherInfo> {
                   children: [
                     Text(
                       '${widget.weather?.feelsLike.round() ?? ''}°',
-                      style: const TextStyle(
-                        color: Colors.black87,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.w400,
                         fontSize: 65,
                         height: 1.05,
@@ -116,8 +116,8 @@ class _WeatherInfoState extends State<WeatherInfo> {
                   children: [
                     Text(
                       '${widget.weather?.mainCondition ?? ''} · ',
-                      style: const TextStyle(
-                        color: Colors.black54,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary,
                         fontWeight: FontWeight.w400,
                         fontSize: 13.5,
                       ),
@@ -130,8 +130,8 @@ class _WeatherInfoState extends State<WeatherInfo> {
                     ),
                     Text(
                       ' ${widget.weather?.windSpeed.round() ?? ''} KpH · ',
-                      style: const TextStyle(
-                        color: Colors.black54,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary,
                         fontWeight: FontWeight.w400,
                         fontSize: 13.5,
                       ),
@@ -144,8 +144,8 @@ class _WeatherInfoState extends State<WeatherInfo> {
                     ),
                     Text(
                       ' ${widget.weather?.humidity.round() ?? ''}%',
-                      style: const TextStyle(
-                        color: Colors.black54,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary,
                         fontWeight: FontWeight.w400,
                         fontSize: 13.5,
                       ),
@@ -178,8 +178,8 @@ class _WeatherInfoState extends State<WeatherInfo> {
             const Gap(15),
             ButtonDelete(
               text: 'Close',
-              color: Colors.white,
-              borderColor: Colors.black54,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              borderColor: Theme.of(context).colorScheme.tertiary,
               textColor: Theme.of(context).primaryColor,
               smallText: true,
               onTap: () {

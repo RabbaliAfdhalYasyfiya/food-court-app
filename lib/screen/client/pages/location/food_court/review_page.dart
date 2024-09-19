@@ -126,6 +126,7 @@ class _ReviewPageState extends State<ReviewPage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
             style: ButtonStyle(
@@ -252,53 +253,51 @@ class _ReviewPageState extends State<ReviewPage> {
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               const Gap(10),
-                              TextFormField(
-                                maxLines: 5,
-                                expands: false,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w400,
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primaryContainer,
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                                selectionControls: EmptyTextSelectionControls(),
-                                enableInteractiveSelection: true,
-                                canRequestFocus: true,
-                                showCursor: false,
-                                cursorColor: Colors.black,
-                                obscureText: false,
-                                keyboardType: TextInputType.multiline,
-                                controller: commentController,
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      style: BorderStyle.solid,
-                                      color: Colors.grey.shade300,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
-                                      width: 1.5,
-                                      style: BorderStyle.solid,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
-                                      color: Colors.grey.shade300,
-                                    ),
-                                  ),
-                                  hintText: 'Comments',
-                                  hintStyle: const TextStyle(
+                                child: TextFormField(
+                                  maxLines: 4,
+                                  expands: false,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.primary,
+                                    fontSize: 17,
                                     fontWeight: FontWeight.w400,
-                                    color: Colors.black38,
-                                    fontSize: 15,
-                                    letterSpacing: 1,
+                                  ),
+                                  selectionControls: EmptyTextSelectionControls(),
+                                  enableInteractiveSelection: true,
+                                  canRequestFocus: true,
+                                  showCursor: false,
+                                  cursorColor: Theme.of(context).colorScheme.primary,
+                                  obscureText: false,
+                                  keyboardType: TextInputType.multiline,
+                                  controller: commentController,
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: BorderSide(
+                                        width: 1,
+                                        style: BorderStyle.solid,
+                                        color: Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: BorderSide(
+                                        width: 1.5,
+                                        style: BorderStyle.solid,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    hintText: 'Comments',
+                                    hintStyle: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey.shade500,
+                                      fontSize: 15,
+                                      letterSpacing: 1,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -330,13 +329,13 @@ class _ReviewPageState extends State<ReviewPage> {
                                             right: 5,
                                             child: GestureDetector(
                                               onTap: deleteImage,
-                                              child: const CircleAvatar(
+                                              child: CircleAvatar(
                                                 backgroundColor: Colors.white70,
                                                 radius: 15,
                                                 child: Icon(
                                                   Iconsax.minus,
                                                   size: 25,
-                                                  color: Colors.black,
+                                                  color: Theme.of(context).colorScheme.primary,
                                                 ),
                                               ),
                                             ),
@@ -377,9 +376,9 @@ class _ReviewPageState extends State<ReviewPage> {
                                           borderRadius: BorderRadius.circular(15),
                                           color: Theme.of(context).scaffoldBackgroundColor,
                                         ),
-                                        child: const Icon(
+                                        child: Icon(
                                           Iconsax.gallery_add5,
-                                          color: Colors.black38,
+                                          color: Theme.of(context).colorScheme.tertiary,
                                           size: 35,
                                         ),
                                       ),

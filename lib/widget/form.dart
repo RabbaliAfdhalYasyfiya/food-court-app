@@ -37,8 +37,8 @@ class FieldFormEmail extends StatelessWidget {
             FilteringTextInputFormatter.singleLineFormatter,
           ],
           keyboardType: inputType,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 17,
             letterSpacing: 1,
             fontWeight: FontWeight.w400,
@@ -47,7 +47,7 @@ class FieldFormEmail extends StatelessWidget {
           enableInteractiveSelection: true,
           canRequestFocus: true,
           showCursor: false,
-          cursorColor: Colors.black,
+          cursorColor: Theme.of(context).colorScheme.primary,
           obscureText: false,
           decoration: InputDecoration(
             prefixIcon: Padding(
@@ -122,8 +122,8 @@ class FieldFormPassword extends StatelessWidget {
             FilteringTextInputFormatter.singleLineFormatter,
           ],
           keyboardType: TextInputType.visiblePassword,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 17,
             letterSpacing: 1,
             fontWeight: FontWeight.w400,
@@ -132,7 +132,7 @@ class FieldFormPassword extends StatelessWidget {
           enableInteractiveSelection: true,
           canRequestFocus: true,
           showCursor: false,
-          cursorColor: Colors.black,
+          cursorColor: Theme.of(context).colorScheme.primary,
           obscureText: !obscure,
           decoration: InputDecoration(
             prefixIcon: Padding(
@@ -229,8 +229,8 @@ class FormFields extends StatelessWidget {
             textInputFormatter,
           ],
           keyboardType: inputType,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 17,
             letterSpacing: 1,
             fontWeight: FontWeight.w400,
@@ -239,7 +239,7 @@ class FormFields extends StatelessWidget {
           enableInteractiveSelection: true,
           canRequestFocus: true,
           showCursor: false,
-          cursorColor: Colors.black,
+          cursorColor: Theme.of(context).colorScheme.primary,
           obscureText: false,
           decoration: InputDecoration(
             prefixIcon: Padding(
@@ -318,8 +318,8 @@ class FormFieldPassword extends StatelessWidget {
             FilteringTextInputFormatter.singleLineFormatter,
           ],
           keyboardType: inputType,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 17,
             letterSpacing: 1,
             fontWeight: FontWeight.w400,
@@ -415,8 +415,8 @@ class FormFieldGenerateCode extends StatelessWidget {
             FilteringTextInputFormatter.singleLineFormatter,
           ],
           keyboardType: inputType,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 17,
             letterSpacing: 1,
             fontWeight: FontWeight.w400,
@@ -425,7 +425,7 @@ class FormFieldGenerateCode extends StatelessWidget {
           enableInteractiveSelection: true,
           canRequestFocus: true,
           showCursor: false,
-          cursorColor: Colors.black,
+          cursorColor: Theme.of(context).colorScheme.primary,
           decoration: InputDecoration(
             prefixIcon: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -516,8 +516,8 @@ class FormFieldGetLocation extends StatelessWidget {
             FilteringTextInputFormatter.singleLineFormatter,
           ],
           keyboardType: inputType,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 17,
             letterSpacing: 1,
             fontWeight: FontWeight.w400,
@@ -526,6 +526,7 @@ class FormFieldGetLocation extends StatelessWidget {
           enableInteractiveSelection: true,
           canRequestFocus: true,
           showCursor: false,
+          cursorColor: Theme.of(context).colorScheme.primary,
           decoration: InputDecoration(
             prefixIcon: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
