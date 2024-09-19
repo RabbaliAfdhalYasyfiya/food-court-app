@@ -112,6 +112,7 @@ class MarkerAdmin {
             categoryProduct: menuProductDoc['category_product'],
             stockProduct: menuProductDoc['stock_product'],
             descProduct: menuProductDoc['description_product'],
+            //timesDate: menuProductDoc['times_date'],
           ),
         );
       }

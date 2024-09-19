@@ -15,7 +15,12 @@ import '../../../widget/form.dart';
 import '../../../widget/load.dart';
 
 class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
+  const AddProduct({
+    super.key,
+    required this.currentTenant,
+  });
+
+  final User currentTenant;
 
   @override
   State<AddProduct> createState() => _AddProductState();
@@ -23,7 +28,6 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   final FirebaseStorage _storage = FirebaseStorage.instance;
-  final currentVendor = FirebaseAuth.instance.currentUser!;
 
   final nameProductController = TextEditingController();
   final priceProductController = TextEditingController();
@@ -80,32 +84,35 @@ class _AddProductState extends State<AddProduct> {
     int stockProduct,
     String descriptionProduct,
   ) async {
+    var timesDate = FieldValue.serverTimestamp();
+
     DocumentReference productRef = await FirebaseFirestore.instance
         .collection('vendors')
-        .doc(currentVendor.uid)
+        .doc(widget.currentTenant.uid)
         .collection('products')
         .add({
-      'vendor_id': currentVendor.uid,
+      'vendor_id': widget.currentTenant.uid,
       'image_product': imageProduct,
       'name_product': nameProduct,
       'price_product': priceProduct,
       'category_product': categoryProduct.isNotEmpty ? categoryProduct : '',
       'stock_product': stockProduct,
       'description_product': descriptionProduct.isNotEmpty ? descriptionProduct : '',
+      'times_date': timesDate,
     });
     await productRef.update({
       'product_id': productRef.id,
     });
   }
 
-  var uuid = const Uuid();
+  var uuid = const Uuid().v4();
 
   void enterAddProduct() async {
     showLoading(context);
 
     try {
       final imageUrl =
-          await uploadImageToStorage("image_product/${currentVendor.uid}/${uuid.v4()}", _image!);
+          await uploadImageToStorage("image_product/${widget.currentTenant.uid}/$uuid", _image!);
 
       addProduct(
         imageUrl,
@@ -131,9 +138,8 @@ class _AddProductState extends State<AddProduct> {
       );
     } finally {
       hideLoading(context);
-
-      Navigator.pop(context);
     }
+    Navigator.pop(context);
   }
 
   FocusNode fieldNameProduct = FocusNode();

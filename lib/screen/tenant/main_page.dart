@@ -23,6 +23,9 @@ class MainPageTenant extends StatefulWidget {
 }
 
 class _MainPageTenantState extends State<MainPageTenant> {
+  
+  final currentTenant = FirebaseAuth.instance.currentUser;
+  
   final List<Widget> body = [
     const OrderProduct(),
     const ActivityPage(),

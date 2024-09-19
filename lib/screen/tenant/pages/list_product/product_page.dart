@@ -57,7 +57,9 @@ class _ProductPageState extends State<ProductPage> {
           Navigator.push(
             context,
             CupertinoPageRoute(
-              builder: (context) => const AddProduct(),
+              builder: (context) => AddProduct(
+                currentTenant: currentTenant!,
+              ),
             ),
           );
         },
@@ -144,8 +146,10 @@ class _ProductPageState extends State<ProductPage> {
               );
             }
 
-            final productData =
+            final List<dynamic> productData =
                 productSnapshot.data!.docs.map((doc) => MenuProduct.fromDocument(doc)).toList();
+
+            productData.sort((a, b) => a.nameProduct.compareTo(b.nameProduct));
 
             final Map<String, List<MenuProduct>> categorizedProducts = {};
             for (var product in productData) {
@@ -185,7 +189,7 @@ class _ProductPageState extends State<ProductPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      category,
+                                      '$category (${products.length})',
                                       style: Theme.of(context).textTheme.titleMedium,
                                     ),
                                     const Gap(10),

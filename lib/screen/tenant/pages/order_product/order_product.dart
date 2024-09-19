@@ -20,7 +20,7 @@ class OrderProduct extends StatefulWidget {
 }
 
 class _OrderProductState extends State<OrderProduct> with SingleTickerProviderStateMixin {
-  final currentVendor = FirebaseAuth.instance.currentUser;
+  final currentTenant = FirebaseAuth.instance.currentUser;
 
   final Map<String, List<bool>> _checkedProductsMap = {};
   final Map<String, List<int>> _countsMap = {};
@@ -79,7 +79,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
     // Ambil dokumen produk berdasarkan vendorId
     final productsSnapshot = await FirebaseFirestore.instance
         .collection('vendors')
-        .doc(currentVendor!.uid)
+        .doc(currentTenant!.uid)
         .collection('products')
         .get();
 
@@ -121,6 +121,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
         context,
         CupertinoPageRoute(
           builder: (context) => CartOrder(
+            currentTenant: currentTenant!,
             selectedProducts: selectedProducts,
             selectedQuantities: selectedCounts,
           ),
@@ -175,7 +176,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                 child: Container(
                   height: 50,
                   width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(10),
@@ -189,13 +190,15 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                     controller: _scrollController,
                     physics: const NeverScrollableScrollPhysics(),
                     child: TabBar(
+                      physics: const NeverScrollableScrollPhysics(),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 10),
                       controller: _tabController,
+                      isScrollable: false,
                       indicatorColor: Theme.of(context).primaryColor,
                       indicatorSize: TabBarIndicatorSize.label,
-                      automaticIndicatorColorAdjustment: true,
+                      indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
                       indicatorWeight: 4,
                       tabAlignment: TabAlignment.center,
-                      splashBorderRadius: BorderRadius.circular(10),
                       unselectedLabelStyle: TextStyle(
                         fontSize: 15,
                         color: Theme.of(context).colorScheme.secondary,
@@ -207,11 +210,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                         fontWeight: FontWeight.w500,
                       ),
                       dividerColor: Colors.transparent,
-                      tabs: categories
-                          .map(
-                            (category) => Tab(text: category),
-                          )
-                          .toList(),
+                      tabs: categories.map((category) => Tab(text: category)).toList(),
                     ),
                   ),
                 ),
@@ -221,12 +220,13 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                 child: TabBarView(
                     dragStartBehavior: DragStartBehavior.start,
                     controller: _tabController,
+                    physics: const ScrollPhysics(),
                     children: categories.map(
                       (category) {
                         return StreamBuilder<QuerySnapshot>(
                           stream: FirebaseFirestore.instance
                               .collection('vendors')
-                              .doc(currentVendor!.uid)
+                              .doc(currentTenant!.uid)
                               .collection('products')
                               .where('category_product', isEqualTo: category)
                               .snapshots(),
@@ -242,6 +242,9 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                               final productData = productSnapshot.data!.docs
                                   .map<MenuProduct>((doc) => MenuProduct.fromDocument(doc))
                                   .toList();
+
+                              productData.sort((MenuProduct a, MenuProduct b) =>
+                                  a.nameProduct.compareTo(b.nameProduct));
 
                               final categoryKey = category;
 
@@ -267,7 +270,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                                         mainAxisSpacing: 5,
                                         mainAxisExtent: 275,
                                       ),
-                                      padding: const EdgeInsets.all(16),
+                                      padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
                                       shrinkWrap: true,
                                       itemCount: productData.length,
                                       scrollDirection: Axis.vertical,

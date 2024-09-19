@@ -1,15 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:gap/gap.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../widget/bottom_sheet.dart';
-import '../../../../widget/load.dart';
 import '../../../../widget/snackbar.dart';
+import '../../../../widget/load.dart';
 import 'order_success.dart';
 
 enum ProductTypeEnum { QRIS, Cash }
@@ -17,10 +18,12 @@ enum ProductTypeEnum { QRIS, Cash }
 class CartOrder extends StatefulWidget {
   const CartOrder({
     super.key,
+    required this.currentTenant,
     required this.selectedProducts,
     required this.selectedQuantities,
   });
 
+  final User currentTenant;
   final List<MenuProduct> selectedProducts;
   final List<int> selectedQuantities;
 
@@ -29,8 +32,6 @@ class CartOrder extends StatefulWidget {
 }
 
 class _CartOrderState extends State<CartOrder> {
-  final currentVendor = FirebaseAuth.instance.currentUser;
-
   ProductTypeEnum? _productTypeEnum;
 
   void addCheckoutProduct() async {
@@ -64,7 +65,7 @@ class _CartOrderState extends State<CartOrder> {
 
       await FirebaseFirestore.instance
           .collection('vendors')
-          .doc(currentVendor!.uid)
+          .doc(widget.currentTenant.uid)
           .collection('products')
           .doc(product.productId)
           .update({
@@ -73,7 +74,7 @@ class _CartOrderState extends State<CartOrder> {
     }
 
     DocumentReference orderRef = await FirebaseFirestore.instance.collection('orders').add({
-      'vendor_id': currentVendor!.uid,
+      'vendor_id': widget.currentTenant.uid,
       'product': orderProduct
           .map(
             (p) => {
@@ -113,7 +114,7 @@ class _CartOrderState extends State<CartOrder> {
           priceTotal: priceTotal,
           taxFee: taxFee,
           payMethod: payMethod!,
-          vendorId: currentVendor!.uid,
+          tenantId: widget.currentTenant.uid,
           orderTime: actualOrderTime,
           initialIndex: 0,
         ),
@@ -156,19 +157,19 @@ class _CartOrderState extends State<CartOrder> {
     double orderTotal,
   ) {
     return Card(
-      margin: const EdgeInsets.all(0),
+      margin: EdgeInsets.zero,
       elevation: 25,
-      shadowColor: Theme.of(context).navigationBarTheme.shadowColor,
-      semanticContainer: true,
+      color: Theme.of(context).navigationBarTheme.shadowColor,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      ),
       child: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(20),
+            top: Radius.circular(32),
           ),
         ),
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
@@ -429,13 +430,14 @@ class _CartOrderState extends State<CartOrder> {
   ) {
     showModalBottomSheet(
       context: context,
-      scrollControlDisabledMaxHeightRatio: 1 / 2.15,
+      scrollControlDisabledMaxHeightRatio: 1 / 2,
       isScrollControlled: false,
       enableDrag: false,
       useRootNavigator: false,
       showDragHandle: false,
       useSafeArea: true,
       isDismissible: false,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return BottomEditCount(
@@ -550,110 +552,132 @@ class _CartOrderState extends State<CartOrder> {
                             final double price =
                                 double.tryParse(product.priceProduct.replaceAll('Rp', '')) ?? 0;
                             final double valuePrice = price * quantity;
-                            return ListTile(
-                              tileColor: Theme.of(context).scaffoldBackgroundColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                side: BorderSide(
-                                    color: Theme.of(context).colorScheme.outline, width: 0.5),
-                              ),
-                              style: ListTileStyle.list,
-                              visualDensity: VisualDensity.comfortable,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 12.5, vertical: 5),
-                              leading: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: AspectRatio(
-                                  aspectRatio: 1 / 1,
-                                  child: Container(
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Theme.of(context).colorScheme.onPrimary,
-                                            Theme.of(context).colorScheme.onSecondary,
-                                            Theme.of(context).colorScheme.onTertiary,
-                                          ],
-                                        ),
-                                      ),
-                                      child: CachedNetworkImage(
-                                        imageUrl: product.imageProduct,
-                                        filterQuality: FilterQuality.low,
-                                        fit: BoxFit.cover,
-                                        useOldImageOnUrlChange: true,
-                                        fadeInCurve: Curves.easeIn,
-                                        fadeOutCurve: Curves.easeOut,
-                                        fadeInDuration: const Duration(milliseconds: 500),
-                                        fadeOutDuration: const Duration(milliseconds: 750),
-                                      )
-                                      //Image.network(e.imageProduct),
-                                      ),
-                                ),
-                              ),
-                              title: Text(
-                                product.nameProduct,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17,
-                                  height: 1,
-                                ),
-                              ),
-                              subtitle: Text(
-                                '${quantity}x',
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              trailing: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                mainAxisSize: MainAxisSize.min,
+                            return Slidable(
+                              closeOnScroll: true,
+                              direction: Axis.horizontal,
+                              enabled: true,
+                              endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                extentRatio: 0.15,
                                 children: [
-                                  InkWell(
-                                    onLongPress: () {
+                                  SlidableAction(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                                    backgroundColor: Colors.redAccent.shade400,
+                                    borderRadius: BorderRadius.circular(15),
+                                    foregroundColor: Colors.white,
+                                    icon: Iconsax.trash,
+                                    autoClose: true,
+                                    onPressed: (context) {
                                       _deleteProduct(index);
                                     },
-                                    onTap: () {
-                                      countInfoEdit(
-                                        product.imageProduct,
-                                        product.nameProduct,
-                                        quantity,
-                                        valuePrice,
-                                        index,
-                                        (index) {
-                                          _deleteProduct(index);
-                                        },
-                                      );
-                                    },
-                                    borderRadius: BorderRadius.circular(10),
-                                    radius: 15,
-                                    splashColor: Theme.of(context).primaryColor.withOpacity(0.15),
-                                    child: Text(
-                                      'Edit',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    'Rp ${NumberFormat('#,##0.000', 'id_ID').format(valuePrice).replaceAll(',', '.')}',
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.primary,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
                                   ),
                                 ],
+                              ),
+                              child: ListTile(
+                                tileColor: Theme.of(context).scaffoldBackgroundColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  side: BorderSide(
+                                      color: Theme.of(context).colorScheme.outline, width: 0.5),
+                                ),
+                                style: ListTileStyle.list,
+                                visualDensity: VisualDensity.comfortable,
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 12.5, vertical: 5),
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: AspectRatio(
+                                    aspectRatio: 1 / 1,
+                                    child: Container(
+                                        height: double.infinity,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Theme.of(context).colorScheme.onPrimary,
+                                              Theme.of(context).colorScheme.onSecondary,
+                                              Theme.of(context).colorScheme.onTertiary,
+                                            ],
+                                          ),
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl: product.imageProduct,
+                                          filterQuality: FilterQuality.low,
+                                          fit: BoxFit.cover,
+                                          useOldImageOnUrlChange: true,
+                                          fadeInCurve: Curves.easeIn,
+                                          fadeOutCurve: Curves.easeOut,
+                                          fadeInDuration: const Duration(milliseconds: 500),
+                                          fadeOutDuration: const Duration(milliseconds: 750),
+                                        )
+                                        //Image.network(e.imageProduct),
+                                        ),
+                                  ),
+                                ),
+                                title: Text(
+                                  product.nameProduct,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.primary,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17,
+                                    height: 1,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  '${quantity}x',
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.primary,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                trailing: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    InkWell(
+                                      onLongPress: () {
+                                        _deleteProduct(index);
+                                      },
+                                      onTap: () {
+                                        countInfoEdit(
+                                          product.imageProduct,
+                                          product.nameProduct,
+                                          quantity,
+                                          valuePrice,
+                                          index,
+                                          (index) {
+                                            _deleteProduct(index);
+                                          },
+                                        );
+                                      },
+                                      borderRadius: BorderRadius.circular(10),
+                                      radius: 15,
+                                      splashColor: Theme.of(context).primaryColor.withOpacity(0.15),
+                                      child: Text(
+                                        'Edit',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      'Rp ${NumberFormat('#,##0.000', 'id_ID').format(valuePrice).replaceAll(',', '.')}',
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.primary,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },

@@ -19,7 +19,7 @@ class OrderSuccess extends StatefulWidget {
     required this.priceTotal,
     required this.payMethod,
     required this.taxFee,
-    required this.vendorId,
+    required this.tenantId,
     required this.orderTime,
     required this.initialIndex,
   });
@@ -29,7 +29,7 @@ class OrderSuccess extends StatefulWidget {
   final String payMethod;
   final double priceTotal;
   final double taxFee;
-  final String vendorId;
+  final String tenantId;
   final int initialIndex;
 
   @override
@@ -127,7 +127,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
                             style: Theme.of(context).textTheme.labelLarge,
                           ),
                           Divider(
-                            thickness: 0.25,
+                            thickness: 0.75,
                             color: Theme.of(context).dividerColor,
                             endIndent: 15,
                             indent: 15,
@@ -300,9 +300,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance.collection('vendors').doc(widget.vendorId).snapshots(),
+        stream: FirebaseFirestore.instance.collection('vendors').doc(widget.tenantId).snapshots(),
         builder: (context, snapshot) {
-          debugPrint(widget.vendorId);
+          debugPrint('Tenant ID : ${widget.tenantId}');
           if (!snapshot.hasData) {
             return Center(
               child: Column(

@@ -407,6 +407,23 @@ class _ActivityPageState extends State<ActivityPage> {
                               return InkWell(
                                 splashColor: Theme.of(context).colorScheme.secondary,
                                 borderRadius: BorderRadius.circular(15),
+                                onLongPress: () {
+                                  debugPrint('Order ID : ${order.orderId}');
+                                  Navigator.push(
+                                    context,
+                                    createRoute(
+                                      OrderSuccess(
+                                        orderedProducts: allProducts,
+                                        priceTotal: order.priceTotal,
+                                        payMethod: order.payMethod,
+                                        taxFee: 1,
+                                        tenantId: currentTenant!.uid,
+                                        orderTime: order.orderTime,
+                                        initialIndex: 1,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 onDoubleTap: () {
                                   debugPrint('Order ID : ${order.orderId}');
                                   Navigator.push(
@@ -417,7 +434,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                         priceTotal: order.priceTotal,
                                         payMethod: order.payMethod,
                                         taxFee: 1,
-                                        vendorId: currentTenant!.uid,
+                                        tenantId: currentTenant!.uid,
                                         orderTime: order.orderTime,
                                         initialIndex: 1,
                                       ),
@@ -504,9 +521,9 @@ class _ActivityPageState extends State<ActivityPage> {
                                                   begin: Alignment.topCenter,
                                                   end: Alignment.bottomCenter,
                                                   colors: [
-                                                    Colors.grey.shade200,
-                                                    Colors.grey.shade100,
-                                                    Colors.grey.shade50,
+                                                    Theme.of(context).colorScheme.onPrimary,
+                                                    Theme.of(context).colorScheme.onSecondary,
+                                                    Theme.of(context).colorScheme.onTertiary,
                                                   ],
                                                 ),
                                               ),
@@ -519,6 +536,16 @@ class _ActivityPageState extends State<ActivityPage> {
                                                 fadeOutCurve: Curves.easeOut,
                                                 fadeInDuration: const Duration(milliseconds: 500),
                                                 fadeOutDuration: const Duration(milliseconds: 750),
+                                                errorWidget: (context, url, error) {
+                                                  return Center(
+                                                    child: Text(
+                                                      'Image $error',
+                                                      style: const TextStyle(
+                                                        color: Colors.redAccent,
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),
@@ -570,7 +597,8 @@ class _ActivityPageState extends State<ActivityPage> {
                     elevation: 25,
                     color: Theme.of(context).navigationBarTheme.shadowColor,
                     shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                    ),
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
                       decoration: BoxDecoration(
@@ -617,7 +645,10 @@ class _ActivityPageState extends State<ActivityPage> {
                               ),
                             ],
                           ),
-                          const Gap(5),
+                          Divider(
+                            thickness: 1,
+                            color: Theme.of(context).dividerColor,
+                          ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

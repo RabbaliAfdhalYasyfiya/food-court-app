@@ -47,9 +47,11 @@ class FirebaseAuthService {
 
       bool isActive = true;
 
-      bool isClose = false;
+      bool isClose = true;
 
-      await FirebaseFirestore.instance.collection('vendors').doc(credential.user!.uid).set({
+      User? user = credential.user;
+
+      await FirebaseFirestore.instance.collection('vendors').doc(user!.uid).set({
         'admin_id': adminID,
         'vendor_id': credential.user!.uid,
         'vendor_name': vendorNameController.text,
@@ -149,7 +151,9 @@ class FirebaseAuthService {
 
       String roleClient = 'isClient';
 
-      await FirebaseFirestore.instance.collection('clients').doc(credential.user!.uid).set(
+      User? user = credential.user;
+
+      await FirebaseFirestore.instance.collection('clients').doc(user!.uid).set(
         {
           'client_id': credential.user!.uid,
           'firstname': firstNameController.text,
@@ -245,13 +249,15 @@ class FirebaseAuthService {
         password: passwordAdminController.text,
       );
 
-      bool isClose = false;
+      bool isClose = true;
 
       String roleAdmin = 'isAdmin';
 
       String imageIcon = 'assets/mapicons/restaurants.png';
 
-      await FirebaseFirestore.instance.collection('admins').doc(credential.user!.uid).set({
+      User? user = credential.user;
+
+      await FirebaseFirestore.instance.collection('admins').doc(user!.uid).set({
         'admin_id': credential.user!.uid,
         'is_close': isClose,
         'code_unique': codeUniqueController.text,

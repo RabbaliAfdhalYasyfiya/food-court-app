@@ -9,6 +9,7 @@ class MenuProduct {
   String categoryProduct;
   int stockProduct;
   String descProduct;
+  //Timestamp timesDate;
 
   MenuProduct({
     required this.productId,
@@ -18,6 +19,7 @@ class MenuProduct {
     required this.categoryProduct,
     required this.stockProduct,
     required this.descProduct,
+    //required this.timesDate,
   });
 
   factory MenuProduct.fromDocument(DocumentSnapshot doc) {
@@ -30,6 +32,7 @@ class MenuProduct {
       categoryProduct: data['category_product'],
       stockProduct: data['stock_product'],
       descProduct: data['description_product'],
+      //timesDate: data['times'],
     );
   }
 }

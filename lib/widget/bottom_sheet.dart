@@ -911,6 +911,7 @@ class _BottomEditCountState extends State<BottomEditCount> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
                             child: AspectRatio(
@@ -981,6 +982,7 @@ class _BottomEditCountState extends State<BottomEditCount> {
                             ),
                           ),
                         ),
+                        const Gap(15),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -1068,7 +1070,9 @@ class _BottomEditCountState extends State<BottomEditCount> {
                       fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
                       elevation: const WidgetStatePropertyAll(1),
                       backgroundColor: WidgetStatePropertyAll(
-                        currentQuantity == 0 ? Colors.redAccent : Theme.of(context).primaryColor,
+                        currentQuantity == 0
+                            ? Colors.redAccent.shade400
+                            : Theme.of(context).primaryColor,
                       ),
                       padding: const WidgetStatePropertyAll(
                         EdgeInsets.symmetric(vertical: 20),
