@@ -139,7 +139,26 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
         } else if (categorySnapshot.hasError) {
           return Center(child: Text('Error: ${categorySnapshot.error}'));
         } else if (!categorySnapshot.hasData || categorySnapshot.data!.isEmpty) {
-          return const Center(child: Text('No categories found'));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/Nodata-pana.png',
+                  width: 200,
+                ),
+                const Gap(25),
+                Text(
+                  'No categories found',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                ),
+              ],
+            ),
+          );
         }
 
         final categories = categorySnapshot.data!;
@@ -346,12 +365,12 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                                     width: 250,
                                   ),
                                   const Gap(20),
-                                  const Text(
+                                  Text(
                                     'Here, no Products have arrived yet',
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
-                                      color: Colors.black54,
+                                      color: Theme.of(context).colorScheme.tertiary,
                                     ),
                                   ),
                                 ],

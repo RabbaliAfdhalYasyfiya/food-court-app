@@ -65,7 +65,7 @@ class _ActivityPageState extends State<ActivityPage> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Shimmer.fromColors(
@@ -282,12 +282,12 @@ class _ActivityPageState extends State<ActivityPage> {
                       width: 200,
                     ),
                     const Gap(25),
-                    const Text(
+                    Text(
                       'Here, no Activities have arrived yet',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black54,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                   ],
@@ -609,10 +609,25 @@ class _ActivityPageState extends State<ActivityPage> {
                             children: [
                               Text(
                                 'Total Sales',
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: Theme.of(context).textTheme.labelSmall,
                               ),
                               Text(
                                 'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue).replaceAll(',', '.')}',
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                            ],
+                          ),
+                          const Gap(5),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue + (taxFee * orderData.length)).replaceAll(',', '.')}',
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ],

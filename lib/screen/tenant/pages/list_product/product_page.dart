@@ -87,12 +87,12 @@ class _ProductPageState extends State<ProductPage> {
                       width: 200,
                     ),
                     const Gap(25),
-                    const Text(
+                    Text(
                       'Here, no Products have arrived yet',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black54,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                   ],

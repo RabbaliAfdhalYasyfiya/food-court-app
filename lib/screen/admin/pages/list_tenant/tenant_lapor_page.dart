@@ -337,7 +337,7 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                           color: Colors.amberAccent.shade400,
                         ),
                         'Total Sales',
-                        'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue).replaceAll(',', '.')}',
+                        'Rp ${totalValue == 0 ? '-' : NumberFormat('#,##0.000', 'id_ID').format(totalValue).replaceAll(',', '.')}',
                       ),
                     ],
                   ),
@@ -351,8 +351,15 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: allProducts.isEmpty
-                          ? const Center(
-                              child: Text('Order results has no data'),
+                          ? Center(
+                              child: Text(
+                                'Order results has no data',
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 17,
+                                ),
+                              ),
                             )
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -512,7 +519,9 @@ class _VendorLaporanPageState extends State<VendorLaporanPage> {
                                                             decoration: BoxDecoration(
                                                               color: e.payMethod != 'Cash'
                                                                   ? Colors.blue.shade50
-                                                                  : Colors.green.shade50,
+                                                                      .withOpacity(0.85)
+                                                                  : Colors.green.shade50
+                                                                      .withOpacity(0.85),
                                                               border: Border.all(
                                                                 width: 1,
                                                                 color: e.payMethod != 'Cash'

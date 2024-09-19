@@ -69,6 +69,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
       showDragHandle: false,
       useSafeArea: true,
       isDismissible: false,
+      barrierColor: Theme.of(context).colorScheme.tertiary,
       backgroundColor: Colors.transparent,
       builder: (context) {
         return StatefulBuilder(
@@ -86,10 +87,11 @@ class _OrderSuccessState extends State<OrderSuccess> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
-                        style: const ButtonStyle(
-                          shadowColor: WidgetStatePropertyAll(Colors.black),
-                          elevation: WidgetStatePropertyAll(1),
-                          backgroundColor: WidgetStatePropertyAll(Colors.white),
+                        style: ButtonStyle(
+                          shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+                          elevation: const WidgetStatePropertyAll(1),
+                          backgroundColor:
+                              WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
                         ),
                         onPressed: () {
                           Navigator.pop(context);
@@ -106,9 +108,9 @@ class _OrderSuccessState extends State<OrderSuccess> {
                       height: double.infinity,
                       width: double.infinity,
                       padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(25)),
                       ),
                       child: Column(
                         children: [
@@ -120,27 +122,23 @@ class _OrderSuccessState extends State<OrderSuccess> {
                             ),
                           ),
                           const Gap(15),
-                          const Text(
+                          Text(
                             'Select Device Printer',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20,
-                            ),
+                            style: Theme.of(context).textTheme.labelLarge,
                           ),
-                          const Divider(
+                          Divider(
                             thickness: 0.25,
-                            color: Colors.black38,
+                            color: Theme.of(context).dividerColor,
                             endIndent: 15,
                             indent: 15,
                           ),
                           Expanded(
                             child: devices.isEmpty
-                                ? const Center(
+                                ? Center(
                                     child: Text(
                                       'No Device Printer',
                                       style: TextStyle(
-                                        color: Colors.black45,
+                                        color: Theme.of(context).colorScheme.secondary,
                                         fontWeight: FontWeight.w300,
                                         fontSize: 15,
                                       ),
@@ -155,22 +153,18 @@ class _OrderSuccessState extends State<OrderSuccess> {
                                           visualDensity: VisualDensity.comfortable,
                                           contentPadding:
                                               const EdgeInsets.symmetric(horizontal: 10),
-                                          leading: const Icon(
+                                          leading: Icon(
                                             CupertinoIcons.printer,
-                                            color: Colors.black45,
+                                            color: Theme.of(context).colorScheme.secondary,
                                           ),
                                           title: Text(
                                             e.name!,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 17,
-                                            ),
+                                            style: Theme.of(context).textTheme.titleMedium,
                                           ),
                                           subtitle: Text(
                                             e.address!,
-                                            style: const TextStyle(
-                                              color: Colors.black38,
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.secondary,
                                               fontWeight: FontWeight.w300,
                                               fontSize: 13,
                                             ),
@@ -319,12 +313,12 @@ class _OrderSuccessState extends State<OrderSuccess> {
                     width: 200,
                   ),
                   const Gap(20),
-                  const Text(
+                  Text(
                     'Here, no Orders have arrived yet',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      color: Colors.black54,
+                      color: Theme.of(context).colorScheme.tertiary,
                     ),
                   ),
                 ],

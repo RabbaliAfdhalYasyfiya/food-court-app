@@ -221,12 +221,12 @@ class _VendorPageState extends State<VendorPage> {
                           width: 250,
                         ),
                         const Gap(20),
-                        const Text(
+                        Text(
                           'Here, no Vendors have arrived yet',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
-                            color: Colors.black54,
+                            color: Theme.of(context).colorScheme.tertiary,
                           ),
                         ),
                       ],

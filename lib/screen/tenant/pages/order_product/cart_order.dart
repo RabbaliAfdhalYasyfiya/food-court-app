@@ -506,20 +506,20 @@ class _CartOrderState extends State<CartOrder> {
                             width: 200,
                           ),
                           const Gap(15),
-                          const Text(
+                          Text(
                             'Here, there are',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black54,
+                              color: Theme.of(context).colorScheme.tertiary,
                             ),
                           ),
-                          const Text(
+                          Text(
                             'no Menus in Cart yet',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
-                              color: Colors.black54,
+                              color: Theme.of(context).colorScheme.tertiary.withOpacity(0.75),
                             ),
                           ),
                         ],

@@ -174,8 +174,8 @@ class _TenantTableState extends State<TenantTable> {
                                         const EdgeInsets.symmetric(horizontal: 7.5, vertical: 2.5),
                                     decoration: BoxDecoration(
                                       color: e.payMethod != 'Cash'
-                                          ? Colors.blue.shade50
-                                          : Colors.green.shade50,
+                                          ? Colors.blue.shade50.withOpacity(0.85)
+                                          : Colors.green.shade50.withOpacity(0.85),
                                       border: Border.all(
                                         width: 1,
                                         color: e.payMethod != 'Cash' ? Colors.blue : Colors.green,
