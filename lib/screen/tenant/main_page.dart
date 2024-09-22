@@ -100,15 +100,6 @@ class _MainPageTenantState extends State<MainPageTenant> {
     );
   }
 
-  // void showNotificationBadge(int index) {
-  //   setState(() {
-  //     currentIndex = index;
-  //     if (index == 0) {
-  //       hasNotification = false;
-  //     }
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

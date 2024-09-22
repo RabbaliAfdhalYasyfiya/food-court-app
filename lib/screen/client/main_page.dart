@@ -4,16 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../widget/snackbar.dart';
 import 'pages/favorite/favorite_page.dart';
 import 'pages/location/location_page.dart';
 import 'pages/profile/profile_page.dart';
 import '../../widget/bottom_sheet.dart';
+import '../../widget/snackbar.dart';
 import '../../widget/load.dart';
 import 'auth/auth_page.dart';
 
 class MainPageClient extends StatefulWidget {
-  const MainPageClient({super.key});
+  const MainPageClient({
+    super.key,
+    this.badge = false,
+  });
+
+  final bool badge;
 
   @override
   State<MainPageClient> createState() => _MainPageClientState();
@@ -27,8 +32,16 @@ class _MainPageClientState extends State<MainPageClient> {
     const ProfilePage(),
   ];
 
+  @override
+  void initState() {
+    showBadge = widget.badge;
+    super.initState();
+  }
+
   int currentIndex = 0;
   bool onTap = false;
+  late bool showBadge;
+
   final List<String> title = [
     'Location',
     'Favorite',
@@ -128,6 +141,9 @@ class _MainPageClientState extends State<MainPageClient> {
           setState(() {
             currentIndex = value;
             onTap = !onTap;
+            if (value == 1) {
+              showBadge = false;
+            }
           });
         },
         destinations: [
@@ -143,9 +159,26 @@ class _MainPageClientState extends State<MainPageClient> {
             label: 'Location',
           ),
           NavigationDestination(
-            icon: Icon(
-              Iconsax.heart,
-              color: Theme.of(context).navigationBarTheme.shadowColor,
+            icon: Stack(
+              children: [
+                Icon(
+                  Iconsax.heart,
+                  color: Theme.of(context).navigationBarTheme.shadowColor,
+                ),
+                if (showBadge)
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      height: 10,
+                      width: 10,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             selectedIcon: Icon(
               Iconsax.heart5,
