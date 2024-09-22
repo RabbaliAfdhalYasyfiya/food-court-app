@@ -23,9 +23,8 @@ class MainPageTenant extends StatefulWidget {
 }
 
 class _MainPageTenantState extends State<MainPageTenant> {
-  
   final currentTenant = FirebaseAuth.instance.currentUser;
-  
+
   final List<Widget> body = [
     const OrderProduct(),
     const ActivityPage(),
@@ -35,6 +34,8 @@ class _MainPageTenantState extends State<MainPageTenant> {
 
   int currentIndex = 0;
   bool onTap = false;
+  bool hasNotification = true;
+
   final List<String> title = [
     'Order',
     'Activity',
@@ -137,13 +138,35 @@ class _MainPageTenantState extends State<MainPageTenant> {
           setState(() {
             currentIndex = value;
             onTap = !onTap;
+            if (value == 1) {
+              hasNotification = false;
+            }
           });
         },
         destinations: [
           NavigationDestination(
-            icon: Icon(
-              Iconsax.menu_board,
-              color: Theme.of(context).navigationBarTheme.shadowColor,
+            icon: Stack(
+              children: [
+                Icon(
+                  Iconsax.menu_board,
+                  color: Theme.of(context).navigationBarTheme.shadowColor,
+                ),
+                if (hasNotification) // Tampilkan badge jika ada notifikasi
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 16,
+                        minHeight: 16,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             selectedIcon: Icon(
               Iconsax.menu_board5,
