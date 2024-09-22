@@ -9,6 +9,7 @@ ThemeData lightMode = ThemeData(
   shadowColor: Colors.black,
   scaffoldBackgroundColor: Colors.white,
   canvasColor: Colors.grey.shade100,
+  brightness: Brightness.light,
   textTheme: const TextTheme(
     labelLarge: TextStyle(
       color: Colors.black,
@@ -140,6 +141,7 @@ ThemeData darkMode = ThemeData(
   scaffoldBackgroundColor: Colors.grey.shade900,
   canvasColor: Colors.black45,
   shadowColor: Colors.white,
+  brightness: Brightness.dark,
   textTheme: const TextTheme(
     labelLarge: TextStyle(
       color: Colors.white,

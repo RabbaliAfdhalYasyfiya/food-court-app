@@ -547,6 +547,7 @@ class _LocationPageState extends State<LocationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     double radiusValueInKilometers = radiusValue / 1000.0;
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -622,7 +623,7 @@ class _LocationPageState extends State<LocationPage> {
                                 minMaxZoomPreference: MinMaxZoomPreference.unbounded,
                                 indoorViewEnabled: true,
                                 zoomControlsEnabled: false,
-                                style: Utils.mapStyleDark,
+                                style: isDarkTheme ? Utils.mapStyleDark : Utils.mapStyleLight,
                                 markers: Set<Marker>.of(_markers),
                                 onTap: (argument) {
                                   customInfoWindowAdminsController.hideInfoWindow!();

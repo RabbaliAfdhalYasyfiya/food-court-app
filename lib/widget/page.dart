@@ -142,7 +142,7 @@ class _PageReviewState extends State<PageReview> {
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           width: 1,
-          color: Colors.grey.shade200,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
       child: Row(
@@ -151,12 +151,12 @@ class _PageReviewState extends State<PageReview> {
           Expanded(
             flex: 0,
             child: Shimmer.fromColors(
-              baseColor: Colors.grey.shade200,
-              highlightColor: Colors.grey.shade100,
+              baseColor: Theme.of(context).colorScheme.onPrimary,
+              highlightColor: Theme.of(context).colorScheme.onSecondary,
               direction: ShimmerDirection.ltr,
               enabled: true,
               child: CircleAvatar(
-                backgroundColor: Colors.grey.shade200,
+                backgroundColor: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
           ),
@@ -173,8 +173,8 @@ class _PageReviewState extends State<PageReview> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Shimmer.fromColors(
-                        baseColor: Colors.grey.shade200,
-                        highlightColor: Colors.grey.shade100,
+                        baseColor: Theme.of(context).colorScheme.onPrimary,
+                        highlightColor: Theme.of(context).colorScheme.onSecondary,
                         direction: ShimmerDirection.ltr,
                         enabled: true,
                         child: Column(
@@ -185,7 +185,7 @@ class _PageReviewState extends State<PageReview> {
                               width: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Colors.grey.shade200,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
                             const Gap(2.5),
@@ -194,7 +194,7 @@ class _PageReviewState extends State<PageReview> {
                               width: 75,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Colors.grey.shade200,
+                                color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
                           ],
@@ -204,7 +204,7 @@ class _PageReviewState extends State<PageReview> {
                         padding: const EdgeInsets.only(right: 10),
                         child: Icon(
                           Icons.more_vert_rounded,
-                          color: Colors.grey.shade200,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           size: 20,
                         ),
                       ),
@@ -213,20 +213,20 @@ class _PageReviewState extends State<PageReview> {
                 ),
                 Divider(
                   thickness: 0.75,
-                  color: Colors.grey.shade200,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 Expanded(
                   flex: 4,
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade200,
-                    highlightColor: Colors.grey.shade100,
+                    baseColor: Theme.of(context).colorScheme.onPrimary,
+                    highlightColor: Theme.of(context).colorScheme.onSecondary,
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Container(
                       height: double.infinity,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -235,8 +235,8 @@ class _PageReviewState extends State<PageReview> {
                 const Gap(7),
                 Expanded(
                   child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade200,
-                    highlightColor: Colors.grey.shade100,
+                    baseColor: Theme.of(context).colorScheme.onPrimary,
+                    highlightColor: Theme.of(context).colorScheme.onSecondary,
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Column(
@@ -247,7 +247,7 @@ class _PageReviewState extends State<PageReview> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: Colors.grey.shade200,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                         const Gap(2.5),
@@ -256,7 +256,7 @@ class _PageReviewState extends State<PageReview> {
                           width: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: Colors.grey.shade200,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                       ],
@@ -300,7 +300,7 @@ class _PageReviewState extends State<PageReview> {
   }
 
   Widget reviewNull() {
-    return const SizedBox(
+    return SizedBox(
       height: 150,
       width: double.infinity,
       child: Center(
@@ -309,19 +309,11 @@ class _PageReviewState extends State<PageReview> {
           children: [
             Text(
               'No reviews yet',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                color: Colors.black54,
-              ),
+              style: Theme.of(context).textTheme.labelMedium,
             ),
             Text(
               'Start the conversation.',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-                color: Colors.black38,
-              ),
+              style: Theme.of(context).textTheme.labelSmall,
             ),
           ],
         ),
@@ -442,7 +434,7 @@ class PageTenant extends StatelessWidget {
                 mainAxisSpacing: 7,
               ),
               itemCount: 2,
-              itemBuilder: (context, index) => tenantLoad(),
+              itemBuilder: (context, index) => tenantLoad(context),
             );
           },
         );
@@ -450,13 +442,13 @@ class PageTenant extends StatelessWidget {
     );
   }
 
-  Widget tenantLoad() {
+  Widget tenantLoad(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           width: 1,
-          color: Colors.grey.shade200,
+          color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
       child: Column(
@@ -464,8 +456,8 @@ class PageTenant extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Shimmer.fromColors(
-              baseColor: Colors.grey.shade200,
-              highlightColor: Colors.grey.shade100,
+              baseColor: Theme.of(context).colorScheme.onPrimary,
+              highlightColor: Theme.of(context).colorScheme.onSecondary,
               direction: ShimmerDirection.ltr,
               enabled: true,
               child: Container(
@@ -473,7 +465,7 @@ class PageTenant extends StatelessWidget {
                 height: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.grey.shade200,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ),
@@ -488,8 +480,8 @@ class PageTenant extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Shimmer.fromColors(
-                    baseColor: Colors.grey.shade200,
-                    highlightColor: Colors.grey.shade100,
+                    baseColor: Theme.of(context).colorScheme.onPrimary,
+                highlightColor: Theme.of(context).colorScheme.onSecondary,
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Container(
@@ -497,14 +489,14 @@ class PageTenant extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.grey.shade200,
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
                   ),
                   const Gap(5),
                   Shimmer.fromColors(
-                    baseColor: Colors.grey.shade200,
-                    highlightColor: Colors.grey.shade100,
+                  baseColor: Theme.of(context).colorScheme.onPrimary,
+                highlightColor: Theme.of(context).colorScheme.onSecondary,
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Row(
@@ -515,7 +507,7 @@ class PageTenant extends StatelessWidget {
                           width: 75,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: Colors.grey.shade200,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                         Container(
@@ -523,7 +515,7 @@ class PageTenant extends StatelessWidget {
                           width: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            color: Colors.grey.shade200,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                       ],
