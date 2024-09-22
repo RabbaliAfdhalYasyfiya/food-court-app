@@ -53,12 +53,12 @@ class _FavoritePageState extends State<FavoritePage> {
                       width: 250,
                     ),
                     const Gap(20),
-                    const Text(
+                    Text(
                       "Here, you don't have a Favorite yet",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black54,
+                        color: Theme.of(context).colorScheme.tertiary,
                       ),
                     ),
                   ],
@@ -109,7 +109,6 @@ class _FavoritePageState extends State<FavoritePage> {
                         '${favorite.nameProduct} removed Favorites, Successfully',
                         Colors.white,
                       );
-                      
                     },
                   );
                 },
