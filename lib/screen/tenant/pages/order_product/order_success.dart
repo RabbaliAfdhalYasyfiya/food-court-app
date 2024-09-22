@@ -21,7 +21,8 @@ class OrderSuccess extends StatefulWidget {
     required this.taxFee,
     required this.tenantId,
     required this.orderTime,
-    required this.initialIndex,
+    required this.initialIndex, 
+    required this.badge,
   });
 
   final Timestamp orderTime;
@@ -31,6 +32,7 @@ class OrderSuccess extends StatefulWidget {
   final double taxFee;
   final String tenantId;
   final int initialIndex;
+  final bool badge;
 
   @override
   State<OrderSuccess> createState() => _OrderSuccessState();
@@ -669,6 +671,7 @@ class _OrderSuccessState extends State<OrderSuccess> {
                               MaterialPageRoute(
                                 builder: (context) => MainPageTenant(
                                   initialIndex: widget.initialIndex,
+                                  badge: widget.badge,
                                 ),
                               ),
                             );

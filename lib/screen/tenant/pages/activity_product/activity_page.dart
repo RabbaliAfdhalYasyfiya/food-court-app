@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:gap/gap.dart';
@@ -420,6 +421,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                         tenantId: currentTenant!.uid,
                                         orderTime: order.orderTime,
                                         initialIndex: 1,
+                                        badge: false,
                                       ),
                                     ),
                                   );
@@ -437,149 +439,186 @@ class _ActivityPageState extends State<ActivityPage> {
                                         tenantId: currentTenant!.uid,
                                         orderTime: order.orderTime,
                                         initialIndex: 1,
+                                        badge: false,
                                       ),
                                     ),
                                   );
                                 },
-                                child: ExpansionTile(
-                                  visualDensity: VisualDensity.comfortable,
-                                  tilePadding: const EdgeInsets.symmetric(horizontal: 12.5),
-                                  expansionAnimationStyle: AnimationStyle(
-                                    curve: Curves.easeInSine,
-                                    duration: const Duration(milliseconds: 150),
-                                  ),
-                                  expandedCrossAxisAlignment: CrossAxisAlignment.end,
-                                  expandedAlignment: Alignment.topCenter,
-                                  initiallyExpanded: false,
-                                  collapsedBackgroundColor:
-                                      Theme.of(context).colorScheme.onTertiary,
-                                  childrenPadding:
-                                      const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                                  collapsedShape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    //side: const BorderSide(width: 0.5, color: Colors.black54),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(
-                                        width: 0.5, color: Theme.of(context).colorScheme.secondary),
-                                  ),
-                                  leading: CircleAvatar(
-                                    backgroundColor: order.payMethod == 'QRIS'
-                                        ? Colors.blue.shade50
-                                        : Colors.green.shade50,
-                                    child: Icon(
-                                      order.payMethod == 'QRIS'
-                                          ? Iconsax.scan_barcode
-                                          : Iconsax.moneys,
-                                      color: order.payMethod == 'QRIS' ? Colors.blue : Colors.green,
-                                    ),
-                                  ),
-                                  title: Text(order.payMethod),
-                                  subtitle: Text(
-                                    order.orderId,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(context).colorScheme.primary,
-                                      fontWeight: FontWeight.w200,
-                                    ),
-                                  ),
-                                  showTrailingIcon: true,
-                                  trailing: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                child: Slidable(
+                                  endActionPane: ActionPane(
+                                    motion: const BehindMotion(),
+                                    extentRatio: 0.15,
                                     children: [
-                                      Text(
-                                        'Rp ${NumberFormat('#,##0.000', 'id_ID').format(order.priceTotal).replaceAll(',', '.')}',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          color: Theme.of(context).colorScheme.primary,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                      Text(
-                                        '+ Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee).replaceAll(',', '.')}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Theme.of(context).colorScheme.primary,
-                                          fontWeight: FontWeight.w300,
-                                        ),
+                                      SlidableAction(
+                                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                                        backgroundColor: Theme.of(context).primaryColor,
+                                        borderRadius: BorderRadius.circular(15),
+                                        foregroundColor: Colors.white,
+                                        icon: Iconsax.receipt,
+                                        autoClose: true,
+                                        onPressed: (context) {
+                                          Navigator.push(
+                                            context,
+                                            createRoute(
+                                              OrderSuccess(
+                                                orderedProducts: allProducts,
+                                                priceTotal: order.priceTotal,
+                                                payMethod: order.payMethod,
+                                                taxFee: 1,
+                                                tenantId: currentTenant!.uid,
+                                                orderTime: order.orderTime,
+                                                initialIndex: 1,
+                                                badge: false,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),
-                                  children: allProducts.map(
-                                    (e) {
-                                      return ListTile(
-                                        visualDensity: VisualDensity.compact,
-                                        leading: AspectRatio(
-                                          aspectRatio: 1 / 1,
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(5),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [
-                                                    Theme.of(context).colorScheme.onPrimary,
-                                                    Theme.of(context).colorScheme.onSecondary,
-                                                    Theme.of(context).colorScheme.onTertiary,
-                                                  ],
+                                  child: ExpansionTile(
+                                    visualDensity: VisualDensity.comfortable,
+                                    tilePadding: const EdgeInsets.symmetric(horizontal: 12.5),
+                                    expansionAnimationStyle: AnimationStyle(
+                                      curve: Curves.easeInSine,
+                                      duration: const Duration(milliseconds: 150),
+                                    ),
+                                    expandedCrossAxisAlignment: CrossAxisAlignment.end,
+                                    expandedAlignment: Alignment.topCenter,
+                                    initiallyExpanded: false,
+                                    collapsedBackgroundColor:
+                                        Theme.of(context).colorScheme.onTertiary,
+                                    childrenPadding:
+                                        const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                                    collapsedShape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      //side: const BorderSide(width: 0.5, color: Colors.black54),
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      side: BorderSide(
+                                          width: 0.5,
+                                          color: Theme.of(context).colorScheme.secondary),
+                                    ),
+                                    leading: CircleAvatar(
+                                      backgroundColor: order.payMethod == 'QRIS'
+                                          ? Colors.blue.shade50
+                                          : Colors.green.shade50,
+                                      child: Icon(
+                                        order.payMethod == 'QRIS'
+                                            ? Iconsax.scan_barcode
+                                            : Iconsax.moneys,
+                                        color:
+                                            order.payMethod == 'QRIS' ? Colors.blue : Colors.green,
+                                      ),
+                                    ),
+                                    title: Text(order.payMethod),
+                                    subtitle: Text(
+                                      order.orderId,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Theme.of(context).colorScheme.primary,
+                                        fontWeight: FontWeight.w200,
+                                      ),
+                                    ),
+                                    showTrailingIcon: true,
+                                    trailing: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Rp ${NumberFormat('#,##0.000', 'id_ID').format(order.priceTotal).replaceAll(',', '.')}',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Theme.of(context).colorScheme.primary,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        Text(
+                                          '+ Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee).replaceAll(',', '.')}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Theme.of(context).colorScheme.primary,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    children: allProducts.map(
+                                      (e) {
+                                        return ListTile(
+                                          visualDensity: VisualDensity.compact,
+                                          leading: AspectRatio(
+                                            aspectRatio: 1 / 1,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(5),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [
+                                                      Theme.of(context).colorScheme.onPrimary,
+                                                      Theme.of(context).colorScheme.onSecondary,
+                                                      Theme.of(context).colorScheme.onTertiary,
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl: e.imageProduct,
-                                                filterQuality: FilterQuality.low,
-                                                fit: BoxFit.cover,
-                                                useOldImageOnUrlChange: true,
-                                                fadeInCurve: Curves.easeIn,
-                                                fadeOutCurve: Curves.easeOut,
-                                                fadeInDuration: const Duration(milliseconds: 500),
-                                                fadeOutDuration: const Duration(milliseconds: 750),
-                                                errorWidget: (context, url, error) {
-                                                  return Center(
-                                                    child: Text(
-                                                      'Image $error',
-                                                      style: const TextStyle(
-                                                        color: Colors.redAccent,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: e.imageProduct,
+                                                  filterQuality: FilterQuality.low,
+                                                  fit: BoxFit.cover,
+                                                  useOldImageOnUrlChange: true,
+                                                  fadeInCurve: Curves.easeIn,
+                                                  fadeOutCurve: Curves.easeOut,
+                                                  fadeInDuration: const Duration(milliseconds: 500),
+                                                  fadeOutDuration:
+                                                      const Duration(milliseconds: 750),
+                                                  errorWidget: (context, url, error) {
+                                                    return Center(
+                                                      child: Text(
+                                                        'Image $error',
+                                                        style: const TextStyle(
+                                                          color: Colors.redAccent,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
-                                                },
+                                                    );
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        title: Text(
-                                          e.nameProduct,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color: Theme.of(context).colorScheme.primary,
-                                            fontSize: 16,
-                                            height: 1,
+                                          title: Text(
+                                            e.nameProduct,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              color: Theme.of(context).colorScheme.primary,
+                                              fontSize: 16,
+                                              height: 1,
+                                            ),
                                           ),
-                                        ),
-                                        subtitle: Text(
-                                          '${e.quantityProduct}x',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: Theme.of(context).colorScheme.primary,
-                                            fontSize: 14,
+                                          subtitle: Text(
+                                            '${e.quantityProduct}x',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              color: Theme.of(context).colorScheme.primary,
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                        ),
-                                        trailing: Text(
-                                          'Rp ${NumberFormat('#,##0.000', 'id_ID').format(e.valueTotal).replaceAll(',', '.')}',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            color: Theme.of(context).colorScheme.primary,
-                                            fontSize: 14,
+                                          trailing: Text(
+                                            'Rp ${NumberFormat('#,##0.000', 'id_ID').format(e.valueTotal).replaceAll(',', '.')}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              color: Theme.of(context).colorScheme.primary,
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ).toList(),
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
                                 ),
                               );
                             },

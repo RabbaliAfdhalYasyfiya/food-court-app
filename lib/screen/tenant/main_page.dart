@@ -14,9 +14,14 @@ import '../../widget/bottom_sheet.dart';
 import 'auth/auth_page.dart';
 
 class MainPageTenant extends StatefulWidget {
-  const MainPageTenant({super.key, this.initialIndex = 0});
-
   final int initialIndex;
+  final bool badge;
+
+  const MainPageTenant({
+    super.key,
+    this.initialIndex = 0,
+    this.badge = false,
+  });
 
   @override
   State<MainPageTenant> createState() => _MainPageTenantState();
@@ -34,7 +39,7 @@ class _MainPageTenantState extends State<MainPageTenant> {
 
   int currentIndex = 0;
   bool onTap = false;
-  bool hasNotification = true;
+  late bool showBadge;
 
   final List<String> title = [
     'Order',
@@ -46,6 +51,7 @@ class _MainPageTenantState extends State<MainPageTenant> {
   @override
   void initState() {
     currentIndex = widget.initialIndex;
+    showBadge = widget.badge;
     super.initState();
   }
 
@@ -94,6 +100,15 @@ class _MainPageTenantState extends State<MainPageTenant> {
     );
   }
 
+  // void showNotificationBadge(int index) {
+  //   setState(() {
+  //     currentIndex = index;
+  //     if (index == 0) {
+  //       hasNotification = false;
+  //     }
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,34 +154,15 @@ class _MainPageTenantState extends State<MainPageTenant> {
             currentIndex = value;
             onTap = !onTap;
             if (value == 1) {
-              hasNotification = false;
+              showBadge = false;
             }
           });
         },
         destinations: [
           NavigationDestination(
-            icon: Stack(
-              children: [
-                Icon(
-                  Iconsax.menu_board,
-                  color: Theme.of(context).navigationBarTheme.shadowColor,
-                ),
-                if (hasNotification) // Tampilkan badge jika ada notifikasi
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                        shape: BoxShape.circle,
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 16,
-                        minHeight: 16,
-                      ),
-                    ),
-                  ),
-              ],
+            icon: Icon(
+              Iconsax.menu_board,
+              color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
               Iconsax.menu_board5,
@@ -175,9 +171,26 @@ class _MainPageTenantState extends State<MainPageTenant> {
             label: 'Order',
           ),
           NavigationDestination(
-            icon: Icon(
-              Iconsax.directbox_notif,
-              color: Theme.of(context).navigationBarTheme.shadowColor,
+            icon: Stack(
+              children: [
+                Icon(
+                  Iconsax.directbox_notif,
+                  color: Theme.of(context).navigationBarTheme.shadowColor,
+                ),
+                if (showBadge) // Tampilkan badge jika ada notifikasi
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      height: 10,
+                      width: 10,
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             selectedIcon: Icon(
               Iconsax.directbox_notif5,

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -117,6 +118,7 @@ class _CartOrderState extends State<CartOrder> {
           tenantId: widget.currentTenant.uid,
           orderTime: actualOrderTime,
           initialIndex: 0,
+          badge: true,
         ),
       ),
     );
@@ -556,8 +558,9 @@ class _CartOrderState extends State<CartOrder> {
                               closeOnScroll: true,
                               direction: Axis.horizontal,
                               enabled: true,
+                              dragStartBehavior: DragStartBehavior.start,
                               endActionPane: ActionPane(
-                                motion: const ScrollMotion(),
+                                motion: const BehindMotion(),
                                 extentRatio: 0.15,
                                 children: [
                                   SlidableAction(
@@ -580,6 +583,8 @@ class _CartOrderState extends State<CartOrder> {
                                   side: BorderSide(
                                       color: Theme.of(context).colorScheme.outline, width: 0.5),
                                 ),
+                                autofocus: true,
+                                dense: false,
                                 style: ListTileStyle.list,
                                 visualDensity: VisualDensity.comfortable,
                                 contentPadding:
