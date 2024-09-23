@@ -164,7 +164,8 @@ class _AuthPageClientState extends State<AuthPageClient> {
                                 value: checked,
                                 visualDensity: VisualDensity.compact,
                                 activeColor: Theme.of(context).primaryColor,
-                                side: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
+                                side: BorderSide(
+                                    color: Theme.of(context).colorScheme.primary, width: 1),
                                 checkColor: Colors.white,
                                 splashRadius: 50,
                                 shape:
@@ -285,20 +286,22 @@ class _AuthPageClientState extends State<AuthPageClient> {
                           );
                         },
                         style: ButtonStyle(
-                          fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                          ),
-                          elevation: const WidgetStatePropertyAll(1),
-                          side: WidgetStatePropertyAll(
-                            BorderSide(
-                              width: 1.25,
-                              color: Theme.of(context).primaryColor.withOpacity(0.1),
-                            ),
-                          ),
-                          backgroundColor: const WidgetStatePropertyAll(Colors.white),
+                          elevation: const WidgetStatePropertyAll(3),
+                          shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
                           padding: const WidgetStatePropertyAll(
                             EdgeInsets.symmetric(vertical: 20),
+                          ),
+                          fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+                          backgroundColor:
+                              WidgetStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
+                          shape: WidgetStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: BorderSide(
+                                width: 0.75,
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
+                            ),
                           ),
                         ),
                         child: Text(

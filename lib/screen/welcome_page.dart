@@ -209,23 +209,23 @@ class _WelcomePageState extends State<WelcomePage> {
                                 );
                               },
                               style: ButtonStyle(
+                                elevation: const WidgetStatePropertyAll(3),
+                                shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+                                padding: const WidgetStatePropertyAll(
+                                  EdgeInsets.symmetric(vertical: 20),
+                                ),
                                 fixedSize:
                                     const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+                                backgroundColor:
+                                    WidgetStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
                                 shape: WidgetStatePropertyAll(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
+                                    side: BorderSide(
+                                      width: 0.75,
+                                      color: Theme.of(context).colorScheme.tertiary,
+                                    ),
                                   ),
-                                ),
-                                elevation: const WidgetStatePropertyAll(1),
-                                side: WidgetStatePropertyAll(
-                                  BorderSide(
-                                    width: 1.25,
-                                    color: Theme.of(context).primaryColor.withOpacity(0.1),
-                                  ),
-                                ),
-                                backgroundColor: const WidgetStatePropertyAll(Colors.white),
-                                padding: const WidgetStatePropertyAll(
-                                  EdgeInsets.symmetric(vertical: 20),
                                 ),
                               ),
                               child: Text(
