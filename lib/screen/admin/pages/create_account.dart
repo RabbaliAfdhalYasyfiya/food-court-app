@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:gap/gap.dart';
 
 import '../../../services/firebase_auth_service.dart';
+import '../../../widget/button.dart';
 import '../../../widget/snackbar.dart';
 import '../../../widget/form.dart';
 import '../../../widget/load.dart';
@@ -72,7 +73,7 @@ class _CreateAccountVendorState extends State<CreateAccountVendor> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
-              style: ButtonStyle(
+            style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
@@ -165,7 +166,7 @@ class _CreateAccountVendorState extends State<CreateAccountVendor> {
                     ),
                   ],
                 ),
-                ElevatedButton(
+                ButtonPrimary(
                   onPressed: () {
                     if (_auth.vendorNameController.text.isEmpty ||
                         _auth.emailVendorController.text.isEmpty ||
@@ -181,17 +182,6 @@ class _CreateAccountVendorState extends State<CreateAccountVendor> {
                       enterAuth();
                     }
                   },
-                  style: ButtonStyle(
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                    ),
-                    fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                    elevation: const WidgetStatePropertyAll(1),
-                    backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                    padding: const WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 20),
-                    ),
-                  ),
                   child: const Text(
                     'Create Account',
                     style: TextStyle(

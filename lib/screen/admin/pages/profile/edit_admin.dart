@@ -10,6 +10,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../widget/bottom_sheet.dart';
+import '../../../../widget/button.dart';
 import '../../../../widget/form.dart';
 
 class EditProfileAdmin extends StatefulWidget {
@@ -263,22 +264,11 @@ class _EditProfileAdminState extends State<EditProfileAdmin> {
                       },
                     ),
                     const Gap(50),
-                    ElevatedButton(
+                    ButtonPrimary(
                       onPressed: () {
                         enterUpdate();
                         Navigator.pop(context);
                       },
-                      style: ButtonStyle(
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                        ),
-                        fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                        elevation: const WidgetStatePropertyAll(1),
-                        backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                        padding: const WidgetStatePropertyAll(
-                          EdgeInsets.symmetric(vertical: 20),
-                        ),
-                      ),
                       child: const Text(
                         'Saved',
                         style: TextStyle(

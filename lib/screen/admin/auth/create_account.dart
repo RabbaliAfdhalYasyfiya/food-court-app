@@ -8,6 +8,7 @@ import 'package:gap/gap.dart';
 
 import '../../../services/firebase_auth_service.dart';
 import '../../../widget/bottom_sheet.dart';
+import '../../../widget/button.dart';
 import '../../../widget/snackbar.dart';
 import '../../../widget/form.dart';
 import '../../../widget/load.dart';
@@ -255,7 +256,7 @@ class _CreateAccountAdminState extends State<CreateAccountAdmin> {
                 ),
                 Column(
                   children: [
-                    ElevatedButton(
+                    ButtonPrimary(
                       onPressed: () {
                         if (_auth.placeNameController.text.isEmpty ||
                             _auth.emailAdminController.text.isEmpty ||
@@ -272,19 +273,6 @@ class _CreateAccountAdminState extends State<CreateAccountAdmin> {
                           enterAuth();
                         }
                       },
-                      style: ButtonStyle(
-                        fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                        shape: WidgetStatePropertyAll(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        elevation: const WidgetStatePropertyAll(3),
-                        backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                        padding: const WidgetStatePropertyAll(
-                          EdgeInsets.symmetric(vertical: 20),
-                        ),
-                      ),
                       child: const Text(
                         'Create Account',
                         style: TextStyle(

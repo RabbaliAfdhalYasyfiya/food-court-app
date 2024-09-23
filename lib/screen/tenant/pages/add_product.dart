@@ -10,6 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'package:gap/gap.dart';
 
 import '../../../widget/bottom_sheet.dart';
+import '../../../widget/button.dart';
 import '../../../widget/snackbar.dart';
 import '../../../widget/form.dart';
 import '../../../widget/load.dart';
@@ -337,23 +338,10 @@ class _AddProductState extends State<AddProduct> {
                   ],
                 ),
                 const Gap(20),
-                ElevatedButton(
+                ButtonPrimary(
                   onPressed: () {
                     enterAddProduct();
                   },
-                  style: ButtonStyle(
-                    fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    elevation: const WidgetStatePropertyAll(3),
-                    backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                    padding: const WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 20),
-                    ),
-                  ),
                   child: const Text(
                     'Add Product',
                     style: TextStyle(

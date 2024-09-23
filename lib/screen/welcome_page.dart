@@ -142,7 +142,8 @@ class _WelcomePageState extends State<WelcomePage> {
                                         ),
                                       ),
                                       elevation: const WidgetStatePropertyAll(3),
-                                      shadowColor: const WidgetStatePropertyAll(Colors.black),
+                                      shadowColor:
+                                          WidgetStatePropertyAll(Theme.of(context).shadowColor),
                                       backgroundColor:
                                           WidgetStatePropertyAll(Theme.of(context).primaryColor),
                                       padding: const WidgetStatePropertyAll(
@@ -179,7 +180,8 @@ class _WelcomePageState extends State<WelcomePage> {
                                         ),
                                       ),
                                       elevation: const WidgetStatePropertyAll(3),
-                                      shadowColor: const WidgetStatePropertyAll(Colors.black),
+                                      shadowColor:
+                                          WidgetStatePropertyAll(Theme.of(context).shadowColor),
                                       backgroundColor:
                                           WidgetStatePropertyAll(Theme.of(context).primaryColor),
                                       padding: const WidgetStatePropertyAll(

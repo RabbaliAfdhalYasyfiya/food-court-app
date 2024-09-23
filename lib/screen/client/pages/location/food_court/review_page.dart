@@ -12,6 +12,7 @@ import 'package:uuid/uuid.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../../widget/bottom_sheet.dart';
+import '../../../../../widget/button.dart';
 import '../../../../../widget/snackbar.dart';
 
 class ReviewPage extends StatefulWidget {
@@ -391,7 +392,7 @@ class _ReviewPageState extends State<ReviewPage> {
                     const Gap(15),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 25),
-                      child: ElevatedButton(
+                      child: ButtonPrimary(
                         onPressed: () {
                           showLoading(context);
                           enterAddImageReview(
@@ -408,20 +409,6 @@ class _ReviewPageState extends State<ReviewPage> {
 
                           Navigator.pop(context);
                         },
-                        style: ButtonStyle(
-                          shape: WidgetStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          elevation: const WidgetStatePropertyAll(3),
-                          fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                          shadowColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                          backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                          padding: const WidgetStatePropertyAll(
-                            EdgeInsets.symmetric(vertical: 17),
-                          ),
-                        ),
                         child: const Text(
                           'Saved Review',
                           style: TextStyle(

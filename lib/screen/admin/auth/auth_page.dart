@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../services/firebase_auth_service.dart';
+import '../../../widget/button.dart';
 import '../../../widget/snackbar.dart';
 import '../../../widget/form.dart';
 import '../../../widget/load.dart';
@@ -208,7 +209,7 @@ class _AuthPageAdminState extends State<AuthPageAdmin> {
                     ],
                   ),
                   const Gap(30),
-                  ElevatedButton(
+                  ButtonPrimary(
                     onPressed: () {
                       if (auth.emailAdminController.text.isEmpty &&
                           auth.passwordAdminController.text.isEmpty) {
@@ -243,20 +244,6 @@ class _AuthPageAdminState extends State<AuthPageAdmin> {
                         enterAuth();
                       }
                     },
-                    style: ButtonStyle(
-                      fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      elevation: const WidgetStatePropertyAll(3),
-                      shadowColor: const WidgetStatePropertyAll(Colors.black),
-                      backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                      padding: const WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 20),
-                      ),
-                    ),
                     child: const Text(
                       'Enter',
                       style: TextStyle(
@@ -267,7 +254,7 @@ class _AuthPageAdminState extends State<AuthPageAdmin> {
                     ),
                   ),
                   const Gap(10),
-                  ElevatedButton(
+                  ButtonSecondary(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -276,25 +263,6 @@ class _AuthPageAdminState extends State<AuthPageAdmin> {
                         ),
                       );
                     },
-                    style: ButtonStyle(
-                      elevation: const WidgetStatePropertyAll(3),
-                      shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
-                      padding: const WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 20),
-                      ),
-                      fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                      backgroundColor:
-                          WidgetStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          side: BorderSide(
-                            width: 0.75,
-                            color: Theme.of(context).colorScheme.tertiary,
-                          ),
-                        ),
-                      ),
-                    ),
                     child: Text(
                       'Create Account',
                       style: TextStyle(

@@ -171,6 +171,7 @@ class _ProductPageState extends State<ProductPage> {
                 }
 
                 final categories = snapshot.data!;
+                categories.sort((a, b) => a.compareTo(b));
 
                 return CustomScrollView(
                   slivers: [

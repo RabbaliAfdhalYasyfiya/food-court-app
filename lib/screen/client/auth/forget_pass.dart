@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../../../widget/button.dart';
 import '../../../widget/form.dart';
 import '../../../widget/snackbar.dart';
 
@@ -48,22 +49,12 @@ class _ForgotPassClientState extends State<ForgotPassClient> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
           titleSpacing: 2,
-          title: const Text(
-            'Forget Password',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-          ),
+          title: const Text('Forget Password'),
           leading: IconButton(
-            style: const ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+            style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
             ),
             icon: Icon(
               Icons.arrow_back_rounded,
@@ -84,11 +75,11 @@ class _ForgotPassClientState extends State<ForgotPassClient> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Gap(50),
-                  const Text(
+                  Text(
                     'Enter your Email Address and we will send you a link to reset your password.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 18,
                       fontWeight: FontWeight.w400,
                     ),
@@ -104,7 +95,7 @@ class _ForgotPassClientState extends State<ForgotPassClient> {
                     },
                   ),
                   const Gap(20),
-                  ElevatedButton(
+                  ButtonPrimary(
                     onPressed: () {
                       if (emailClientController.text.isEmpty) {
                         snackBarCustom(
@@ -117,22 +108,6 @@ class _ForgotPassClientState extends State<ForgotPassClient> {
                         passwordReset();
                       }
                     },
-                    style: ButtonStyle(
-                      fixedSize: const WidgetStatePropertyAll(
-                        Size.fromWidth(double.maxFinite),
-                      ),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      elevation: const WidgetStatePropertyAll(3),
-                      shadowColor: const WidgetStatePropertyAll(Colors.black),
-                      backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                      padding: const WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 20),
-                      ),
-                    ),
                     child: const Text(
                       'Reset Password',
                       style: TextStyle(

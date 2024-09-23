@@ -338,7 +338,6 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
                                                   borderRadius: BorderRadius.circular(15),
                                                 ),
                                               ),
-                                              elevation: const WidgetStatePropertyAll(3),
                                               backgroundColor: WidgetStatePropertyAll(
                                                   Theme.of(context).primaryColor),
                                             ),

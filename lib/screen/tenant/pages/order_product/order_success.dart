@@ -9,6 +9,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../services/models/model_tenant.dart';
+import '../../../../widget/button.dart';
 import '../../../../widget/snackbar.dart';
 import '../../main_page.dart';
 
@@ -21,7 +22,7 @@ class OrderSuccess extends StatefulWidget {
     required this.taxFee,
     required this.tenantId,
     required this.orderTime,
-    required this.initialIndex, 
+    required this.initialIndex,
     required this.badge,
   });
 
@@ -617,8 +618,18 @@ class _OrderSuccessState extends State<OrderSuccess> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: ElevatedButton.icon(
-                          iconAlignment: IconAlignment.start,
+                        child: ButtonTertiary(
+                          onPressed: () {
+                            orderPrint(
+                              vendor.vendorName,
+                              vendor.emailVendor,
+                              vendor.phoneNumberVendor,
+                            );
+
+                            setState(() {
+                              getPrinter();
+                            });
+                          },
                           icon: const Icon(
                             CupertinoIcons.printer,
                             color: Colors.white,
@@ -631,40 +642,11 @@ class _OrderSuccessState extends State<OrderSuccess> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          onPressed: () {
-                            orderPrint(
-                              vendor.vendorName,
-                              vendor.emailVendor,
-                              vendor.phoneNumberVendor,
-                            );
-
-                            setState(() {
-                              getPrinter();
-                            });
-                          },
-                          style: ButtonStyle(
-                            fixedSize:
-                                const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                            shape: WidgetStatePropertyAll(
-                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                            ),
-                            elevation: const WidgetStatePropertyAll(3),
-                            side: WidgetStatePropertyAll(
-                              BorderSide(
-                                width: 2,
-                                color: Colors.greenAccent.shade400.withOpacity(0.25),
-                              ),
-                            ),
-                            backgroundColor: WidgetStatePropertyAll(Colors.greenAccent.shade700),
-                            padding: const WidgetStatePropertyAll(
-                              EdgeInsets.symmetric(vertical: 20),
-                            ),
-                          ),
                         ),
                       ),
                       const Gap(10),
                       Expanded(
-                        child: ElevatedButton(
+                        child: ButtonPrimary(
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -676,18 +658,6 @@ class _OrderSuccessState extends State<OrderSuccess> {
                               ),
                             );
                           },
-                          style: ButtonStyle(
-                            fixedSize:
-                                const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                            shape: WidgetStatePropertyAll(
-                              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                            ),
-                            elevation: const WidgetStatePropertyAll(3),
-                            backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                            padding: const WidgetStatePropertyAll(
-                              EdgeInsets.symmetric(vertical: 20),
-                            ),
-                          ),
                           child: const Text(
                             'Continue',
                             style: TextStyle(

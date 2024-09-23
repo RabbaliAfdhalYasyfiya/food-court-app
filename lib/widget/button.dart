@@ -1,6 +1,115 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+class ButtonPrimary extends StatelessWidget {
+  const ButtonPrimary({
+    super.key,
+    required this.onPressed,
+    required this.child,
+  });
+
+  final Function() onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        ),
+        fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+        elevation: const WidgetStatePropertyAll(3),
+        shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+        backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 20),
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+class ButtonSecondary extends StatelessWidget {
+  const ButtonSecondary({
+    super.key,
+    required this.onPressed,
+    required this.child,
+  });
+
+  final Function() onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        elevation: const WidgetStatePropertyAll(3),
+        shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 20),
+        ),
+        fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+        backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            side: BorderSide(
+              width: 0.75,
+              color: Theme.of(context).colorScheme.tertiary,
+            ),
+          ),
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
+class ButtonTertiary extends StatelessWidget {
+  const ButtonTertiary({
+    super.key,
+    required this.onPressed,
+    required this.icon,
+    required this.label,
+  });
+
+  final Function() onPressed;
+  final Widget icon;
+  final Widget label;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      iconAlignment: IconAlignment.start,
+      icon: icon,
+      label: label,
+      onPressed: onPressed,
+      style: ButtonStyle(
+        fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        ),
+        elevation: const WidgetStatePropertyAll(3),
+        shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+        side: WidgetStatePropertyAll(
+          BorderSide(
+            width: 2,
+            color: Colors.greenAccent.shade400.withOpacity(0.25),
+          ),
+        ),
+        backgroundColor: WidgetStatePropertyAll(Colors.greenAccent.shade700),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 20),
+        ),
+      ),
+    );
+  }
+}
+
 class ButtonWithIcon extends StatelessWidget {
   const ButtonWithIcon({
     super.key,

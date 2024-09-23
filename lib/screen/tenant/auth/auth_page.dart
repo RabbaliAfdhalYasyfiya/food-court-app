@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../services/firebase_auth_service.dart';
+import '../../../widget/button.dart';
 import '../../../widget/snackbar.dart';
 import '../../../widget/form.dart';
 import '../../../widget/load.dart';
@@ -206,7 +207,7 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
                     ],
                   ),
                   const Gap(30),
-                  ElevatedButton(
+                  ButtonPrimary(
                     onPressed: () {
                       if (auth.emailVendorController.text.isEmpty &&
                           auth.passwordVendorController.text.isEmpty) {
@@ -241,20 +242,6 @@ class _AuthPageTenantState extends State<AuthPageTenant> {
                         enterAuth();
                       }
                     },
-                    style: ButtonStyle(
-                      fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                      shape: WidgetStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      elevation: const WidgetStatePropertyAll(3),
-                      shadowColor: const WidgetStatePropertyAll(Colors.black),
-                      backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                      padding: const WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(vertical: 20),
-                      ),
-                    ),
                     child: const Text(
                       'Enter',
                       style: TextStyle(

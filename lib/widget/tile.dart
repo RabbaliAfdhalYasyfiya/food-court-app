@@ -51,7 +51,7 @@ class _TileFoodCourtState extends State<TileFoodCourt> {
         } else {
           snackBarCustom(
             context,
-            Theme.of(context).colorScheme.error,
+            Colors.redAccent.shade400,
             'This ${widget.markerAdmin.placeName} is currently Closed',
             Colors.white,
           );

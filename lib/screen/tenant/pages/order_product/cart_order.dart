@@ -10,6 +10,7 @@ import 'package:gap/gap.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../widget/bottom_sheet.dart';
+import '../../../../widget/button.dart';
 import '../../../../widget/snackbar.dart';
 import '../../../../widget/load.dart';
 import 'order_success.dart';
@@ -356,7 +357,7 @@ class _CartOrderState extends State<CartOrder> {
               ),
             ),
             const Gap(10),
-            ElevatedButton(
+            ButtonPrimary(
               onPressed: () {
                 if (widget.selectedProducts.isEmpty) {
                   snackBarCustom(
@@ -376,17 +377,6 @@ class _CartOrderState extends State<CartOrder> {
                   addCheckoutProduct();
                 }
               },
-              style: ButtonStyle(
-                fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                ),
-                elevation: const WidgetStatePropertyAll(3),
-                backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                padding: const WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(vertical: 20),
-                ),
-              ),
               child: const Text(
                 'Checkout',
                 style: TextStyle(
