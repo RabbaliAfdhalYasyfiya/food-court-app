@@ -286,7 +286,7 @@ class TileTenant extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(

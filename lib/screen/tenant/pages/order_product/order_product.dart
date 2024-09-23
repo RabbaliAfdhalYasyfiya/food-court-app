@@ -19,37 +19,24 @@ class OrderProduct extends StatefulWidget {
   State<OrderProduct> createState() => _OrderProductState();
 }
 
-class _OrderProductState extends State<OrderProduct> with SingleTickerProviderStateMixin {
+class _OrderProductState extends State<OrderProduct> with TickerProviderStateMixin {
   final currentTenant = FirebaseAuth.instance.currentUser;
 
   final Map<String, List<bool>> _checkedProductsMap = {};
   final Map<String, List<int>> _countsMap = {};
   final Map<String, List<MenuProduct>> _productDataMap = {};
 
-  late ScrollController _scrollController;
+  final ScrollController _scrollController = ScrollController();
   late TabController _tabController;
   late Future<List<String>> _categoriesFuture;
 
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController();
+    _scrollController;
     _categoriesFuture = fetchCategories();
     _categoriesFuture.then((categories) {
       _tabController = TabController(length: categories.length, vsync: this);
-      _tabController.addListener(() {
-        if (_tabController.indexIsChanging) {
-          // Calculate the position to scroll to based on tab index
-          double offset =
-              (_tabController.index * 225); // Adjust the multiplier based on your tab width
-          _scrollController.animateTo(
-            offset,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-          );
-        }
-        setState(() {});
-      });
       setState(() {});
     });
   }
@@ -164,6 +151,8 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
 
         final categories = categorySnapshot.data!;
 
+        categories.sort((a, b) => a.compareTo(b));
+
         if (_tabController.length != categories.length) {
           _tabController = TabController(length: categories.length, vsync: this);
         }
@@ -176,7 +165,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                 child: Container(
                   height: 50,
                   width: double.infinity,
-                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                  margin: const EdgeInsets.fromLTRB(16, 5, 16, 10),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(10),
@@ -185,24 +174,25 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                       width: 1,
                     ),
                   ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    controller: _scrollController,
-                    physics: const NeverScrollableScrollPhysics(),
+                  child: DefaultTabController(
+                    length: categories.length,
+                    animationDuration: const Duration(milliseconds: 250),
                     child: TabBar(
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 10),
                       controller: _tabController,
-                      isScrollable: false,
+                      isScrollable: true,
+                      splashBorderRadius: BorderRadius.circular(10),
                       indicatorColor: Theme.of(context).primaryColor,
                       indicatorSize: TabBarIndicatorSize.label,
-                      indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
+                      indicatorPadding: const EdgeInsets.symmetric(horizontal: 5),
                       indicatorWeight: 4,
-                      tabAlignment: TabAlignment.center,
+                      tabAlignment: TabAlignment.start,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       unselectedLabelStyle: TextStyle(
                         fontSize: 15,
                         color: Theme.of(context).colorScheme.secondary,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w300,
                       ),
                       labelStyle: TextStyle(
                         fontSize: 15,
@@ -210,6 +200,8 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                         fontWeight: FontWeight.w500,
                       ),
                       dividerColor: Colors.transparent,
+                      automaticIndicatorColorAdjustment: true,
+                      overlayColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
                       tabs: categories.map((category) => Tab(text: category)).toList(),
                     ),
                   ),
@@ -220,7 +212,7 @@ class _OrderProductState extends State<OrderProduct> with SingleTickerProviderSt
                 child: TabBarView(
                     dragStartBehavior: DragStartBehavior.start,
                     controller: _tabController,
-                    physics: const ScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     children: categories.map(
                       (category) {
                         return StreamBuilder<QuerySnapshot>(

@@ -379,9 +379,9 @@ class _LocationPageState extends State<LocationPage> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.grey.shade200,
-                      Colors.grey.shade100,
-                      Colors.grey.shade50,
+                      Theme.of(context).colorScheme.onPrimary,
+                      Theme.of(context).colorScheme.onSecondary,
+                      Theme.of(context).colorScheme.onTertiary,
                     ],
                   ),
                 ),
@@ -437,7 +437,7 @@ class _LocationPageState extends State<LocationPage> {
                         margin: const EdgeInsets.only(top: 2.5),
                         padding: const EdgeInsets.all(2.5),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.15),
                           borderRadius: const BorderRadius.all(Radius.circular(5)),
                         ),
                         child: Icon(
@@ -650,6 +650,8 @@ class _LocationPageState extends State<LocationPage> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Card(
+                                        margin: EdgeInsets.zero,
+                                        shadowColor: Theme.of(context).shadowColor,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(100)),
                                         child: IconButton(
@@ -678,12 +680,16 @@ class _LocationPageState extends State<LocationPage> {
                                       Expanded(
                                         flex: 4,
                                         child: Card(
+                                          margin: EdgeInsets.zero,
+                                          shadowColor: Theme.of(context).shadowColor,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10)),
                                           child: Container(
                                             height: 40,
                                             width: double.infinity,
                                             padding: const EdgeInsets.only(left: 15),
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(25),
+                                              borderRadius: BorderRadius.circular(10),
                                               color: Theme.of(context).scaffoldBackgroundColor,
                                             ),
                                             child: Row(
@@ -747,11 +753,15 @@ class _LocationPageState extends State<LocationPage> {
                                       showWeatherInfo();
                                     },
                                     child: Card(
+                                      margin: EdgeInsets.zero,
+                                      shadowColor: Theme.of(context).shadowColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10)),
                                       child: Container(
                                         height: 40,
                                         padding: const EdgeInsets.symmetric(horizontal: 7.5),
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(25),
+                                          borderRadius: BorderRadius.circular(10),
                                           color: Theme.of(context).scaffoldBackgroundColor,
                                         ),
                                         child: Row(
@@ -785,7 +795,7 @@ class _LocationPageState extends State<LocationPage> {
                   ),
                   const Gap(10),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       'Nearby Food Court',
                       style: Theme.of(context).textTheme.titleMedium,
@@ -826,6 +836,8 @@ class _LocationPageState extends State<LocationPage> {
                           }
 
                           List<MarkerAdmin> markerAdminList = snapshot.data as List<MarkerAdmin>;
+
+                          markerAdminList.sort((a, b) => a.distance.compareTo(b.distance));
 
                           return markerAdminList.isEmpty
                               ? Container(

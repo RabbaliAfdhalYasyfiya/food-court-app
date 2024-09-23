@@ -39,13 +39,26 @@ class _TenantMenuState extends State<TenantMenu> {
     List<Widget> sliverListItems = [];
     categorizedProducts.forEach(
       (category, products) {
+        products.sort((a, b) => a.nameProduct.compareTo(b.nameProduct));
         sliverListItems.add(
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.only(left: 15, bottom: 7),
-              child: Text(
-                category,
-                style: Theme.of(context).textTheme.titleMedium,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    category,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const Gap(10),
+                  Expanded(
+                    child: Divider(
+                      thickness: 0.5,
+                      color: Theme.of(context).dividerColor,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

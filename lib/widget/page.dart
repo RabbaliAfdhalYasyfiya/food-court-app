@@ -393,6 +393,7 @@ class PageTenant extends StatelessWidget {
 
             if (snapshot.hasData) {
               final vendorData = snapshot.data!;
+              vendorData.sort((a, b) => a.vendorName.compareTo(b.vendorName));
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -481,7 +482,7 @@ class PageTenant extends StatelessWidget {
                 children: [
                   Shimmer.fromColors(
                     baseColor: Theme.of(context).colorScheme.onPrimary,
-                highlightColor: Theme.of(context).colorScheme.onSecondary,
+                    highlightColor: Theme.of(context).colorScheme.onSecondary,
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Container(
@@ -495,8 +496,8 @@ class PageTenant extends StatelessWidget {
                   ),
                   const Gap(5),
                   Shimmer.fromColors(
-                  baseColor: Theme.of(context).colorScheme.onPrimary,
-                highlightColor: Theme.of(context).colorScheme.onSecondary,
+                    baseColor: Theme.of(context).colorScheme.onPrimary,
+                    highlightColor: Theme.of(context).colorScheme.onSecondary,
                     direction: ShimmerDirection.ltr,
                     enabled: true,
                     child: Row(

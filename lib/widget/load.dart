@@ -6,7 +6,7 @@ void showLoading(BuildContext context) {
     context: context,
     useSafeArea: true,
     barrierDismissible: false,
-    barrierColor: Colors.black87.withOpacity(0.85),
+    barrierColor: Theme.of(context).colorScheme.tertiary,
     traversalEdgeBehavior: TraversalEdgeBehavior.closedLoop,
     builder: (context) {
       return Dialog(
@@ -28,7 +28,7 @@ void showLoading(BuildContext context) {
               Text(
                 'Loading...',
                 style: TextStyle(
-                  color:  Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                 ),

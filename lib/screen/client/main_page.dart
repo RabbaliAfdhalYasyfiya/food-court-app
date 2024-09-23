@@ -149,11 +149,11 @@ class _MainPageClientState extends State<MainPageClient> {
         destinations: [
           NavigationDestination(
             icon: Icon(
-              Iconsax.map,
+              Iconsax.map_1,
               color: Theme.of(context).navigationBarTheme.shadowColor,
             ),
             selectedIcon: Icon(
-              Iconsax.map_15,
+              Iconsax.map5,
               color: Theme.of(context).primaryColor,
             ),
             label: 'Location',
