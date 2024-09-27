@@ -53,7 +53,7 @@ class ButtonSecondary extends StatelessWidget {
           EdgeInsets.symmetric(vertical: 20),
         ),
         fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-        backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
+        backgroundColor: WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),

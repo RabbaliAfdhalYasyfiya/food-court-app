@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:gap/gap.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../widget/snackbar.dart';
@@ -123,9 +124,27 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
       future: _categoriesFuture,
       builder: (context, categorySnapshot) {
         if (categorySnapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return Shimmer.fromColors(
+            baseColor: Theme.of(context).colorScheme.onPrimary,
+            highlightColor: Theme.of(context).colorScheme.onSecondary,
+            child: Container(
+              height: 50,
+              width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(16, 5, 16, 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onPrimary,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.onSecondary,
+                  width: 1,
+                ),
+              ),
+            ),
+          );
         } else if (categorySnapshot.hasError) {
-          return Center(child: Text('Error: ${categorySnapshot.error}'));
+          return Center(
+            child: Text('Error: ${categorySnapshot.error}'),
+          );
         } else if (!categorySnapshot.hasData || categorySnapshot.data!.isEmpty) {
           return Center(
             child: Column(
@@ -178,26 +197,31 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
                     length: categories.length,
                     animationDuration: const Duration(milliseconds: 250),
                     child: TabBar(
-                      physics: const ClampingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 10),
                       controller: _tabController,
                       isScrollable: true,
                       splashBorderRadius: BorderRadius.circular(10),
-                      indicatorColor: Theme.of(context).primaryColor,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      indicatorPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      indicatorWeight: 4,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
+                      indicator: UnderlineTabIndicator(
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(50)),
+                        borderSide: BorderSide(
+                          width: 4,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                       tabAlignment: TabAlignment.start,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       unselectedLabelStyle: TextStyle(
                         fontSize: 15,
                         color: Theme.of(context).colorScheme.secondary,
-                        fontWeight: FontWeight.w300,
+                        fontWeight: FontWeight.w400,
                       ),
                       labelStyle: TextStyle(
                         fontSize: 15,
                         color: Theme.of(context).primaryColor,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                       ),
                       dividerColor: Colors.transparent,
                       automaticIndicatorColorAdjustment: true,
@@ -212,7 +236,7 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
                 child: TabBarView(
                     dragStartBehavior: DragStartBehavior.start,
                     controller: _tabController,
-                    physics: const AlwaysScrollableScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     children: categories.map(
                       (category) {
                         return StreamBuilder<QuerySnapshot>(
@@ -227,6 +251,24 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
                               debugPrint('${productSnapshot.error}');
                               return Center(
                                 child: Text('An error occurred: ${productSnapshot.error}'),
+                              );
+                            }
+
+                            if (categorySnapshot.connectionState == ConnectionState.waiting) {
+                              return GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5,
+                                  mainAxisExtent: 275,
+                                ),
+                                padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
+                                shrinkWrap: true,
+                                itemCount: 5,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  return orderLoad(context);
+                                },
                               );
                             }
 
@@ -302,44 +344,79 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
                                       },
                                     ),
                                   ),
-                                  Visibility(
-                                    visible: checkedProducts.contains(true),
-                                    child: Expanded(
-                                      flex: 0,
-                                      child: Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 100,
-                                          color: Theme.of(context).scaffoldBackgroundColor,
-                                          padding: const EdgeInsets.all(16),
-                                          child: ElevatedButton.icon(
-                                            icon: const Icon(
-                                              Iconsax.shopping_cart,
-                                              color: Colors.white,
+                                  Expanded(
+                                    flex: 0,
+                                    child: AnimatedSlide(
+                                      offset: checkedProducts.contains(true)
+                                          ? const Offset(0, 0)
+                                          : const Offset(0, 1),
+                                      duration: const Duration(milliseconds: 250),
+                                      curve: Curves.easeInOut,
+                                      child: Visibility(
+                                        visible: checkedProducts.contains(true),
+                                        child: Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Card(
+                                            margin: EdgeInsets.zero,
+                                            elevation: 25,
+                                            color: Theme.of(context).navigationBarTheme.shadowColor,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(top: Radius.circular(25)),
                                             ),
-                                            iconAlignment: IconAlignment.start,
-                                            label: const Text(
-                                              'Order Menu',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500,
+                                            child: Container(
+                                              width: double.infinity,
+                                              padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                                              decoration: BoxDecoration(
+                                                borderRadius: const BorderRadius.vertical(
+                                                    top: Radius.circular(25)),
+                                                color: Theme.of(context).scaffoldBackgroundColor,
                                               ),
-                                            ),
-                                            onPressed: () {
-                                              processToCart();
-                                            },
-                                            style: ButtonStyle(
-                                              fixedSize: const WidgetStatePropertyAll(
-                                                  Size.fromWidth(double.negativeInfinity)),
-                                              shape: WidgetStatePropertyAll(
-                                                RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(15),
-                                                ),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    width: 40,
+                                                    height: 5,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(100),
+                                                      color: Colors.grey.shade400,
+                                                    ),
+                                                  ),
+                                                  const Gap(20),
+                                                  ElevatedButton.icon(
+                                                    icon: const Icon(
+                                                      Iconsax.shopping_cart,
+                                                      color: Colors.white,
+                                                    ),
+                                                    iconAlignment: IconAlignment.start,
+                                                    label: const Text(
+                                                      'Order Menu',
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.white,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      processToCart();
+                                                    },
+                                                    style: ButtonStyle(
+                                                      fixedSize: const WidgetStatePropertyAll(
+                                                          Size.fromWidth(double.maxFinite)),
+                                                      shape: WidgetStatePropertyAll(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(15),
+                                                        ),
+                                                      ),
+                                                      backgroundColor: WidgetStatePropertyAll(
+                                                          Theme.of(context).primaryColor),
+                                                      padding: const WidgetStatePropertyAll(
+                                                        EdgeInsets.symmetric(vertical: 20),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              backgroundColor: WidgetStatePropertyAll(
-                                                  Theme.of(context).primaryColor),
                                             ),
                                           ),
                                         ),
@@ -379,6 +456,146 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
           ),
         );
       },
+    );
+  }
+
+  Widget orderLoad(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Shimmer.fromColors(
+                baseColor: Theme.of(context).colorScheme.onPrimary,
+                highlightColor: Theme.of(context).colorScheme.onSecondary,
+                direction: ShimmerDirection.ltr,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Gap(10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Shimmer.fromColors(
+                baseColor: Theme.of(context).colorScheme.onPrimary,
+                highlightColor: Theme.of(context).colorScheme.onSecondary,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    const Gap(2.5),
+                    Container(
+                      height: 20,
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    const Gap(5),
+                    Container(
+                      height: 17,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Divider(
+                thickness: 0.5,
+                height: 10,
+                endIndent: 10,
+                indent: 10,
+                color: Theme.of(context).dividerColor,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Shimmer.fromColors(
+                      baseColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                      highlightColor: Theme.of(context).primaryColor.withOpacity(0.25),
+                      child: Container(
+                        height: 40,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor.withOpacity(0.25),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(15),
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                            topLeft: Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Shimmer.fromColors(
+                      baseColor: Theme.of(context).colorScheme.onPrimary,
+                      highlightColor: Theme.of(context).colorScheme.onSecondary,
+                      child: Container(
+                        height: 40,
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Shimmer.fromColors(
+                      baseColor: Theme.of(context).primaryColor.withOpacity(0.5),
+                      highlightColor: Theme.of(context).primaryColor.withOpacity(0.25),
+                      child: Container(
+                        height: 40,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor.withOpacity(0.25),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(15),
+                            topLeft: Radius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

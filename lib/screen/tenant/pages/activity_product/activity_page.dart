@@ -21,6 +21,21 @@ class ActivityPage extends StatefulWidget {
 class _ActivityPageState extends State<ActivityPage> {
   final currentTenant = FirebaseAuth.instance.currentUser;
 
+  bool isCheckoutCardVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(milliseconds: 250),
+      () {
+        setState(() {
+          isCheckoutCardVisible = true;
+        });
+      },
+    );
+  }
+
   Widget activityLoad() {
     return Column(
       children: [
@@ -37,7 +52,7 @@ class _ActivityPageState extends State<ActivityPage> {
                 height: 25,
                 width: 150,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
@@ -45,7 +60,7 @@ class _ActivityPageState extends State<ActivityPage> {
               Expanded(
                 child: Divider(
                   thickness: 1.5,
-                  color: Colors.grey.shade200,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
             ],
@@ -116,7 +131,7 @@ class _ActivityPageState extends State<ActivityPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: Colors.grey.shade200,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         width: 1.5,
                       ),
                     ),
@@ -135,14 +150,14 @@ class _ActivityPageState extends State<ActivityPage> {
                               Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundColor: Colors.grey.shade200,
+                                    backgroundColor: Theme.of(context).colorScheme.onPrimary,
                                   ),
                                   const Gap(10),
                                   Container(
                                     height: 25,
                                     width: 100,
                                     decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
+                                      color: Theme.of(context).colorScheme.onPrimary,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                   ),
@@ -152,7 +167,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                 height: 25,
                                 width: 85,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
+                                  color: Theme.of(context).colorScheme.onPrimary,
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -172,7 +187,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
+                                      color: Theme.of(context).colorScheme.onPrimary,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                   ),
@@ -184,7 +199,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                         height: 25,
                                         width: 100,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Theme.of(context).colorScheme.onPrimary,
                                           borderRadius: BorderRadius.circular(5),
                                         ),
                                       ),
@@ -193,7 +208,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                         height: 20,
                                         width: 50,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Theme.of(context).colorScheme.onPrimary,
                                           borderRadius: BorderRadius.circular(5),
                                         ),
                                       ),
@@ -205,7 +220,7 @@ class _ActivityPageState extends State<ActivityPage> {
                                 height: 22,
                                 width: 80,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
+                                  color: Theme.of(context).colorScheme.onPrimary,
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
@@ -631,78 +646,83 @@ class _ActivityPageState extends State<ActivityPage> {
                 ),
                 Align(
                   alignment: AlignmentDirectional.bottomCenter,
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    elevation: 25,
-                    color: Theme.of(context).navigationBarTheme.shadowColor,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                  child: AnimatedSlide(
+                    offset: isCheckoutCardVisible ? const Offset(0, 0) : const Offset(0, 1),
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.easeInOut,
+                    child: Card(
+                      margin: EdgeInsets.zero,
+                      elevation: 25,
+                      color: Theme.of(context).navigationBarTheme.shadowColor,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
                       ),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Colors.grey.shade400,
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 5,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                color: Colors.grey.shade400,
+                              ),
                             ),
-                          ),
-                          const Gap(20),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Total Tax Fee',
-                                style: Theme.of(context).textTheme.headlineSmall,
-                              ),
-                              Text(
-                                'Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee * orderData.length).replaceAll(',', '.')}',
-                                style: Theme.of(context).textTheme.headlineSmall,
-                              ),
-                            ],
-                          ),
-                          const Gap(5),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Total Sales',
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                              Text(
-                                'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue).replaceAll(',', '.')}',
-                                style: Theme.of(context).textTheme.labelSmall,
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            thickness: 1,
-                            color: Theme.of(context).dividerColor,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Total',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                              Text(
-                                'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue + (taxFee * orderData.length)).replaceAll(',', '.')}',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ],
-                          ),
-                        ],
+                            const Gap(20),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Total Tax Fee',
+                                  style: Theme.of(context).textTheme.headlineSmall,
+                                ),
+                                Text(
+                                  'Rp ${NumberFormat('#,##0.000', 'id_ID').format(taxFee * orderData.length).replaceAll(',', '.')}',
+                                  style: Theme.of(context).textTheme.headlineSmall,
+                                ),
+                              ],
+                            ),
+                            const Gap(5),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Total Sales',
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                                Text(
+                                  'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue).replaceAll(',', '.')}',
+                                  style: Theme.of(context).textTheme.labelSmall,
+                                ),
+                              ],
+                            ),
+                            Divider(
+                              thickness: 1,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Total',
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                                Text(
+                                  'Rp ${NumberFormat('#,##0.000', 'id_ID').format(totalValue + (taxFee * orderData.length)).replaceAll(',', '.')}',
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

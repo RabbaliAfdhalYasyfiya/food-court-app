@@ -7,5 +7,7 @@
   "git.enableStatusBarSync": true,
   "git.terminalGitEditor": true,
   "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
-  "terminal.integrated.tabs.defaultIcon": "symbol-module"
+  "terminal.integrated.tabs.defaultIcon": "symbol-module",
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true
 }

@@ -120,19 +120,31 @@ class _ProductPageState extends State<ProductPage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Shimmer.fromColors(
-                        baseColor: Colors.grey.shade200,
-                        highlightColor: Colors.grey.shade100,
-                        direction: ShimmerDirection.ltr,
-                        enabled: true,
-                        child: Container(
-                          height: 22,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(5),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Shimmer.fromColors(
+                            baseColor: Theme.of(context).colorScheme.onPrimary,
+                            highlightColor: Theme.of(context).colorScheme.onSecondary,
+                            direction: ShimmerDirection.ltr,
+                            enabled: true,
+                            child: Container(
+                              height: 22,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
                           ),
-                        ),
+                          const Gap(10),
+                          Expanded(
+                            child: Divider(
+                              thickness: 0.5,
+                              color: Theme.of(context).dividerColor,
+                            ),
+                          ),
+                        ],
                       ),
                       const Gap(5),
                       productLoad(),
@@ -275,11 +287,11 @@ class _ProductPageState extends State<ProductPage> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.shade200, width: 1),
-      ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
+        ),
       child: Row(
         children: [
           Expanded(
@@ -287,13 +299,13 @@ class _ProductPageState extends State<ProductPage> {
             child: AspectRatio(
               aspectRatio: 1 / 1,
               child: Shimmer.fromColors(
-                baseColor: Colors.grey.shade200,
-                highlightColor: Colors.grey.shade100,
+                baseColor: Theme.of(context).colorScheme.onPrimary,
+                highlightColor: Theme.of(context).colorScheme.onSecondary,
                 direction: ShimmerDirection.ltr,
                 enabled: true,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
@@ -309,8 +321,8 @@ class _ProductPageState extends State<ProductPage> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Shimmer.fromColors(
-                  baseColor: Colors.grey.shade200,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor: Theme.of(context).colorScheme.onPrimary,
+                  highlightColor: Theme.of(context).colorScheme.onSecondary,
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Column(
@@ -320,7 +332,7 @@ class _ProductPageState extends State<ProductPage> {
                         height: 20,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
@@ -329,7 +341,7 @@ class _ProductPageState extends State<ProductPage> {
                         height: 20,
                         width: 120,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
@@ -338,23 +350,23 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 const Gap(7.5),
                 Shimmer.fromColors(
-                  baseColor: Colors.grey.shade200,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor: Theme.of(context).colorScheme.onPrimary,
+                  highlightColor: Theme.of(context).colorScheme.onSecondary,
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Container(
                     height: 17,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
                 ),
                 const Gap(3),
                 Shimmer.fromColors(
-                  baseColor: Colors.grey.shade200,
-                  highlightColor: Colors.grey.shade100,
+                  baseColor: Theme.of(context).colorScheme.onPrimary,
+                  highlightColor: Theme.of(context).colorScheme.onSecondary,
                   direction: ShimmerDirection.ltr,
                   enabled: true,
                   child: Column(
@@ -364,7 +376,7 @@ class _ProductPageState extends State<ProductPage> {
                         height: 15,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
@@ -373,7 +385,7 @@ class _ProductPageState extends State<ProductPage> {
                         height: 15,
                         width: 120,
                         decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),

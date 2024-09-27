@@ -61,7 +61,7 @@ class _LocationPageState extends State<LocationPage> {
   String? specAddressLocation;
 
   final Set<Circle> _circle = <Circle>{};
-  final List<Marker> _markers = <Marker>[];
+  final Set<Marker> _markers = <Marker>{};
 
   late Future<List<MarkerAdmin>> futureMarkerAdminData;
 
@@ -598,7 +598,7 @@ class _LocationPageState extends State<LocationPage> {
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
+                              color: Theme.of(context).colorScheme.onPrimary,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                   color: Theme.of(context).colorScheme.outline, width: 0.5),
@@ -624,7 +624,7 @@ class _LocationPageState extends State<LocationPage> {
                                 indoorViewEnabled: true,
                                 zoomControlsEnabled: false,
                                 style: isDarkTheme ? Utils.mapStyleDark : Utils.mapStyleLight,
-                                markers: Set<Marker>.of(_markers),
+                                markers: _markers,
                                 onTap: (argument) {
                                   customInfoWindowAdminsController.hideInfoWindow!();
                                 },
@@ -836,9 +836,7 @@ class _LocationPageState extends State<LocationPage> {
                           }
 
                           List<MarkerAdmin> markerAdminList = snapshot.data as List<MarkerAdmin>;
-
-                          markerAdminList.sort((a, b) => a.distance.compareTo(b.distance));
-
+                        
                           return markerAdminList.isEmpty
                               ? Container(
                                   width: double.infinity,

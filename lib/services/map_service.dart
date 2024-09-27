@@ -1,10 +1,12 @@
 import 'dart:ui' as ui;
 
-import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter/services.dart';
+
+import '../utils/utils.dart';
 
 class MapService {
-  final String key = 'AIzaSyBQ0CWDFFQ9qOjVOjtRZnExng95RS0QkNQ';
+  final String key = googleMapAPI;
   //final String type = 'geocode';
 
   Future<Position> determinePosition() async {

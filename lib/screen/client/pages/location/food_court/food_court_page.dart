@@ -75,18 +75,26 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 16),
-                child: IconButton(
-                  visualDensity: VisualDensity.comfortable,
+                child: ElevatedButton.icon(
+                  label: const Text(
+                    'Route',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 17,
+                    ),
+                  ),
+                  onLongPress: () {
+                    try {
+                      var url =
+                          "https://www.google.com/maps/dir/?api=1&destination=${widget.markerAdmin.latitude},${widget.markerAdmin.longitude}";
+                      final Uri uri = Uri.parse(url);
+                      launchUrl(uri);
+                    } catch (e) {
+                      debugPrint('Error : $e');
+                    }
+                  },
                   onPressed: () {
-                    // try {
-                    //   var url =
-                    //       "https://www.google.com/maps/dir/?api=1&destination=${widget.markerAdmin.latitude},${widget.markerAdmin.longitude}";
-                    //   final Uri uri = Uri.parse(url);
-                    //   launchUrl(uri);
-                    // } catch (e) {
-                    //   debugPrint('Error : $e');
-                    // }
-
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
@@ -101,26 +109,14 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                    elevation: const WidgetStatePropertyAll(0),
                     padding: const WidgetStatePropertyAll(
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 11),
                     ),
                   ),
-                  icon: const Row(
-                    children: [
-                      Text(
-                        'Rute',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                        ),
-                      ),
-                      Gap(10),
-                      Icon(
-                        CupertinoIcons.arrow_up_right_diamond_fill,
-                        color: Colors.white,
-                      ),
-                    ],
+                  icon: const Icon(
+                    CupertinoIcons.arrow_up_right_diamond_fill,
+                    color: Colors.white,
                   ),
                 ),
               )
@@ -135,39 +131,17 @@ class _FoodCourtPageState extends State<FoodCourtPage> {
                 imageUrl: widget.markerAdmin.imagePlace,
                 filterQuality: FilterQuality.low,
                 fit: BoxFit.cover,
-                placeholder: (context, url) {
-                  return Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    color: Colors.grey.shade200,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.grey.shade400,
-                        strokeCap: StrokeCap.round,
-                      ),
-                    ),
-                  );
-                },
+                useOldImageOnUrlChange: true,
+                fadeInCurve: Curves.easeIn,
+                fadeOutCurve: Curves.easeOut,
+                fadeInDuration: const Duration(milliseconds: 500),
+                fadeOutDuration: const Duration(milliseconds: 750),
                 errorWidget: (context, url, error) {
                   return Center(
                     child: Text(
                       'Image $error',
                       style: const TextStyle(
                         color: Colors.redAccent,
-                      ),
-                    ),
-                  );
-                },
-                imageBuilder: (context, imageProvider) {
-                  return Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.low,
                       ),
                     ),
                   );

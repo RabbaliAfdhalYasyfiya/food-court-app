@@ -1,6 +1,7 @@
+const String googleMapAPI = 'AIzaSyBQ0CWDFFQ9qOjVOjtRZnExng95RS0QkNQ'; 
+
 class Utils {
   static String mapStyleLight = '''
-
 [
   {
     "featureType": "administrative.land_parcel",
@@ -55,7 +56,6 @@ class Utils {
     ]
   }
 ]
-
   ''';
 
   static String mapStyleDark = ''' 

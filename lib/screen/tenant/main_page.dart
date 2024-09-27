@@ -214,8 +214,8 @@ class _MainPageTenantState extends State<MainPageTenant> {
         ],
       ),
       body: DoubleBackToCloseApp(
-        snackBar: const SnackBar(
-          content: Text(
+        snackBar: SnackBar(
+          content: const Text(
             'Press again to Exit',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -224,13 +224,13 @@ class _MainPageTenantState extends State<MainPageTenant> {
               fontWeight: FontWeight.w300,
             ),
           ),
-          duration: Duration(seconds: 3),
+          duration: const Duration(seconds: 3),
           backgroundColor: Colors.black87,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            side: BorderSide(color: Colors.black45, width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            side: BorderSide(color: Theme.of(context).colorScheme.secondary, width: 1),
           ),
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           behavior: SnackBarBehavior.floating,
           elevation: 0,
           clipBehavior: Clip.antiAliasWithSaveLayer,

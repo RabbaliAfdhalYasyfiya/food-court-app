@@ -36,6 +36,21 @@ class CartOrder extends StatefulWidget {
 class _CartOrderState extends State<CartOrder> {
   ProductTypeEnum? _productTypeEnum;
 
+  bool isCheckoutCardVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(milliseconds: 250),
+      () {
+        setState(() {
+          isCheckoutCardVisible = true;
+        });
+      },
+    );
+  }
+
   void addCheckoutProduct() async {
     showLoading(context);
 
@@ -682,12 +697,17 @@ class _CartOrderState extends State<CartOrder> {
             ),
             Expanded(
               flex: 6,
-              child: checkoutCard(
-                context,
-                widget.selectedProducts.length,
-                subTotal,
-                taxFee,
-                orderTotal,
+              child: AnimatedSlide(
+                offset: isCheckoutCardVisible ? const Offset(0, 0) : const Offset(0, 1),
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeInOut,
+                child: checkoutCard(
+                  context,
+                  widget.selectedProducts.length,
+                  subTotal,
+                  taxFee,
+                  orderTotal,
+                ),
               ),
             ),
           ],

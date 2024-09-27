@@ -112,10 +112,12 @@ ThemeData lightMode = ThemeData(
     shadowColor: Colors.black,
     overlayColor: WidgetStatePropertyAll(Colors.blueAccent.shade400.withOpacity(0.25)),
     indicatorColor: Colors.blueAccent.shade400.withOpacity(0.15),
+    
     labelTextStyle: const WidgetStatePropertyAll(
       TextStyle(
         color: Colors.black,
         fontSize: 13,
+        fontWeight: FontWeight.w400,
       ),
     ),
   ),
@@ -248,6 +250,7 @@ ThemeData darkMode = ThemeData(
       TextStyle(
         color: Colors.white,
         fontSize: 13,
+        fontWeight: FontWeight.w400,
       ),
     ),
   ),
