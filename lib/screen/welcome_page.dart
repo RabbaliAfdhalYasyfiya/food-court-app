@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../widget/button.dart';
 import 'admin/auth/auth_page.dart';
 import 'client/auth/auth_page.dart';
 import 'tenant/auth/auth_page.dart';
@@ -124,7 +125,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: ElevatedButton(
+                                  child: ButtonPrimary(
                                     onPressed: () {
                                       Navigator.push(
                                         context,
@@ -133,23 +134,6 @@ class _WelcomePageState extends State<WelcomePage> {
                                         ),
                                       );
                                     },
-                                    style: ButtonStyle(
-                                      fixedSize: const WidgetStatePropertyAll(
-                                          Size.fromWidth(double.infinity)),
-                                      shape: WidgetStatePropertyAll(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
-                                        ),
-                                      ),
-                                      elevation: const WidgetStatePropertyAll(3),
-                                      shadowColor:
-                                          WidgetStatePropertyAll(Theme.of(context).shadowColor),
-                                      backgroundColor:
-                                          WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                                      padding: const WidgetStatePropertyAll(
-                                        EdgeInsets.symmetric(vertical: 20),
-                                      ),
-                                    ),
                                     child: const Text(
                                       'Manager',
                                       style: TextStyle(
@@ -162,7 +146,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 ),
                                 const Gap(5),
                                 Expanded(
-                                  child: ElevatedButton(
+                                  child: ButtonPrimary(
                                     onPressed: () {
                                       Navigator.push(
                                         context,
@@ -171,23 +155,6 @@ class _WelcomePageState extends State<WelcomePage> {
                                         ),
                                       );
                                     },
-                                    style: ButtonStyle(
-                                      fixedSize: const WidgetStatePropertyAll(
-                                          Size.fromWidth(double.maxFinite)),
-                                      shape: WidgetStatePropertyAll(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
-                                        ),
-                                      ),
-                                      elevation: const WidgetStatePropertyAll(3),
-                                      shadowColor:
-                                          WidgetStatePropertyAll(Theme.of(context).shadowColor),
-                                      backgroundColor:
-                                          WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                                      padding: const WidgetStatePropertyAll(
-                                        EdgeInsets.symmetric(vertical: 20),
-                                      ),
-                                    ),
                                     child: const Text(
                                       'Tenant',
                                       style: TextStyle(
@@ -201,7 +168,7 @@ class _WelcomePageState extends State<WelcomePage> {
                               ],
                             ),
                             const Gap(10),
-                            ElevatedButton(
+                            ButtonSecondary(
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -210,26 +177,6 @@ class _WelcomePageState extends State<WelcomePage> {
                                   ),
                                 );
                               },
-                              style: ButtonStyle(
-                                elevation: const WidgetStatePropertyAll(3),
-                                shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
-                                padding: const WidgetStatePropertyAll(
-                                  EdgeInsets.symmetric(vertical: 20),
-                                ),
-                                fixedSize:
-                                    const WidgetStatePropertyAll(Size.fromWidth(double.maxFinite)),
-                                backgroundColor:
-                                    WidgetStatePropertyAll(Theme.of(context).colorScheme.onPrimary),
-                                shape: WidgetStatePropertyAll(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(
-                                      width: 0.75,
-                                      color: Theme.of(context).colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ),
-                              ),
                               child: Text(
                                 'Customer',
                                 style: TextStyle(

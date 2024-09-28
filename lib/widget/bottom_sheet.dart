@@ -8,8 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:gap/gap.dart';
 
 import '../services/map_service.dart';
 import '../utils/utils.dart';
@@ -181,19 +181,21 @@ class BottomSheetLocation extends StatefulWidget {
 }
 
 class _BottomSheetLocationState extends State<BottomSheetLocation> {
-  final apiKey = 'AIzaSyBQ0CWDFFQ9qOjVOjtRZnExng95RS0QkNQ';
   final addressLocController = TextEditingController();
   final latController = TextEditingController();
   final lngController = TextEditingController();
   final Set<Marker> marker = <Marker>{};
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-7.740697249517362, 110.35192056953613),
-    tilt: 0,
-    zoom: 14,
-  );
+  double currentLat = 0.0;
+  double currentLng = 0.0;
 
   final Completer<GoogleMapController> _completer = Completer<GoogleMapController>();
+
+  @override
+  void initState() {
+    getCurrentLocation();
+    super.initState();
+  }
 
   void getCurrentLocation() async {
     Position position = await MapService().determinePosition();
@@ -209,6 +211,11 @@ class _BottomSheetLocationState extends State<BottomSheetLocation> {
         ),
       ),
     );
+
+    setState(() {
+      currentLat = position.latitude;
+      currentLng = position.longitude;
+    });
   }
 
   void getAddressFromLatLng(LatLng location) async {
@@ -263,6 +270,7 @@ class _BottomSheetLocationState extends State<BottomSheetLocation> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
@@ -340,22 +348,28 @@ class _BottomSheetLocationState extends State<BottomSheetLocation> {
                           children: [
                             GoogleMap(
                               myLocationButtonEnabled: true,
-                              initialCameraPosition: _kGooglePlex,
+                              initialCameraPosition: CameraPosition(
+                                target: LatLng(currentLat, currentLng),
+                                tilt: 0,
+                                zoom: 14,
+                              ),
                               myLocationEnabled: false,
                               compassEnabled: false,
                               trafficEnabled: false,
                               buildingsEnabled: false,
-                              fortyFiveDegreeImageryEnabled: false,
+                              fortyFiveDegreeImageryEnabled: true,
                               rotateGesturesEnabled: false,
                               zoomGesturesEnabled: true,
-                              zoomControlsEnabled: true,
-                              indoorViewEnabled: false,
-                              markers: Set<Marker>.of(marker),
+                              zoomControlsEnabled: false,
+                              indoorViewEnabled: true,
+                              minMaxZoomPreference: MinMaxZoomPreference.unbounded,
+                              markers: marker,
+                              style: isDarkTheme ? Utils.mapStyleDark : Utils.mapStyleLight,
                               onMapCreated: (GoogleMapController controller) {
-                                controller.setMapStyle(Utils.mapStyleLight);
+                                controller.getStyleError();
                                 _completer.complete(controller);
                               },
-                              onTap: (LatLng latLng) async {
+                              onTap: (LatLng latLng) {
                                 getLocation(latLng);
                                 debugPrint('Latitude: ${latLng.latitude}');
                                 debugPrint('Longitude: ${latLng.longitude}');

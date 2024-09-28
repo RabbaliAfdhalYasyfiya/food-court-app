@@ -620,9 +620,8 @@ class _LocationPageState extends State<LocationPage> {
                                 fortyFiveDegreeImageryEnabled: true,
                                 rotateGesturesEnabled: false,
                                 zoomGesturesEnabled: true,
-                                minMaxZoomPreference: MinMaxZoomPreference.unbounded,
-                                indoorViewEnabled: true,
                                 zoomControlsEnabled: false,
+                                indoorViewEnabled: true,
                                 style: isDarkTheme ? Utils.mapStyleDark : Utils.mapStyleLight,
                                 markers: _markers,
                                 onTap: (argument) {

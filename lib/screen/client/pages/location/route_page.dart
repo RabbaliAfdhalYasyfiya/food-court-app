@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class RoutePage extends StatefulWidget {
 
 class _RoutePageState extends State<RoutePage> {
   final Completer<GoogleMapController> completer = Completer<GoogleMapController>();
+  StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
 
   final Set<Marker> _markers = <Marker>{};
   final Set<Polyline> _polyline = <Polyline>{};
@@ -40,9 +42,12 @@ class _RoutePageState extends State<RoutePage> {
   String distance = '';
   String walkingDuration = "";
   String drivingDuration = "";
+  List<LatLng> routePoints = []; // Simpan titik-titik dari polyline
 
   String? currentLoc;
   String? destinationLoc;
+
+  Timer? movementTimer; // Timer untuk simulasi pergerakan
 
   @override
   void initState() {
@@ -53,7 +58,23 @@ class _RoutePageState extends State<RoutePage> {
     drivingDuration = "0"; // Default in minutes
     walkingDuration = "0"; // Default in minutes
     distance = "0";
+    _accelerometerSubscription = accelerometerEvents.listen((AccelerometerEvent event) {
+      double threshold = 0.05; // Threshold untuk mendeteksi pergerakan
+      if ((event.x.abs() > threshold || event.y.abs() > threshold || event.z.abs() > threshold)) {
+        // Jika ada pergerakan, mulai simulasi
+        simulateMovement();
+      } else {
+        // Jika tidak ada pergerakan, berhenti
+        _stopMovement();
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _accelerometerSubscription?.cancel();
+    super.dispose();
   }
 
   void getCurrent() async {
@@ -162,12 +183,9 @@ class _RoutePageState extends State<RoutePage> {
     final PolylinePoints polylinePoints = PolylinePoints();
     final List<PointLatLng> decodedPoints = polylinePoints.decodePolyline(encodedPolyline);
 
-    // Convert to LatLng for Google Maps
-    final List<LatLng> routePoints =
-        decodedPoints.map((point) => LatLng(point.latitude, point.longitude)).toList();
-    debugPrint("Route Points: $routePoints");
-
     setState(() {
+      debugPrint("Route Points: $routePoints");
+      routePoints = decodedPoints.map((point) => LatLng(point.latitude, point.longitude)).toList();
       _polyline.clear(); // Clear any existing polylines
       _polyline.add(
         Polyline(
@@ -216,21 +234,28 @@ class _RoutePageState extends State<RoutePage> {
     return LatLng(midLat, midLng);
   }
 
+
   void simulateMovement() async {
-    LatLng currentPosition = LatLng(widget.currentLat, widget.currentLng);
-    LatLng destination = LatLng(widget.markerAdmin.latitude, widget.markerAdmin.longitude);
-    double step = 0.00010; // kecepatan simulasi
+    if (routePoints.isEmpty) return; // Pastikan ada rute untuk diikuti
+
+    int currentIndex = 0; // Indeks awal dalam rute
+    LatLng currentPosition = routePoints[currentIndex];
 
     final Uint8List markerUser =
         await MapService().getBytesFromAsset('assets/mapicons/navigate.png', 80);
 
-    Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      double newLat =
-          currentPosition.latitude + step * (destination.latitude - currentPosition.latitude);
-      double newLng =
-          currentPosition.longitude + step * (destination.longitude - currentPosition.longitude);
+    // Pastikan jika ada timer yang sedang berjalan, kita hentikan dulu
+    movementTimer?.cancel();
 
-      currentPosition = LatLng(newLat, newLng);
+    // Simulasi pergerakan pada setiap interval
+    movementTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
+      if (currentIndex >= routePoints.length - 1) {
+        timer.cancel(); // Berhenti jika mencapai akhir rute
+        return;
+      }
+
+      // Pindah ke titik berikutnya dalam rute
+      currentPosition = routePoints[++currentIndex];
 
       setState(() {
         _markers.removeWhere((m) => m.markerId.value == 'currentLocation');
@@ -243,12 +268,15 @@ class _RoutePageState extends State<RoutePage> {
           ),
         );
       });
-
-      if ((newLat - destination.latitude).abs() < step &&
-          (newLng - destination.longitude).abs() < step) {
-        timer.cancel(); // Berhenti saat sampai destinasi
-      }
     });
+  }
+
+  void _stopMovement() {
+    // Hentikan timer pergerakan jika ada
+    if (movementTimer != null && movementTimer!.isActive) {
+      movementTimer?.cancel();
+      debugPrint('Movement stopped');
+    }
   }
 
   void onModeSelected(TransportMode mode) {
