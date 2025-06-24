@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_court_app/services/models/model_product.dart';
+
+import 'model_product.dart';
 
 class Tenant {
   String vendorId;

@@ -9,8 +9,8 @@ import 'package:gap/gap.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../services/models/model_tenant.dart';
-import '../../../../widget/button.dart';
 import '../../../../widget/snackbar.dart';
+import '../../../../widget/button.dart';
 import '../../main_page.dart';
 
 class OrderSuccess extends StatefulWidget {

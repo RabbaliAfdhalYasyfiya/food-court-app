@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:gap/gap.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../widget/snackbar.dart';

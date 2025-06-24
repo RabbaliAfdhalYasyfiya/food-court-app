@@ -10,8 +10,8 @@ import 'package:gap/gap.dart';
 
 import '../../../../services/models/model_product.dart';
 import '../../../../widget/bottom_sheet.dart';
-import '../../../../widget/button.dart';
 import '../../../../widget/snackbar.dart';
+import '../../../../widget/button.dart';
 import '../../../../widget/load.dart';
 import 'order_success.dart';
 
