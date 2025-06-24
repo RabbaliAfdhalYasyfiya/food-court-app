@@ -40,6 +40,7 @@ class OrderSuccess extends StatefulWidget {
 }
 
 class _OrderSuccessState extends State<OrderSuccess> {
+  ScrollController scrollController = ScrollController();
   List<BluetoothDevice> devices = [];
   BlueThermalPrinter printer = BlueThermalPrinter.instance;
   BluetoothDevice? selectedDevice;
@@ -296,8 +297,6 @@ class _OrderSuccessState extends State<OrderSuccess> {
     printer.printNewLine();
     printer.paperCut();
   }
-
-  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {

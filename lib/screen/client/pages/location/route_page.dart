@@ -1,6 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -146,9 +146,9 @@ class _RoutePageState extends State<RoutePage> {
   void drawPolyline() async {
     const String baseUrl = "http://router.project-osrm.org/route/v1";
     final String mode = selectedMode == TransportMode.walking ? 'walking' : 'driving';
-    final String url = "$baseUrl/$mode/"
-        "${widget.currentLng},${widget.currentLat};"
-        "${widget.markerAdmin.longitude},${widget.markerAdmin.latitude}?overview=full";
+    final String url = '$baseUrl/$mode/'
+        '${widget.currentLng},${widget.currentLat};'
+        '${widget.markerAdmin.longitude},${widget.markerAdmin.latitude}?overview=full';
 
     debugPrint("Requesting route with mode: $mode, URL: $url");
 
@@ -202,9 +202,9 @@ class _RoutePageState extends State<RoutePage> {
     });
   }
 
-// Helper function to update distance and duration
+// Helper function untuk update distance dan duration
   void _updateDistanceAndDuration(double distanceMeters, double durationSeconds) {
-    // Convert meters to kilometers
+    // Convert meters ke kilometers
     double distanceKm = distanceMeters / 1000;
 
     double walkingSpeed = 5; // km/h
@@ -214,7 +214,7 @@ class _RoutePageState extends State<RoutePage> {
     String drivingDurationStr = (distanceKm / drivingSpeed * 60).toStringAsFixed(0);
 
     setState(() {
-      distance = distanceKm.toStringAsFixed(1); // Update distance in kilometers
+      distance = distanceKm.toStringAsFixed(1); // Update distance dalam kilometers
 
       // Update the appropriate duration based on the selected transport mode
       if (selectedMode == TransportMode.walking) {
@@ -233,7 +233,6 @@ class _RoutePageState extends State<RoutePage> {
     double midLng = (start.longitude + end.longitude) / 2;
     return LatLng(midLat, midLng);
   }
-
 
   void simulateMovement() async {
     if (routePoints.isEmpty) return; // Pastikan ada rute untuk diikuti

@@ -81,6 +81,7 @@ ThemeData lightMode = ThemeData(
       fontSize: 13,
     ),
   ),
+  
   progressIndicatorTheme: ProgressIndicatorThemeData(
     color: Colors.blueAccent.shade400,
   ),
@@ -112,7 +113,6 @@ ThemeData lightMode = ThemeData(
     shadowColor: Colors.black,
     overlayColor: WidgetStatePropertyAll(Colors.blueAccent.shade400.withOpacity(0.25)),
     indicatorColor: Colors.blueAccent.shade400.withOpacity(0.15),
-    
     labelTextStyle: const WidgetStatePropertyAll(
       TextStyle(
         color: Colors.black,

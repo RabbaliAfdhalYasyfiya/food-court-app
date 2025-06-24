@@ -280,6 +280,237 @@ class FormFields extends StatelessWidget {
   }
 }
 
+class FormFieldsKategori extends StatefulWidget {
+  const FormFieldsKategori({
+    super.key,
+    required this.prefixIcon,
+    required this.inputType,
+    required this.controller,
+    required this.manualController,
+    required this.hintText,
+    required this.tap,
+    required this.maxLineBoolean,
+    required this.textInputFormatter,
+    required this.focusNode,
+    required this.onFieldSubmit,
+    required this.kategori,
+  });
+
+  final IconData prefixIcon;
+  final TextInputType inputType;
+  final TextEditingController controller;
+  final TextEditingController manualController;
+  final String hintText;
+  final bool tap;
+  final bool maxLineBoolean;
+  final TextInputFormatter textInputFormatter;
+  final FocusNode focusNode;
+  final Function(String) onFieldSubmit;
+  final List<String> kategori;
+
+  @override
+  State<FormFieldsKategori> createState() => _FormFieldsKategoriState();
+}
+
+class _FormFieldsKategoriState extends State<FormFieldsKategori> {
+  String? selectKategori;
+  bool isManualEntry = false;
+
+  final FocusNode manualFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    manualFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Center(
+          child: isManualEntry
+              ? TextFormField(
+                  focusNode: widget.focusNode,
+                  onFieldSubmitted: widget.onFieldSubmit,
+                  maxLines: widget.maxLineBoolean ? 3 : null,
+                  readOnly: widget.tap,
+                  onChanged: (value) {
+                    widget.controller.text = value;
+                  },
+                  controller: widget.controller,
+                  inputFormatters: [
+                    widget.textInputFormatter,
+                  ],
+                  keyboardType: widget.inputType,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontSize: 17,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  selectionControls: EmptyTextSelectionControls(),
+                  enableInteractiveSelection: true,
+                  canRequestFocus: true,
+                  showCursor: false,
+                  cursorColor: Theme.of(context).colorScheme.primary,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Icon(
+                        widget.prefixIcon,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        width: 1,
+                        style: BorderStyle.solid,
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        width: 1.5,
+                        style: BorderStyle.solid,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
+                    hintText: widget.hintText,
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey.shade500,
+                      fontSize: 15,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                )
+              : DropdownMenu(
+                  dropdownMenuEntries: <DropdownMenuEntry<String>>[
+                    ...widget.kategori.map(
+                      (category) {
+                        return DropdownMenuEntry(
+                          value: category,
+                          label: category,
+                          leadingIcon: const Icon(Iconsax.settings),
+                          style: ButtonStyle(
+                            shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                            padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+                            visualDensity: VisualDensity.standard,
+                            iconSize: const WidgetStatePropertyAll(20),
+                            fixedSize:
+                                const WidgetStatePropertyAll(Size.fromWidth(double.infinity)),
+                            textStyle: WidgetStatePropertyAll(
+                              TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    DropdownMenuEntry(
+                      value: 'Other',
+                      label: 'Other Categories',
+                      leadingIcon: const Icon(Iconsax.edit),
+                      style: ButtonStyle(
+                        padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+                        visualDensity: VisualDensity.standard,
+                        iconSize: const WidgetStatePropertyAll(20),
+                        fixedSize: const WidgetStatePropertyAll(Size.fromWidth(double.infinity)),
+                        textStyle: WidgetStatePropertyAll(
+                          TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                  hintText: widget.hintText,
+                  leadingIcon: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Icon(
+                      widget.prefixIcon,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                  controller: widget.controller,
+                  menuStyle: MenuStyle(
+                    visualDensity: VisualDensity.compact,
+                    padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 16)),
+                    backgroundColor:
+                        WidgetStatePropertyAll(Theme.of(context).scaffoldBackgroundColor),
+                    elevation: const WidgetStatePropertyAll(2),
+                    shadowColor: WidgetStatePropertyAll(Theme.of(context).shadowColor),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        side: BorderSide(width: 1, color: Colors.grey.shade400),
+                      ),
+                    ),
+                  ),
+                  inputDecorationTheme: InputDecorationTheme(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        width: 1,
+                        style: BorderStyle.solid,
+                        color: Colors.grey.shade400,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: BorderSide(
+                        width: 1.5,
+                        style: BorderStyle.solid,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 17, vertical: 18),
+                    hintStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey.shade500,
+                      fontSize: 15,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                  width: double.infinity,
+                  onSelected: (value) {
+                    setState(() {
+                      if (value == 'Other') {
+                        isManualEntry = true;
+                        widget.controller.clear();
+                        widget.manualController.clear();
+
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          FocusScope.of(context).requestFocus(manualFocusNode);
+                        });
+                      } else {
+                        isManualEntry = false;
+                        selectKategori = value;
+                        widget.controller.text = value ?? '';
+                      }
+                    });
+                  },
+                )
+          
+          ),
+    );
+  }
+}
+
 class FormFieldPassword extends StatelessWidget {
   const FormFieldPassword({
     super.key,

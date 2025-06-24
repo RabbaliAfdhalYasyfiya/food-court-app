@@ -51,7 +51,9 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
 
   void decCount(String categoryKey, int index) {
     setState(() {
-      if (_countsMap[categoryKey]![index] > 0) _countsMap[categoryKey]![index]--;
+      if (_countsMap[categoryKey]![index] > 0) {
+        _countsMap[categoryKey]![index]--;
+      }
     });
   }
 
@@ -234,223 +236,224 @@ class _OrderProductState extends State<OrderProduct> with TickerProviderStateMix
               Expanded(
                 flex: 3,
                 child: TabBarView(
-                    dragStartBehavior: DragStartBehavior.start,
-                    controller: _tabController,
-                    physics: const BouncingScrollPhysics(),
-                    children: categories.map(
-                      (category) {
-                        return StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('vendors')
-                              .doc(currentTenant!.uid)
-                              .collection('products')
-                              .where('category_product', isEqualTo: category)
-                              .snapshots(),
-                          builder: (context, AsyncSnapshot productSnapshot) {
-                            if (productSnapshot.hasError) {
-                              debugPrint('${productSnapshot.error}');
-                              return Center(
-                                child: Text('An error occurred: ${productSnapshot.error}'),
-                              );
+                  dragStartBehavior: DragStartBehavior.start,
+                  controller: _tabController,
+                  physics: const BouncingScrollPhysics(),
+                  children: categories.map(
+                    (category) {
+                      return StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('vendors')
+                            .doc(currentTenant!.uid)
+                            .collection('products')
+                            .where('category_product', isEqualTo: category)
+                            .snapshots(),
+                        builder: (context, AsyncSnapshot productSnapshot) {
+                          if (productSnapshot.hasError) {
+                            debugPrint('${productSnapshot.error}');
+                            return Center(
+                              child: Text('An error occurred: ${productSnapshot.error}'),
+                            );
+                          }
+
+                          if (categorySnapshot.connectionState == ConnectionState.waiting) {
+                            return GridView.builder(
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5,
+                                mainAxisExtent: 275,
+                              ),
+                              padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
+                              shrinkWrap: true,
+                              itemCount: 5,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return orderLoad(context);
+                              },
+                            );
+                          }
+
+                          if (productSnapshot.hasData) {
+                            final productData = productSnapshot.data!.docs
+                                .map<MenuProduct>((doc) => MenuProduct.fromDocument(doc))
+                                .toList();
+
+                            productData.sort((MenuProduct a, MenuProduct b) =>
+                                a.nameProduct.compareTo(b.nameProduct));
+
+                            final categoryKey = category;
+
+                            _productDataMap[categoryKey] = productData;
+
+                            if (!_checkedProductsMap.containsKey(categoryKey)) {
+                              _checkedProductsMap[categoryKey] =
+                                  List<bool>.filled(productData.length, false);
+                              _countsMap[categoryKey] = List<int>.filled(productData.length, 0);
                             }
 
-                            if (categorySnapshot.connectionState == ConnectionState.waiting) {
-                              return GridView.builder(
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 5,
-                                  mainAxisExtent: 275,
-                                ),
-                                padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
-                                shrinkWrap: true,
-                                itemCount: 5,
-                                scrollDirection: Axis.vertical,
-                                itemBuilder: (context, index) {
-                                  return orderLoad(context);
-                                },
-                              );
-                            }
+                            final checkedProducts = _checkedProductsMap[categoryKey]!;
+                            final counts = _countsMap[categoryKey]!;
 
-                            if (productSnapshot.hasData) {
-                              final productData = productSnapshot.data!.docs
-                                  .map<MenuProduct>((doc) => MenuProduct.fromDocument(doc))
-                                  .toList();
-
-                              productData.sort((MenuProduct a, MenuProduct b) =>
-                                  a.nameProduct.compareTo(b.nameProduct));
-
-                              final categoryKey = category;
-
-                              _productDataMap[categoryKey] = productData;
-
-                              if (!_checkedProductsMap.containsKey(categoryKey)) {
-                                _checkedProductsMap[categoryKey] =
-                                    List<bool>.filled(productData.length, false);
-                                _countsMap[categoryKey] = List<int>.filled(productData.length, 0);
-                              }
-
-                              final checkedProducts = _checkedProductsMap[categoryKey]!;
-                              final counts = _countsMap[categoryKey]!;
-
-                              return Column(
-                                children: [
-                                  Expanded(
-                                    flex: 4,
-                                    child: GridView.builder(
-                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 5,
-                                        mainAxisSpacing: 5,
-                                        mainAxisExtent: 275,
-                                      ),
-                                      padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
-                                      shrinkWrap: true,
-                                      itemCount: productData.length,
-                                      scrollDirection: Axis.vertical,
-                                      itemBuilder: (context, index) {
-                                        final product = productData[index];
-
-                                        return TileOrderProduct(
-                                          index: index,
-                                          count: counts[index],
-                                          imageProduct: product.imageProduct,
-                                          nameProduct: product.nameProduct,
-                                          priceProduct: product.priceProduct,
-                                          checkProduct: checkedProducts[index],
-                                          tapped: () {
-                                            setState(() {
-                                              checkedProducts[index] = !checkedProducts[index];
-                                              if (checkedProducts[index]) {
-                                                incCount(categoryKey, index);
-                                              } else {
-                                                counts[index] = 0;
-                                              }
-                                            });
-                                          },
-                                          onChanged: (bool? value) {
-                                            setState(() {
-                                              checkedProducts[index] = value!;
-                                              if (value) {
-                                                incCount(categoryKey, index);
-                                              } else {
-                                                counts[index] = 0;
-                                              }
-                                            });
-                                          },
-                                          onDecCount: () => decCount(categoryKey, index),
-                                          onIncCount: () => incCount(categoryKey, index),
-                                        );
-                                      },
+                            return Column(
+                              children: [
+                                Expanded(
+                                  flex: 4,
+                                  child: GridView.builder(
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 5,
+                                      mainAxisExtent: 275,
                                     ),
+                                    padding: const EdgeInsets.fromLTRB(16, 6, 16, 16),
+                                    shrinkWrap: true,
+                                    itemCount: productData.length,
+                                    scrollDirection: Axis.vertical,
+                                    itemBuilder: (context, index) {
+                                      final product = productData[index];
+
+                                      return TileOrderProduct(
+                                        index: index,
+                                        count: counts[index],
+                                        imageProduct: product.imageProduct,
+                                        nameProduct: product.nameProduct,
+                                        priceProduct: product.priceProduct,
+                                        checkProduct: checkedProducts[index],
+                                        tapped: () {
+                                          setState(() {
+                                            checkedProducts[index] = !checkedProducts[index];
+                                            if (checkedProducts[index]) {
+                                              incCount(categoryKey, index);
+                                            } else {
+                                              counts[index] = 0;
+                                            }
+                                          });
+                                        },
+                                        onChanged: (bool? value) {
+                                          setState(() {
+                                            checkedProducts[index] = value!;
+                                            if (value) {
+                                              incCount(categoryKey, index);
+                                            } else {
+                                              counts[index] = 0;
+                                            }
+                                          });
+                                        },
+                                        onDecCount: () => decCount(categoryKey, index),
+                                        onIncCount: () => incCount(categoryKey, index),
+                                      );
+                                    },
                                   ),
-                                  Expanded(
-                                    flex: 0,
-                                    child: AnimatedSlide(
-                                      offset: checkedProducts.contains(true)
-                                          ? const Offset(0, 0)
-                                          : const Offset(0, 1),
-                                      duration: const Duration(milliseconds: 250),
-                                      curve: Curves.easeInOut,
-                                      child: Visibility(
-                                        visible: checkedProducts.contains(true),
-                                        child: Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: Card(
-                                            margin: EdgeInsets.zero,
-                                            elevation: 25,
-                                            color: Theme.of(context).navigationBarTheme.shadowColor,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(top: Radius.circular(25)),
+                                ),
+                                Expanded(
+                                  flex: 0,
+                                  child: AnimatedSlide(
+                                    offset: checkedProducts.contains(true)
+                                        ? const Offset(0, 0)
+                                        : const Offset(0, 1),
+                                    duration: const Duration(milliseconds: 250),
+                                    curve: Curves.easeInOut,
+                                    child: Visibility(
+                                      visible: checkedProducts.contains(true),
+                                      child: Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Card(
+                                          margin: EdgeInsets.zero,
+                                          elevation: 25,
+                                          color: Theme.of(context).navigationBarTheme.shadowColor,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.vertical(top: Radius.circular(25)),
+                                          ),
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+                                            decoration: BoxDecoration(
+                                              borderRadius: const BorderRadius.vertical(
+                                                  top: Radius.circular(25)),
+                                              color: Theme.of(context).scaffoldBackgroundColor,
                                             ),
-                                            child: Container(
-                                              width: double.infinity,
-                                              padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-                                              decoration: BoxDecoration(
-                                                borderRadius: const BorderRadius.vertical(
-                                                    top: Radius.circular(25)),
-                                                color: Theme.of(context).scaffoldBackgroundColor,
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    width: 40,
-                                                    height: 5,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(100),
-                                                      color: Colors.grey.shade400,
-                                                    ),
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  width: 40,
+                                                  height: 5,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(100),
+                                                    color: Colors.grey.shade400,
                                                   ),
-                                                  const Gap(20),
-                                                  ElevatedButton.icon(
-                                                    icon: const Icon(
-                                                      Iconsax.shopping_cart,
+                                                ),
+                                                const Gap(20),
+                                                ElevatedButton.icon(
+                                                  icon: const Icon(
+                                                    Iconsax.shopping_cart,
+                                                    color: Colors.white,
+                                                  ),
+                                                  iconAlignment: IconAlignment.start,
+                                                  label: const Text(
+                                                    'Order Menu',
+                                                    style: TextStyle(
+                                                      fontSize: 18,
                                                       color: Colors.white,
-                                                    ),
-                                                    iconAlignment: IconAlignment.start,
-                                                    label: const Text(
-                                                      'Order Menu',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        color: Colors.white,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      processToCart();
-                                                    },
-                                                    style: ButtonStyle(
-                                                      fixedSize: const WidgetStatePropertyAll(
-                                                          Size.fromWidth(double.maxFinite)),
-                                                      shape: WidgetStatePropertyAll(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(15),
-                                                        ),
-                                                      ),
-                                                      backgroundColor: WidgetStatePropertyAll(
-                                                          Theme.of(context).primaryColor),
-                                                      padding: const WidgetStatePropertyAll(
-                                                        EdgeInsets.symmetric(vertical: 20),
-                                                      ),
+                                                      fontWeight: FontWeight.w500,
                                                     ),
                                                   ),
-                                                ],
-                                              ),
+                                                  onPressed: () {
+                                                    processToCart();
+                                                  },
+                                                  style: ButtonStyle(
+                                                    fixedSize: const WidgetStatePropertyAll(
+                                                        Size.fromWidth(double.maxFinite)),
+                                                    shape: WidgetStatePropertyAll(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(15),
+                                                      ),
+                                                    ),
+                                                    backgroundColor: WidgetStatePropertyAll(
+                                                        Theme.of(context).primaryColor),
+                                                    padding: const WidgetStatePropertyAll(
+                                                      EdgeInsets.symmetric(vertical: 20),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              );
-                            }
-
-                            return Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/Nodata-pana.png',
-                                    width: 250,
-                                  ),
-                                  const Gap(20),
-                                  Text(
-                                    'Here, no Products have arrived yet',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Theme.of(context).colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             );
-                          },
-                        );
-                      },
-                    ).toList()),
+                          }
+
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/images/Nodata-pana.png',
+                                  width: 250,
+                                ),
+                                const Gap(20),
+                                Text(
+                                  'Here, no Products have arrived yet',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    color: Theme.of(context).colorScheme.tertiary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ).toList(),
+                ),
               ),
             ],
           ),

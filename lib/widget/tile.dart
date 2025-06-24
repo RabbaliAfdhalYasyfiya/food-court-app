@@ -1332,67 +1332,72 @@ class TileOrderProduct extends StatelessWidget {
                       indent: 10,
                       color: Theme.of(context).dividerColor,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: onDecCount,
-                          icon: const Icon(CupertinoIcons.minus),
-                          color: Colors.white,
-                          style: ButtonStyle(
-                            shape: const WidgetStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(15),
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10),
+                    SizedBox(
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: onDecCount,
+                            icon: const Icon(CupertinoIcons.minus),
+                            color: Colors.white,
+                            constraints: const BoxConstraints(minHeight: double.infinity),
+                            style: ButtonStyle(
+                              shape: const WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15),
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                    topLeft: Radius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              backgroundColor: WidgetStatePropertyAll(
+                                Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              height: double.infinity,
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '$count',
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 ),
                               ),
                             ),
-                            backgroundColor: WidgetStatePropertyAll(
-                              Theme.of(context).primaryColor,
-                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 40,
-                            margin: const EdgeInsets.symmetric(horizontal: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                            child: Center(
-                              child: Text(
-                                '$count',
-                                style: Theme.of(context).textTheme.labelLarge,
-                              ),
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: onIncCount,
-                          icon: const Icon(CupertinoIcons.add),
-                          color: Colors.white,
-                          style: ButtonStyle(
-                            shape: const WidgetStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(15),
-                                  topLeft: Radius.circular(10),
+                          IconButton(
+                            onPressed: onIncCount,
+                            icon: const Icon(CupertinoIcons.add),
+                            color: Colors.white,
+                            constraints: const BoxConstraints(minHeight: double.infinity),
+                            style: ButtonStyle(
+                              shape: const WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(15),
+                                    topLeft: Radius.circular(10),
+                                  ),
                                 ),
                               ),
-                            ),
-                            backgroundColor: WidgetStatePropertyAll(
-                              Theme.of(context).primaryColor,
+                              backgroundColor: WidgetStatePropertyAll(
+                                Theme.of(context).primaryColor,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

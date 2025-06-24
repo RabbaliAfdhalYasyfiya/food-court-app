@@ -49,7 +49,7 @@ class _ProductPageState extends State<ProductPage> {
       extendBody: true,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         elevation: 2,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         disabledElevation: 5,
@@ -65,10 +65,18 @@ class _ProductPageState extends State<ProductPage> {
         },
         isExtended: true,
         tooltip: 'Add Product',
-        child: const Icon(
+        icon: const Icon(
           Iconsax.additem,
           color: Colors.white,
-          size: 30,
+          size: 20,
+        ),
+        label: const Text(
+          'Add Product',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 17,
+          ),
         ),
       ),
       body: SafeArea(
@@ -287,11 +295,11 @@ class _ProductPageState extends State<ProductPage> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
-        ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Theme.of(context).colorScheme.outline, width: 1),
+      ),
       child: Row(
         children: [
           Expanded(

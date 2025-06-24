@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:uuid/uuid.dart';
 import 'package:gap/gap.dart';
 
@@ -33,8 +34,11 @@ class _AddProductState extends State<AddProduct> {
   final nameProductController = TextEditingController();
   final priceProductController = TextEditingController();
   final categoryProductController = TextEditingController();
+  final categoryProductManualController = TextEditingController();
   final stockProductController = TextEditingController();
   final descriptionProductController = TextEditingController();
+
+  late Future<List<String>> _categoriesFuture;
 
   Uint8List? _image;
 
@@ -119,7 +123,9 @@ class _AddProductState extends State<AddProduct> {
         imageUrl,
         nameProductController.text,
         priceProductController.text,
-        categoryProductController.text.isNotEmpty ? categoryProductController.text : '',
+        categoryProductController.text.isNotEmpty
+            ? categoryProductController.text
+            : categoryProductManualController.text,
         int.parse(stockProductController.text),
         descriptionProductController.text.isNotEmpty ? descriptionProductController.text : '',
       );
@@ -143,11 +149,38 @@ class _AddProductState extends State<AddProduct> {
     Navigator.pop(context);
   }
 
+  Future<List<String>> fetchCategories() async {
+    final categories = <String>{}; // Menggunakan Set untuk menghindari duplikasi
+
+    // Ambil dokumen produk berdasarkan vendorId
+    final productsSnapshot = await FirebaseFirestore.instance
+        .collection('vendors')
+        .doc(widget.currentTenant.uid)
+        .collection('products')
+        .get();
+
+    // Iterasi dokumen untuk mendapatkan category_product
+    for (var doc in productsSnapshot.docs) {
+      final category = doc.data()['category_product'] as String;
+      if (category.isNotEmpty) {
+        categories.add(category); // Menambahkan ke Set (otomatis menghindari duplikasi)
+      }
+    }
+
+    return categories.toList(); // Konversi Set ke List
+  }
+
   FocusNode fieldNameProduct = FocusNode();
   FocusNode fieldPriceProduct = FocusNode();
   FocusNode fieldStockProduct = FocusNode();
   FocusNode fieldCategoryProduct = FocusNode();
   FocusNode fieldDescProduct = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _categoriesFuture = fetchCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,90 +211,101 @@ class _AddProductState extends State<AddProduct> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(
+                    Row(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: Container(
-                            height: 200,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Theme.of(context).colorScheme.onPrimary,
-                                  Theme.of(context).colorScheme.onSecondary,
-                                  Theme.of(context).colorScheme.onTertiary,
-                                ],
-                              ),
-                            ),
-                            child: _image != null
-                                ? Image.memory(
-                                    _image!,
-                                    height: double.infinity,
+                        Expanded(
+                          flex: 2,
+                          child: Stack(
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Container(
+                                    height: 200,
                                     width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.low,
-                                  )
-                                : Image.asset(
-                                    'assets/images/empty_image.png',
-                                    height: double.infinity,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                    filterQuality: FilterQuality.low,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                        colors: [
+                                          Theme.of(context).colorScheme.onPrimary,
+                                          Theme.of(context).colorScheme.onSecondary,
+                                          Theme.of(context).colorScheme.onTertiary,
+                                        ],
+                                      ),
+                                    ),
+                                    child: _image != null
+                                        ? Image.memory(
+                                            _image!,
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                            filterQuality: FilterQuality.low,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/empty_image.png',
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                            filterQuality: FilterQuality.low,
+                                          ),
                                   ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 15,
-                          right: 20,
-                          child: IconButton(
-                            visualDensity: VisualDensity.comfortable,
-                            padding: const EdgeInsets.all(15),
-                            style: ButtonStyle(
-                              visualDensity: VisualDensity.compact,
-                              elevation: const WidgetStatePropertyAll(2),
-                              shape: const WidgetStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                              ),
-                              backgroundColor:
-                                  WidgetStatePropertyAll(Theme.of(context).primaryColor),
-                            ),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                builder: (context) => BottomSheetPhoto(
-                                  camera: () {
-                                    getFromCamera();
-                                    Navigator.pop(context);
-                                  },
-                                  gallery: () {
-                                    getFromGallery();
-                                    Navigator.pop(context);
-                                  },
-                                  delete: () {
-                                    deleteImage();
-                                    Navigator.pop(context);
-                                  },
-                                  title: 'Image Product',
                                 ),
-                              );
-                            },
-                            color: Theme.of(context).primaryColor,
-                            icon: const Icon(
-                              Iconsax.camera,
-                              size: 20,
-                              color: Colors.white,
-                            ),
+                              ),
+                              Positioned(
+                                bottom: 10,
+                                right: 15,
+                                child: IconButton(
+                                  visualDensity: VisualDensity.comfortable,
+                                  padding: const EdgeInsets.all(15),
+                                  style: ButtonStyle(
+                                    visualDensity: VisualDensity.compact,
+                                    elevation: const WidgetStatePropertyAll(2),
+                                    shape: const WidgetStatePropertyAll(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStatePropertyAll(Theme.of(context).primaryColor),
+                                  ),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (context) => BottomSheetPhoto(
+                                        camera: () {
+                                          getFromCamera();
+                                          Navigator.pop(context);
+                                        },
+                                        gallery: () {
+                                          getFromGallery();
+                                          Navigator.pop(context);
+                                        },
+                                        delete: () {
+                                          deleteImage();
+                                          Navigator.pop(context);
+                                        },
+                                        title: 'Image Product',
+                                      ),
+                                    );
+                                  },
+                                  color: Theme.of(context).primaryColor,
+                                  icon: const Icon(
+                                    Iconsax.camera,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
+                        const Spacer(),
                       ],
                     ),
-                    const Gap(10),
+                    const Gap(15),
                     FormFields(
                       prefixIcon: Iconsax.edit_2,
                       inputType: TextInputType.name,
@@ -295,20 +339,6 @@ class _AddProductState extends State<AddProduct> {
                     ),
                     const Gap(10),
                     FormFields(
-                      prefixIcon: Iconsax.element_plus,
-                      inputType: TextInputType.name,
-                      controller: categoryProductController,
-                      hintText: 'Category Product',
-                      tap: false,
-                      maxLineBoolean: false,
-                      textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
-                      focusNode: fieldCategoryProduct,
-                      onFieldSubmit: (val) {
-                        FocusScope.of(context).requestFocus(fieldStockProduct);
-                      },
-                    ),
-                    const Gap(10),
-                    FormFields(
                       prefixIcon: Iconsax.folder_add,
                       inputType: TextInputType.number,
                       controller: stockProductController,
@@ -318,9 +348,53 @@ class _AddProductState extends State<AddProduct> {
                       textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
                       focusNode: fieldStockProduct,
                       onFieldSubmit: (val) {
-                        FocusScope.of(context).requestFocus(fieldDescProduct);
+                        FocusScope.of(context).requestFocus(fieldCategoryProduct);
                       },
                     ),
+                    const Gap(10),
+                    FutureBuilder<List<String>>(
+                        future: _categoriesFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Shimmer.fromColors(
+                              baseColor: Theme.of(context).colorScheme.onPrimary,
+                              highlightColor: Theme.of(context).colorScheme.onSecondary,
+                              child: Container(
+                                height: 50,
+                                width: double.infinity,
+                                margin: const EdgeInsets.fromLTRB(16, 5, 16, 10),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Theme.of(context).colorScheme.onSecondary,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          }
+                          final categories = snapshot.data!;
+                          return FormFieldsKategori(
+                            prefixIcon: Iconsax.element_plus,
+                            inputType: TextInputType.name,
+                            controller: categoryProductController,
+                            manualController: categoryProductManualController,
+                            hintText: 'Category Product',
+                            tap: false,
+                            maxLineBoolean: false,
+                            textInputFormatter: FilteringTextInputFormatter.singleLineFormatter,
+                            focusNode: fieldCategoryProduct,
+                            onFieldSubmit: (val) {
+                              FocusScope.of(context).requestFocus(fieldDescProduct);
+                            },
+                            kategori: categories,
+                          );
+                        }),
                     const Gap(10),
                     FormFields(
                       prefixIcon: Iconsax.messages,
@@ -337,7 +411,7 @@ class _AddProductState extends State<AddProduct> {
                     ),
                   ],
                 ),
-                const Gap(20),
+                const Gap(30),
                 ButtonPrimary(
                   onPressed: () {
                     enterAddProduct();

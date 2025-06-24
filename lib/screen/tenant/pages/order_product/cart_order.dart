@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -37,6 +37,8 @@ class _CartOrderState extends State<CartOrder> {
   ProductTypeEnum? _productTypeEnum;
 
   bool isCheckoutCardVisible = false;
+
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -146,8 +148,6 @@ class _CartOrderState extends State<CartOrder> {
       Colors.white,
     );
   }
-
-  ScrollController scrollController = ScrollController();
 
   Route createRoute(Widget child) {
     return PageRouteBuilder(
@@ -474,6 +474,7 @@ class _CartOrderState extends State<CartOrder> {
     double subTotal = _calculateSubtotal();
     double taxFee = 1; // Example fixed tax fee
     double orderTotal = subTotal + taxFee;
+    debugPrint('$orderTotal');
 
     if (widget.selectedProducts.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback(
@@ -599,31 +600,30 @@ class _CartOrderState extends State<CartOrder> {
                                   child: AspectRatio(
                                     aspectRatio: 1 / 1,
                                     child: Container(
-                                        height: double.infinity,
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              Theme.of(context).colorScheme.onPrimary,
-                                              Theme.of(context).colorScheme.onSecondary,
-                                              Theme.of(context).colorScheme.onTertiary,
-                                            ],
-                                          ),
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [
+                                            Theme.of(context).colorScheme.onPrimary,
+                                            Theme.of(context).colorScheme.onSecondary,
+                                            Theme.of(context).colorScheme.onTertiary,
+                                          ],
                                         ),
-                                        child: CachedNetworkImage(
-                                          imageUrl: product.imageProduct,
-                                          filterQuality: FilterQuality.low,
-                                          fit: BoxFit.cover,
-                                          useOldImageOnUrlChange: true,
-                                          fadeInCurve: Curves.easeIn,
-                                          fadeOutCurve: Curves.easeOut,
-                                          fadeInDuration: const Duration(milliseconds: 500),
-                                          fadeOutDuration: const Duration(milliseconds: 750),
-                                        )
-                                        //Image.network(e.imageProduct),
-                                        ),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl: product.imageProduct,
+                                        filterQuality: FilterQuality.low,
+                                        fit: BoxFit.cover,
+                                        useOldImageOnUrlChange: true,
+                                        fadeInCurve: Curves.easeIn,
+                                        fadeOutCurve: Curves.easeOut,
+                                        fadeInDuration: const Duration(milliseconds: 500),
+                                        fadeOutDuration: const Duration(milliseconds: 750),
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 title: Text(
