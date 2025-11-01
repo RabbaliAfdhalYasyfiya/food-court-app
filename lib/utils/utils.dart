@@ -1,4 +1,4 @@
-const String googleMapAPI = 'AIzaSyBQ0CWDFFQ9qOjVOjtRZnExng95RS0QkNQ'; 
+const String googleMapAPI = ''; // <=== put API Google Maps here
 
 class Utils {
   static String mapStyleLight = '''
